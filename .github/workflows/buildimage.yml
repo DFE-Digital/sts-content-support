@@ -54,6 +54,6 @@ jobs:
                     docker build . --tag ghcr.io/dfe-digital/sts-knowledgebase/App:latest
                     docker push ghcr.io/dfe-digital/sts-knowledgebase/App:latest
                 tags: |
-                    ghcr.io/dfe-digital/sts-knowledgebase/${{ env.DOCKER_IMAGE}}/${{github.run_number}}
+                    ghcr.io/dfe-digital/${{ env.DOCKER_IMAGE}}
                 push: true
                 
