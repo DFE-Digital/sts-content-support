@@ -14,7 +14,7 @@ on:
 #    branches: [ "main" ]
 
 env:
-    DOCKER_IMAGE: knowledgebase
+    DOCKER_IMAGE: sts-knowledgebase
 
 jobs:
 
