@@ -14,7 +14,7 @@ name: Build Image and Publish to GCR
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main-prod" ]
 
 env:
     DOCKER_IMAGE: sts-knowledgebase
