@@ -8,6 +8,12 @@ on:
             environment:
                 type: string
                 required: true
+            branch:
+                 type: string
+                 required: true
+            checked-out-sha:
+                 type: string
+                 required: true        
 
 #on:
 #  push:
