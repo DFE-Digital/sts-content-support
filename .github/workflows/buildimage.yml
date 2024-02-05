@@ -51,18 +51,9 @@ jobs:
                 context: ./
                 file: ./src/App/Dockerfile
                 run: |
-<<<<<<< HEAD
                     docker build . --tag ghcr.io/sts-knowledgebase/App:latest
                     docker push ghcr.io/sts-knowledgebase/App:latest
                 tags: |
                     ghcr.io/sts-knowledgebase/${{ env.DOCKER_IMAGE}}/${{github.run_number}}
-=======
-                    docker build . --tag ghcr.io/DFE-Digital/sts-knowledgebase/App:latest
-                    docker push ghcr.io/DFE-Digital/sts-knowledgebase/App:latest
-                tags: |
-                    ghcr.io/DFE-Digital/sts-knowledgebase/${{ env.DOCKER_IMAGE}}/${{github.run_number}}
->>>>>>> 5445b413c8ade516f02fa67f6ce862c8af53d884
                 push: true
                 
-            - run :
-               echo "${{vars.AZ_ENVIRONMENT}}"
