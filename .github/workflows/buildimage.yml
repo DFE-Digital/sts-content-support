@@ -1,0 +1,61 @@
+
+name: Build Image and Publish to GCR
+
+on:
+    workflow_dispatch :
+    # workflow_call:
+        inputs:
+            environment:
+                type: string
+                required: true
+
+#on:
+#  push:
+#    branches: [ "main" ]
+
+env:
+    DOCKER_IMAGE: Knowledgebase
+
+jobs:
+
+    build-image:
+
+        runs-on: ubuntu-22.04
+        name: Build & Publish Image
+        
+        steps:
+
+            - name: Checkout Repository
+              uses: actions/checkout@v3
+              with:
+                ref: ${{ github.ref }}
+
+            - name: Get GitHub Runner IP
+              id: whats-my-ip
+              uses: ./.github/actions/whats-my-ip-address
+
+
+            - name: GitHub Container Registry Login
+              uses: docker/login-action@v3
+              with:
+                registry: ghcr.io
+                username: ${{ github.actor }}
+                password: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Build Image & Publish To GCR
+              uses: docker/build-push-action@v4
+              with:
+                username: ${{ github.actor }}
+                password: ${{ secrets.GITHUB_TOKEN }}
+                registry: docker.pkg.github.com
+                context: ./
+                file: ./src/App/Dockerfile
+                run: |
+                    docker build . --tag ghcr.io/DFE-Digital/sts-knowledgebase/App:latest
+                    docker push ghcr.io/DFE-Digital/sts-knowledgebase/App:latest
+                tags: |
+                    ghcr.io/DFE-Digital/sts-knowledgebase/${{ env.DOCKER_IMAGE}}/${{github.run_number}}
+                push: true
+                
+            - run :
+               echo "${{vars.AZ_ENVIRONMENT}}"
