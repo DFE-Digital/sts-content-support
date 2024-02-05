@@ -1,20 +1,20 @@
 
 name: Build Image and Publish to GCR
 
-on:
-    workflow_dispatch :
+# on:
+    # workflow_dispatch :
     # workflow_call:
-        inputs:
-            environment:
-                type: string
-                required: true
-            branch:
-                 type: string
-                 required: true      
+    #    inputs:
+    #        environment:
+    #            type: string
+    #            required: true
+    #        branch:
+    #             type: string
+    #             required: true      
 
-#on:
-#  push:
-#    branches: [ "main" ]
+on:
+  push:
+    branches: [ "main" ]
 
 env:
     DOCKER_IMAGE: sts-knowledgebase
