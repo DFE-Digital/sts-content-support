@@ -14,7 +14,7 @@ on:
 #    branches: [ "main" ]
 
 env:
-    DOCKER_IMAGE: Knowledgebase
+    DOCKER_IMAGE: knowledgebase
 
 jobs:
 
