@@ -58,6 +58,11 @@ jobs:
                 #    docker build . --tag ghcr.io/dfe-digital/sts-knowledgebase/App:latest
                 #    docker push ghcr.io/dfe-digital/sts-knowledgebase/App:latest
                 tags: |
-                    ghcr.io/dfe-digital/${{ env.DOCKER_IMAGE}}:${{github.run_number}}
+                    ghcr.io/dfe-digital/${{ env.DOCKER_IMAGE}}:${{ secrets.MAJOR }}.${{ vars.PATCH_VERSION }}
                 push: true
-                
+
+            - name: Set Action Secret
+              uses: action-pack/increment@v2
+              with:
+                name: 'MY_VARIABLE'
+                token: ${{ secrets.REPO_ACCESS_TOKEN }}   
