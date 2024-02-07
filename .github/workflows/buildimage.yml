@@ -64,5 +64,5 @@ jobs:
             - name: Set Action Secret
               uses: action-pack/increment@v2
               with:
-                name: 'MY_VARIABLE'
+                name: 'PATCH_VERSION'
                 token: ${{ secrets.REPO_ACCESS_TOKEN }}   
