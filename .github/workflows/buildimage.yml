@@ -45,6 +45,20 @@ jobs:
                 username: ${{ github.actor }}
                 password: ${{ secrets.GITHUB_TOKEN }}
 
+                                 
+            - name: Bump version and push tag
+              uses: mathieudutour/github-tag-action@v6.1
+              id: tag_version
+              with:
+                 github_token: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Create a GitHub release
+              uses: ncipollo/release-action@v1
+              with:
+                tag: ${{ steps.tag_version.outputs.new_tag }}
+                name: Release ${{ steps.tag_version.outputs.new_tag }}
+                body: ${{ steps.tag_version.outputs.changelog }}    
+
             - name: Build Image & Publish To GCR
               uses: docker/build-push-action@v4
               with:
@@ -58,11 +72,11 @@ jobs:
                 #    docker build . --tag ghcr.io/dfe-digital/sts-knowledgebase/App:latest
                 #    docker push ghcr.io/dfe-digital/sts-knowledgebase/App:latest
                 tags: |
-                    ghcr.io/dfe-digital/${{ env.DOCKER_IMAGE}}:${{ secrets.MAJOR }}.${{ vars.PATCH_VERSION }}
+                    ghcr.io/dfe-digital/${{ env.DOCKER_IMAGE}}:${{ steps.tag_version.outputs.new_tag }}
                 push: true
 
-            - name: Set Action Secret
-              uses: action-pack/increment@v2
-              with:
-                name: 'PATCH_VERSION'
-                token: ${{ secrets.REPO_ACCESS_TOKEN }}   
+            #- name: Set Action Secret
+            #  uses: action-pack/increment@v2
+            #  with:
+            #    name: 'PATCH_VERSION'
+            #    token: ${{ secrets.REPO_ACCESS_TOKEN }}   
