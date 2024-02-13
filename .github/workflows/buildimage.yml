@@ -2,19 +2,22 @@
 name: Build Image and Publish to GCR
 
 on:
-    workflow_dispatch :
+     workflow_dispatch :
     # workflow_call:
-        inputs:
+         inputs:
             environment:
                 type: string
                 required: true
+    #        branch:
+    #             type: string
+    #             required: true      
 
 #on:
 #  push:
-#    branches: [ "main" ]
+#    branches: [ "Main-Prod" ]
 
 env:
-    DOCKER_IMAGE: Knowledgebase
+    DOCKER_IMAGE: sts-knowledgebase
 
 jobs:
 
@@ -42,6 +45,20 @@ jobs:
                 username: ${{ github.actor }}
                 password: ${{ secrets.GITHUB_TOKEN }}
 
+                                 
+            - name: Bump version and push tag
+              uses: mathieudutour/github-tag-action@v6.1
+              id: tag_version
+              with:
+                 github_token: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: Create a GitHub release
+              uses: ncipollo/release-action@v1
+              with:
+                tag: ${{ steps.tag_version.outputs.new_tag }}
+                name: Release ${{ steps.tag_version.outputs.new_tag }}
+                body: ${{ steps.tag_version.outputs.changelog }}    
+
             - name: Build Image & Publish To GCR
               uses: docker/build-push-action@v4
               with:
@@ -50,12 +67,16 @@ jobs:
                 registry: docker.pkg.github.com
                 context: ./
                 file: ./src/App/Dockerfile
-                run: |
-                    docker build . --tag ghcr.io/DFE-Digital/sts-knowledgebase/App:latest
-                    docker push ghcr.io/DFE-Digital/sts-knowledgebase/App:latest
+                build-args: COMMIT_SHA=${{ inputs.checked-out-sha }}
+                #run: |
+                #    docker build . --tag ghcr.io/dfe-digital/sts-knowledgebase/App:latest
+                #    docker push ghcr.io/dfe-digital/sts-knowledgebase/App:latest
                 tags: |
-                    ghcr.io/DFE-Digital/sts-knowledgebase/${{ env.DOCKER_IMAGE}}/${{github.run_number}}
+                    ghcr.io/dfe-digital/${{ env.DOCKER_IMAGE}}:${{ steps.tag_version.outputs.new_tag }}
                 push: true
-                
-            - run :
-               echo "${{vars.AZ_ENVIRONMENT}}"
+
+            #- name: Set Action Secret
+            #  uses: action-pack/increment@v2
+            #  with:
+            #    name: 'PATCH_VERSION'
+            #    token: ${{ secrets.REPO_ACCESS_TOKEN }}   
