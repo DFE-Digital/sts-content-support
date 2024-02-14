@@ -8,3 +8,4 @@
   storage_account_name  = local.azurerm_terraform_storage_account
   container_access_type = "private"
 }
+#
