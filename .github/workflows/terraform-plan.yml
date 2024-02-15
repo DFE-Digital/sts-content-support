@@ -90,6 +90,10 @@ jobs:
         id: plan
         run: terraform plan
 
+      - name: Apply Terraform changes
+        id: apply
+        run: terraform apply
+
       - name: Remove Runner to KV whitelist
         uses: azure/CLI@v1
         if: always()
@@ -97,3 +101,6 @@ jobs:
           azcliversion: 2.45.0
           inlineScript: |
             az keyvault network-rule remove --name ${{ env.AZ_KEYVAULT_NAME }} --ip-address ${{ steps.whats-my-ip.outputs.ip }} &> /dev/null
+
+      
+    
