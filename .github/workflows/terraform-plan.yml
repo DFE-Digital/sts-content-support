@@ -28,8 +28,24 @@ env:
   TF_BACKEND_KEY: ${{ secrets.TF_BACKEND_KEY }}
   TF_BACKEND_RESOURCE_GROUP: ${{ secrets.TF_BACKEND_RESOURCE_GROUP }}
 
+
+  TF_VAR_project_name: ${{ secrets.DFE_PROJECT_NAME }}
+  TF_VAR_environment: ${{ secrets.AZ_ENVIRONMENT }}
   TF_VAR_tf_state_storage_account : ${{ secrets.tf_state_storage_account }}
   TF_VAR_tfstate_storage_container_name : ${{secrets.tfstate_storage_container_name}}
+  TF_VAR_resource_group_name : ${{secrets.resource_group_name}}
+  TF_VAR_azure_location: ${{ vars.AZ_LOCATION }}
+
+  TF_VAR_az_tag_environment: ${{ vars.AZ_TAG_ENVIRONMENT }}
+  TF_VAR_az_tag_product: ${{ vars.AZ_TAG_PRODUCT }}  
+  TF_VAR_azure_location: ${{ vars.AZ_LOCATION }}
+
+
+  TF_VAR_az_tag_environment: ${{ vars.AZ_TAG_ENVIRONMENT }}
+  TF_VAR_az_tag_product: ${{ vars.AZ_TAG_PRODUCT }}
+  TF_VAR_registry_password: ${{ secrets.GITHUB_TOKEN }}
+
+
 
   TF_WORKING_DIRECTORY: terraform
 

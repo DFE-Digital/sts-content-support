@@ -1,4 +1,54 @@
+  #####################
+  # Key Vault #
+  #####################
+  
+module "main_hosting" {
+  source = "github.com/DFE-Digital/terraform-azurerm-container-apps-hosting?ref=v1.2.0"
 
+ resource "azurerm_key_vault" "vault" {
+  name                       = local.kv_name
+  location                   = local.azure_location
+  resource_group_name        = local.azure_resource_group_name
+  tenant_id                  = data.azurerm_client_config.current.tenant_id
+  sku_name                   = "standard"
+  soft_delete_retention_days = 90
+  enable_rbac_authorization  = false
+  tags                       = local.tags
+  purge_protection_enabled   = true
+
+  network_acls {
+    bypass                     = "None"
+    default_action             = "Deny"
+    virtual_network_subnet_ids = [module.main_hosting.networking.subnet_id]
+  }
+
+  lifecycle {
+    ignore_changes = [network_acls[0].ip_rules]
+  }
+ }
+
+  resource "azurerm_key_vault_access_policy" "vault_access_policy_serviceprinciple" {
+    key_vault_id = azurerm_key_vault.vault.id
+    tenant_id    = data.azurerm_client_config.current.tenant_id
+    object_id    = local.current_user_id   
+
+    secret_permissions = ["List", "Get", "Set"]
+    key_permissions    = ["List", "Get", "Create", "GetRotationPolicy", "SetRotationPolicy", "Delete", "Purge", "UnwrapKey", "WrapKey"]
+  }
+
+  resource "azurerm_key_vault_secret" "vault_secret_contentful_deliveryapikey" {
+    key_vault_id = azurerm_key_vault.vault.id
+    name         = "S190d-github-deployment-client-secret"
+    value        = "temp value"
+ 
+    lifecycle {
+      ignore_changes = [
+        value,
+        expiration_date
+      ]
+    }
+  }
+}
   #####################
   # Storage Container #
   #####################
