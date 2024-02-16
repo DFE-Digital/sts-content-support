@@ -100,9 +100,18 @@ jobs:
         id: plan
         run: terraform plan
 
-      - name: Apply Terraform changes
-        id: apply
-        run: terraform apply
+      - uses: trstringer/manual-approval@v1
+        with:
+          secret: ${{ github.TOKEN }}
+          approvers: sathishmani219
+          minimum-approvals: 1
+          issue-title: "Check and approve"
+          issue-body: "Review the terraform plan, then approve."
+          exclude-workflow-initiator-as-approver: false
+
+      #- name: Apply Terraform changes
+      #  id: apply
+      #  run: terraform apply -auto-approve
 
       - name: Remove Runner to KV whitelist
         uses: azure/CLI@v1
