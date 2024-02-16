@@ -3,7 +3,7 @@
   #####################
   
 module "main_hosting" {
-  source = "github.com/DFE-Digital/terraform-azurerm-container-apps-hosting?ref=v1.2.0"
+  # source = "github.com/DFE-Digital/terraform-azurerm-container-apps-hosting?ref=v1.2.0"
 
  resource "azurerm_key_vault" "vault" {
   name                       = local.kv_name
