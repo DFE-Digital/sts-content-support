@@ -16,15 +16,15 @@
   tags                       = local.tags
   purge_protection_enabled   = true
 
-  network_acls {
-    bypass                     = "None"
-    default_action             = "Deny"
-    virtual_network_subnet_ids = [module.main_hosting.networking.subnet_id]
-  }
+  # network_acls {
+  # bypass                     = "None"
+  # default_action             = "Deny"
+  #  virtual_network_subnet_ids = [module.main_hosting.networking.subnet_id]
+  #}
 
-  lifecycle {
-    ignore_changes = [network_acls[0].ip_rules]
-  }
+  #lifecycle {
+  #  ignore_changes = [network_acls[0].ip_rules]
+  # }
  }
 
   resource "azurerm_key_vault_access_policy" "vault_access_policy_serviceprinciple" {
@@ -48,12 +48,15 @@
       ]
     }
   }
-}
+
+# }
+
+
   #####################
   # Storage Container #
   #####################
 
-  resource "azurerm_storage_container" "tf_storage_container" {
+ resource "azurerm_storage_container" "tf_storage_container" {
   name                  = local.tfstate_container_name
   storage_account_name  = local.azurerm_terraform_storage_account
   container_access_type = "private"
