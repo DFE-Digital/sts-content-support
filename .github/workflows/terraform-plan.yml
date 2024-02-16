@@ -100,9 +100,9 @@ jobs:
         id: plan
         run: terraform plan
 
-     # - name: Apply Terraform changes
-     #   id: apply
-     #   run: terraform apply
+      - name: Apply Terraform changes
+        id: apply
+        run: terraform apply
 
       - name: Remove Runner to KV whitelist
         uses: azure/CLI@v1
