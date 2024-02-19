@@ -11,7 +11,7 @@ on:
   #  inputs:
   #    environment:
   #      type: string
-  #       required: true
+  #         required: true
         
 env:
   DOTNET_VERSION: ${{ vars.DOTNET_VERSION }}
@@ -29,8 +29,6 @@ env:
   TF_BACKEND_RESOURCE_GROUP: ${{ secrets.TF_BACKEND_RESOURCE_GROUP }}
   TF_VAR_az_app_kestrel_endpoint: ${{ vars.KESTRELENDPOINT }}
   TF_VAR_container_app_image_name : ${{ vars.container_app_image_name }}
-
-
   TF_VAR_project_name: ${{ secrets.DFE_PROJECT_NAME }}
   TF_VAR_environment: ${{ secrets.AZ_ENVIRONMENT }}
   TF_VAR_tf_state_storage_account : ${{ secrets.tf_state_storage_account }}
@@ -48,9 +46,6 @@ env:
    
   TF_VAR_serviceprinciple_identity : ${{ secrets.serviceprinciple }} 
   TF_VAR_registry_password: ${{ secrets.GITHUB_TOKEN }}
-
-
-
   TF_WORKING_DIRECTORY: terraform
 
 jobs:
@@ -107,7 +102,7 @@ jobs:
         id: plan
         run: terraform plan
 
-       - uses: trstringer/manual-approval@v1
+      - uses: trstringer/manual-approval@v1
         with:
           secret: ${{ github.TOKEN }}
           approvers: sathishmani219
