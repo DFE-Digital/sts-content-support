@@ -78,3 +78,56 @@ variable "msi_id" {
   description = "The Managed Service Identity ID. If this value isn't null (the default), 'data.azurerm_client_config.current.object_id' will be set to this value."
   default     = null
 }
+
+
+
+################
+# Container App#
+################
+
+variable "container_app_image_name" {
+  type = string
+  description = "This variable is to define container App image name"
+}
+
+variable "az_container_port" {
+  type = number
+  description = "This variable defines the port of the Container App"
+  default     = 8080
+}
+
+
+variable "az_app_kestrel_endpoint" {
+  description = "Endpoint for Kestrel setup"
+  type        = string
+}
+
+
+###################
+# Github Registry #
+###################
+
+variable "registry_server" {
+  description = "Container registry server"
+  type        = string
+}
+
+variable "registry_username" {
+  description = "Container registry username"
+  type        = string
+}
+
+variable "registry_password" {
+  description = "Container registry password"
+  type        = string
+}
+
+variable "registry_custom_image_url" {
+  description = "Pass in the address to your image from your custom registry"
+  type        = string
+}
+
+variable "serviceprinciple_identity"{
+  description = "Variable to define the service principle"
+  type = string
+}
