@@ -44,8 +44,7 @@ env:
   TF_VAR_registry_custom_image_url: "ghcr.io/dfe-digital/sts-knowledgebase:v0.0.1-development.0"
   TF_VAR_registry_password: ${{ secrets.GITHUB_TOKEN }}
    
-  TF_VAR_serviceprinciple_identity : ${{ secrets.serviceprinciple }} 
-  TF_VAR_registry_password: ${{ secrets.GITHUB_TOKEN }}
+  TF_VAR_serviceprinciple_identity : ${{ secrets.serviceprinciple }}
   TF_WORKING_DIRECTORY: terraform
 
 jobs:
