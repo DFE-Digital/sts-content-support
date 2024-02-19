@@ -11,7 +11,7 @@ on:
   #  inputs:
   #    environment:
   #      type: string
-  #      required: true
+  #       required: true
         
 env:
   DOTNET_VERSION: ${{ vars.DOTNET_VERSION }}
