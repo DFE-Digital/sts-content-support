@@ -68,7 +68,7 @@ module "main_hosting" {
   project_name   = local.project_name
   azure_location = local.azure_location
   tags           = local.tags
-  resource_group_name        = local.azure_resource_group_name
+  
   
 
   #################
