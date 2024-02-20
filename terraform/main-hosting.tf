@@ -102,4 +102,13 @@ module "main_hosting" {
   registry_password         = local.registry_password
   registry_custom_image_url = local.registry_custom_image_url
 
+
+  resource "azurerm_resource_group" "default" {
+  count = local.existing_resource_group == "" ? 1 : 0
+
+  name     = local.azure_resource_group_name
+  location = local.azure_location
+  tags     = local.tags
+}
+
 }
