@@ -14,6 +14,12 @@ variable "tf_state_storage_account"{
   description = "Terraform TFstate storage account name"
 }
 
+
+#############
+# General #
+#############
+
+
 variable "resource_group_name"{
   type = string
   description = "Resource Group name"
@@ -44,7 +50,11 @@ variable "az_tag_product" {
   type        = string
 }
 
+###################
+## Tenant config#
+####################
 
+/*
 variable "client_id" {
   type = string
   description = "client id"
@@ -68,7 +78,7 @@ variable "subscriptionid" {
   description = "Subscription id "
   default = "value"
 }
-
+ */
 
 ############
 # Identity #
@@ -80,7 +90,7 @@ variable "msi_id" {
 }
 
 
-
+/*
 ################
 # Container App#
 ################
@@ -131,3 +141,4 @@ variable "serviceprinciple_identity"{
   description = "Variable to define the service principle"
   type = string
 }
+*/
