@@ -29,11 +29,11 @@
     tenant_id    = data.azurerm_client_config.current.tenant_id
     object_id    = local.current_user_id   
 
-    secret_permissions = ["List", "Get", "Set"]
+    secret_permissions = ["List", "Get", "Set","Delete","Recover","Backup","Restore"]
     key_permissions    = ["List", "Get", "Create", "GetRotationPolicy", "SetRotationPolicy", "Delete", "Purge", "UnwrapKey", "WrapKey"]
   }
 
-  resource "azurerm_key_vault_secret" "vault_secret_contentful_deliveryapikey" {
+  resource "azurerm_key_vault_secret" "vault_secret_contentful_deliveryapikey" {  
     key_vault_id = azurerm_key_vault.vault.id
     name         = "S190d-github-deployment-client-secret"
     value        = "temp value"
