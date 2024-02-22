@@ -110,9 +110,9 @@ jobs:
       #    issue-body: "Review the terraform plan, then approve."
       #    exclude-workflow-initiator-as-approver: false
 
-      - name: Apply Terraform changes
-        id: apply
-        run: terraform apply -auto-approve
+      #- name: Apply Terraform changes
+      #  id: apply
+      #  run: terraform apply -auto-approve
 
       - name: Remove Runner to KV whitelist
         uses: azure/CLI@v1

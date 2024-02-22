@@ -90,7 +90,7 @@ variable "msi_id" {
 }
 
 
-/*
+
 ################
 # Container App#
 ################
@@ -141,4 +141,3 @@ variable "serviceprinciple_identity"{
   description = "Variable to define the service principle"
   type = string
 }
-*/
