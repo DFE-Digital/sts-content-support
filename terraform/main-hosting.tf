@@ -111,4 +111,5 @@ module "main_hosting" {
   registry_password         = local.registry_password
   registry_custom_image_url = local.registry_custom_image_url
 
-}
+
+} 

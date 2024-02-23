@@ -21,8 +21,7 @@ locals {
     "Service Offering" = var.az_tag_product,
     "Product"          = var.az_tag_product
  }
-
-
+ 
     ########################
     ### Container App ###
     ########################
@@ -30,7 +29,7 @@ locals {
    container_app_image_name = var.container_app_image_name
    container_port           = var.az_container_port
    kestrel_endpoint = var.az_app_kestrel_endpoint
-   
+
    ##################
    # Azure KeyVault #
    ##################
