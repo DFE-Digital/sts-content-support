@@ -45,5 +45,5 @@ locals {
   ####################
   # Managed Identity #
   ####################
-  user_identity_name = var.serviceprinciple_identity
+  user_identity_name = "${local.resource_prefix}-mi"
 }
