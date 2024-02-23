@@ -83,6 +83,7 @@ module "main_hosting" {
   #################
   # Container App #
   #################
+  existing_resource_group            = local.azure_resource_group_name
   enable_container_registry           = true
   use_external_container_registry_url = true
   image_name                          = local.container_app_image_name
