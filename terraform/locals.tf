@@ -14,14 +14,14 @@ locals {
   registry_username         = var.registry_username
   registry_password         = var.registry_password
   registry_custom_image_url = var.registry_custom_image_url
-  resource_group_name        = module.main_hosting.azurerm_resource_group_default.name
+  resource_group_name        = var.resource_group_name
 
   tags = {
     "Environment"      = var.az_tag_environment,
     "Service Offering" = var.az_tag_product,
     "Product"          = var.az_tag_product
  }
- 
+
     ########################
     ### Container App ###
     ########################
