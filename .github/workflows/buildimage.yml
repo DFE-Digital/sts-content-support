@@ -19,6 +19,10 @@ on:
 env:
     DOCKER_IMAGE: sts-knowledgebase
     ACR_DOCKER_IMAGE: sts-knowledgebase
+    ARM_TENANT_ID: ${{ secrets.AZ_TENANT_ID }}
+    ARM_SUBSCRIPTION_ID: ${{ secrets.AZ_SUBSCRIPTION_ID }}
+    ARM_CLIENT_ID: ${{ secrets.AZ_CLIENT_ID }}
+    ARM_CLIENT_SECRET: ${{ secrets.AZ_CLIENT_SECRET }}
 
 jobs:
 
