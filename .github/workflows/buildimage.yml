@@ -108,5 +108,5 @@ jobs:
             
             - name: Push Image To ACR
               run: |
-                docker tag ghcr.io/dfe-digital/${{ env.DOCKER_IMAGE}}:${{ steps.tag_version.outputs.new_tag }}
+                docker tag ghcr.io/dfe-digital/${{ env.DOCKER_IMAGE}}:${{ steps.tag_version.outputs.new_tag }} ${{ secrets.AZ_ACR_URL }}/${{ env.ACR_DOCKER_IMAGE }}::${{ steps.tag_version.outputs.new_tag }}
                 docker push ${{ secrets.AZ_ACR_URL }}/${{ env.ACR_DOCKER_IMAGE }}:${{ steps.tag_version.outputs.new_tag }}
