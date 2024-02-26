@@ -27,9 +27,16 @@ env:
 jobs:
 
     build-image:
-
-        runs-on: ubuntu-22.04
         name: Build & Publish Image
+        runs-on: ubuntu-22.04
+        defaults:
+        run:
+          working-directory: ${{env.TF_WORKING_DIRECTORY}}
+
+        environment: ${{ inputs.environment }}
+
+
+        
         
         steps:
 
