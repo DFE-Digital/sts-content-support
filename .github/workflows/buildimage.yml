@@ -18,6 +18,7 @@ on:
 
 env:
     DOCKER_IMAGE: sts-knowledgebase
+    ACR_DOCKER_IMAGE: sts-knowledgebase
 
 jobs:
 
@@ -80,3 +81,18 @@ jobs:
             #  with:
             #    name: 'PATCH_VERSION'
             #    token: ${{ secrets.REPO_ACCESS_TOKEN }}   
+
+            - name: Pull Image From GCR
+              run: docker pull ghcr.io/dfe-digital/${{ env.DOCKER_IMAGE}}:${{ steps.tag_version.outputs.new_tag }}
+
+            - name: Azure Container Registry Login
+              uses: docker/login-action@v3
+              with:
+                registry: ${{ secrets.AZ_ACR_URL }}
+                username: ${{ secrets.AZ_CLIENT_ID }}
+                password: ${{ secrets.AZ_CLIENT_SECRET }}
+            
+            - name: Push Image To ACR
+              run: |
+                docker tag ghcr.io/dfe-digital/${{ env.DOCKER_IMAGE}}:${{ steps.tag_version.outputs.new_tag }}
+                docker push ${{ secrets.AZ_ACR_URL }}/${{ env.ACR_DOCKER_IMAGE }}:${{ steps.tag_version.outputs.new_tag }}
