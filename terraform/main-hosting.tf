@@ -59,13 +59,14 @@
 }
 
 resource "azurerm_resource_group" "default" {
-  #count = local.existing_resource_group == "" ? 1 : 0
+ 
 
   name     = local.resource_prefix
   location = local.azure_location
   tags     = local.tags
 }
 
+/*
 
 module "main_hosting" {
   source = "github.com/DFE-Digital/terraform-azurerm-container-apps-hosting?ref=v1.2.0"
@@ -112,5 +113,5 @@ module "main_hosting" {
   registry_password         = local.registry_password
   registry_custom_image_url = local.registry_custom_image_url
 
-
+*/
 } 
