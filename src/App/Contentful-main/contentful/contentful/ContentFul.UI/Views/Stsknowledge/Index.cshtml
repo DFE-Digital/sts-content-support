@@ -1,0 +1,496 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@using Contentful.Core.Models
+
+
+@model Projects.Models.Finaldataview
+<div>    
+    
+    @* @foreach (var componentTitle in Model.Page)
+    {
+        var h = componentTitle.text;
+        <h2>Issue :@componentTitle.internalName</h2>
+        <h2>Type : @componentTitle.Text</h2>
+    <h2>Type : @componentTitle.internalName[0]</h2>
+    } *@
+    
+</div>
+
+@{    ViewData["Title"] = "Home Page STS";}
+
+<link href="~/css/application.css" rel="stylesheet" />
+<link href="~/css/app.min.css" rel="stylesheet" />
+@* <link href="~/css/application-edu.css" rel="stylesheet" /> *@
+<div>
+    <header class="dfe-header" role="banner">
+        <div class="dfe-width-container dfe-header__container">
+            <div class="dfe-header__logo">
+                <a class="dfe-header__link dfe-header__link--service " href="#" aria-label="DfE homepage">
+                    <img src="/assets/images/dfe-logo.png" class="dfe-logo" alt="DfE Homepage">
+                    <img src="/assets/images/dfe-logo-alt.png" class="dfe-logo-hover" alt="DfE Homepage">
+                    <span class="dfe-header__service-name">
+                        @for (int i = 0; i < Model.Page.Count(); i++)
+                        {
+                            if (i == 6)
+                            {
+                                @Model.Page[6].text;
+                            }
+                        }
+                        @* @Model[6].text *@
+                    </span>
+                </a>
+            </div>
+            <div class="dfe-header__content" id="content-header">
+                <div class="dfe-header__search">
+                    <button class="dfe-header__search-toggle" id="toggle-search" aria-controls="search" aria-label="Open search">
+                        <svg class="dfe-icon dfe-icon__search" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="27" height="27">
+                            <path d="M19.71 18.29l-4.11-4.1a7 7 0 1 0-1.41 1.41l4.1 4.11a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42zM5 10a5 5 0 1 1 5 5 5 5 0 0 1-5-5z"></path>
+                        </svg>
+                        <span class="govuk-visually-hidden">Search</span>
+                    </button>
+                    <div class="dfe-header__search-wrap" id="wrap-search">
+                        <form class="dfe-header__search-form" id="search" action="/search/" method="get" role="search">
+                            <label class="govuk-visually-hidden" for="searchterm">Search this website</label>
+                            <input class="dfe-search__input" id="searchterm" name="searchterm" type="search" placeholder="Search" autocomplete="off">
+                            <button class="dfe-search__submit" type="submit">
+                                <svg class="dfe-icon dfe-icon__search" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="27" height="27">
+                                    <path d="M19.71 18.29l-4.11-4.1a7 7 0 1 0-1.41 1.41l4.1 4.11a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42zM5 10a5 5 0 1 1 5 5 5 5 0 0 1-5-5z"></path>
+                                </svg>
+                                <span class="govuk-visually-hidden">Search</span>
+                            </button>
+                            <button class="dfe-search__close" id="close-search">
+                                <svg class="dfe-icon dfe-icon__close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false" width="27" height="27">
+                                    <path d="M13.41 12l5.3-5.29a1 1 0 1 0-1.42-1.42L12 10.59l-5.29-5.3a1 1 0 0 0-1.42 1.42l5.3 5.29-5.3 5.29a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l5.29-5.3 5.29 5.3a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42z"></path>
+                                </svg>
+                                <span class="govuk-visually-hidden">Close search</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+</div>
+<div>
+    <section class="dfe-page-hero">
+        <div class="dfe-width-container">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+                    
+                    <h1 class="govuk-heading-xl">@* @Model[7].text *@
+
+                        @for (int i = 0; i < Model.Page.Count(); i++)
+                        {
+                            if (i == 7)
+                            {
+                                @Model.Page[7].text;
+                            }
+                        }
+                    </h1>
+                    
+                    <p class="govuk-body-l">
+                        @for (int i = 0; i < Model.Page.Count(); i++)
+                        {
+                            if (i == 7)
+                            {
+                                @Model.Page[7].headerDescription.content[0].content[0].value;                                
+                            }
+                        }
+                        @* @Model[7].headerDescription.content[0].content[0].value *@
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<div>
+    <div class="dfe-width-container">
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                
+                <h1 class="govuk-heading-xl">
+                    @for (int i = 0; i < Model.Page.Count(); i++)
+                    {
+                        if (i == 3)
+                        {
+                            @Model.Page[3].internalName;
+                        }
+                    }
+                    @* @Model[3].internalName *@
+
+                </h1>
+                
+                <p class="govuk-body-l">
+                    @for (int i = 0; i < Model.Page.Count(); i++)
+                    {
+                        if (i == 3)
+                        {
+                            @Model.Page[3].richText.content[1].content[0].value;
+                        }
+                    }
+                    @* @Model[3].richText.content[1].content[0].value *@
+                </p>
+                
+                <p class="govuk-body-l">
+                    @for (int i = 0; i < Model.Page.Count(); i++)
+                    {
+                        if (i == 3)
+                        {
+                            @Model.Page[3].richText.content[2].content[0].value;
+                        }
+                    }
+                    @* @Model[3].richText.content[2].content[0].value *@
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+        </div>
+    </div>
+</div>
+<div>
+    <section class="brand--department-for-education brand__border-color organisation__brand-border-top organisation__section-wrap organisation__margin-bottom" id="featured-documents">
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                <h2 class="gem-c-heading gem-c-heading--font-size-27 gem-c-heading--padding   govuk-!-margin-bottom-3">
+                    
+                    @Model.Page[9].sectionTitle
+                </h2>
+            </div>
+        </div>
+
+
+        <div class="govuk-grid-row" data-module="ga4-link-tracker" data-ga4-track-links-only data-ga4-link='{"event_name":"navigation","type":"image card","section":"Featured"}'>
+
+            <div class="govuk-grid-column-one-third">
+                <div class="gem-c-image-card brand--department-for-education">
+                    <div class="gem-c-image-card__text-wrapper">
+                        <div class="gem-c-image-card__header-and-context-wrapper">
+                            <h3 class="gem-c-image-card__title govuk-heading-s">
+                                <a class="gem-c-image-card__title-link govuk-link brand__color" 
+                                
+                                href=@Model.cards[0].cardLink>
+                                
+                                
+                                @Model.cards[0].cardTitle
+                               
+                            </a>
+                            </h3>        <p class="gem-c-image-card__context"><time datetime="2024-02-29" lang="en"></time><span aria-hidden="true"> — </span></p>
+                        </div>
+                        <div class="gem-c-image-card__description">
+                            <div class="govspeak">
+                                <p>
+                                    
+                                    @Model.cards[0].cardDescription
+                                    
+                                </p>
+                            </div>
+                        </div>
+                    </div>    <figure class="gem-c-image-card__image-wrapper"><img class="gem-c-image-card__image" alt="classroom of students" loading="auto" height="200" width="500"
+                             src=@Model.image[0]
+                             >
+                        </figure>
+                </div>
+            </div>
+            <div class="govuk-grid-column-one-third">
+                <div class="gem-c-image-card brand--department-for-education">
+                    <div class="gem-c-image-card__text-wrapper">
+                        <div class="gem-c-image-card__header-and-context-wrapper">
+                            <h3 class="gem-c-image-card__title govuk-heading-s">
+                                <a class="gem-c-image-card__title-link govuk-link brand__color"
+                                
+                                   href=@Model.cards[1].cardLink>
+                                
+                                
+                                @Model.cards[1].cardTitle;
+                                
+                            </a>
+                            </h3>        <p class="gem-c-image-card__context"><time datetime="2024-02-19" lang="en"></time><span aria-hidden="true"> — </span></p>
+                        </div>
+                        <div class="gem-c-image-card__description">
+                            <div class="govspeak">
+                                <p>
+                                    
+                                    @Model.cards[1].cardDescription;
+                                    
+                                </p>
+                            </div>
+                        </div>
+                    </div>    <figure class="gem-c-image-card__image-wrapper"><img class="gem-c-image-card__image" alt="using a mobile" loading="auto" height="200" width="500"
+                             src=@Model.image[1] >
+                    </figure>
+                </div>
+            </div>
+            <div class="govuk-grid-column-one-third">
+                <div class="gem-c-image-card brand--department-for-education">
+                    <div class="gem-c-image-card__text-wrapper">
+                        <div class="gem-c-image-card__header-and-context-wrapper">
+                            <h3 class="gem-c-image-card__title govuk-heading-s">
+                                <a class="gem-c-image-card__title-link govuk-link brand__color"
+                                
+                                   href=@Model.cards[2].cardLink>
+                                
+                                
+                                    @Model.cards[2].cardTitle;
+                                
+                            </a>
+                            </h3>        <p class="gem-c-image-card__context"><time datetime="2024-02-04" lang="en"> </time><span aria-hidden="true"> — </span></p>
+                        </div>
+                        <div class="gem-c-image-card__description">
+                            <div class="govspeak">
+                                <p>
+                                    
+                                    @Model.cards[2].cardDescription;
+                                   
+                                    </p>
+                            </div>
+                        </div>
+                    </div>    <figure class="gem-c-image-card__image-wrapper"><img class="gem-c-image-card__image" alt="Teacher and students in a classroom." loading="auto" height="200" width="500"
+                             src=@Model.image[2]>
+                    </figure>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+                    <h2 class="gem-c-heading gem-c-heading--font-size-27 gem-c-heading--padding   govuk-!-margin-bottom-3">
+                        
+                        @Model.Page[5].fileName
+                    </h2>
+                </div>
+            </div>
+            <div class="dfe-width-container">
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds">
+
+                        <h3 class="gem-c-image-card__title govuk-heading-s">
+                            <a class="gem-c-image-card__title-link govuk-link brand__color"
+                               href=@Model.image[3]>
+                               @Model.Page[5].fileDescription
+                                
+                                
+                                
+                            </a>
+                        </h3>
+
+                        <p class="govuk-body-l">
+                            
+                        </p>
+
+                        <p class="govuk-body-l">
+                            
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+ 
+        @* <div class="govuk-grid-row" data-module="ga4-link-tracker" data-ga4-track-links-only data-ga4-link='{"event_name":"navigation","type":"image card","section":"Featured"}'>
+
+            <div class="govuk-grid-column-one-third">
+                <div class="gem-c-image-card brand--department-for-education">
+                    <div class="gem-c-image-card__text-wrapper">
+                        <div class="gem-c-image-card__header-and-context-wrapper">
+                            <h3 class="gem-c-image-card__title govuk-heading-s">
+                                <a class="gem-c-image-card__title-link govuk-link brand__color" href="/government/consultations/gender-questioning-children-draft-schools-and-colleges-guidance">Gender questioning children: draft schools and colleges guidance</a>
+                            </h3>        <p class="gem-c-image-card__context"><time datetime="2023-12-19" lang="en">19 December 2023</time><span aria-hidden="true"> — </span>Open consultation</p>
+                        </div>
+                        <div class="gem-c-image-card__description">
+                            <div class="govspeak">
+                                <p>We’re seeking your views on our draft non-statutory guidance for schools and colleges about children questioning their gender.</p>
+                            </div>
+                        </div>
+                    </div>    <figure class="gem-c-image-card__image-wrapper"><img class="gem-c-image-card__image" alt="someone writing into an exercise book and using a laptop" loading="auto" height="200" width="300" src="https://assets.publishing.service.gov.uk/media/659d4aacaa18b10013a199e9/s465_zhBagzfw.jpeg"></figure>
+                </div>
+            </div>
+            <div class="govuk-grid-column-one-third">
+                <div class="gem-c-image-card brand--department-for-education">
+                    <div class="gem-c-image-card__text-wrapper">
+                        <div class="gem-c-image-card__header-and-context-wrapper">
+                            <h3 class="gem-c-image-card__title govuk-heading-s">
+                                <a class="gem-c-image-card__title-link govuk-link brand__color" href="/government/consultations/a-world-class-education-system-the-advanced-british-standard">A world-class education system: The Advanced British Standard</a>
+                            </h3>        <p class="gem-c-image-card__context"><time datetime="2023-12-14" lang="en">14 December 2023</time><span aria-hidden="true"> — </span>Open consultation</p>
+                        </div>
+                        <div class="gem-c-image-card__description">
+                            <div class="govspeak">
+                                <p>We are seeking views to help us to develop our approach for the Advanced British Standard (ABS).</p>
+                            </div>
+                        </div>
+                    </div>    <figure class="gem-c-image-card__image-wrapper"><img class="gem-c-image-card__image" alt="students with their hands up in class" loading="auto" height="200" width="300" src="https://assets.publishing.service.gov.uk/media/65de1433f1cab30011fc481b/s465_TS101700812_-_Classroom_answering_question.jpg"></figure>
+                </div>
+            </div>
+            <div class="govuk-grid-column-one-third">
+                <div class="gem-c-image-card brand--department-for-education">
+                    <div class="gem-c-image-card__text-wrapper">
+                        <div class="gem-c-image-card__header-and-context-wrapper">
+                            <h3 class="gem-c-image-card__title govuk-heading-s">
+                                <a class="gem-c-image-card__title-link govuk-link brand__color" href="https://www.gov.uk/apply-free-school-meals">Apply for free school meals</a>
+                            </h3>        <p class="gem-c-image-card__context">Campaign</p>
+                        </div>
+                        <div class="gem-c-image-card__description">
+                            <div class="govspeak">
+                                <p>Check if your child can get free school meals in England and find out how to apply on your local authority’s website.</p>
+                            </div>
+                        </div>
+                    </div>    <figure class="gem-c-image-card__image-wrapper"><img class="gem-c-image-card__image" alt="children eating school lunch" loading="auto" height="200" width="300" src="https://assets.publishing.service.gov.uk/media/65a01da6e8f5ec000f1f8c08/s465_Children_eating_TS42102200.jpg"></figure>
+                </div> *@
+            </div>
+        </div>
+    </section>
+
+</div>
+<div>
+  
+    <footer class="govuk-footer" role="contentinfo">
+        <div class="govuk-width-container">
+
+            <div class="govuk-footer__navigation">
+
+                <div class="govuk-footer__section govuk-grid-column-two-thirds">
+                    <h2 class="govuk-footer__heading govuk-heading-m">Site information</h2>
+
+
+                    <ul class="govuk-footer__list govuk-footer__list--columns-2">
+
+
+                        <li class="govuk-footer__list-item">
+                            <a class="govuk-footer__link" href="/accessibility-statement">
+                                Accessibility statement
+                            </a>
+                        </li>
+
+
+
+                        <li class="govuk-footer__list-item">
+                            <a class="govuk-footer__link" href="/design-ops">
+                                Contact DesignOps
+                            </a>
+                        </li>
+
+
+
+                        <li class="govuk-footer__list-item">
+                            <a class="govuk-footer__link" href="/cookie-policy">
+                                Cookie policy
+                            </a>
+                        </li>
+
+
+
+                        <li class="govuk-footer__list-item">
+                            <a class="govuk-footer__link" href="https://github.com/DFE-Digital/design">
+                                GitHub source code
+                            </a>
+                        </li>
+
+
+                    </ul>
+
+                </div>
+
+                <div class="govuk-footer__section govuk-grid-column-one-third">
+                    <h2 class="govuk-footer__heading govuk-heading-m">Other services</h2>
+
+
+                    <ul class="govuk-footer__list">
+
+
+                        <li class="govuk-footer__list-item">
+                            <a class="govuk-footer__link" href="https://design-histories.education.gov.uk/">
+                                Design Histories
+                            </a>
+                        </li>
+
+
+
+                        <li class="govuk-footer__list-item">
+                            <a class="govuk-footer__link" href="https://apply-the-service-standard.education.gov.uk/">
+                                Apply the Service Standard
+                            </a>
+                        </li>
+
+
+
+                        <li class="govuk-footer__list-item">
+                            <a class="govuk-footer__link" href="https://user-research.education.gov.uk/">
+                                User Research Manual
+                            </a>
+                        </li>
+
+
+
+                        <li class="govuk-footer__list-item">
+                            <a class="govuk-footer__link" href="https://technical-guidance.education.gov.uk/">
+                                Technical Manual
+                            </a>
+                        </li>
+
+
+
+                        <li class="govuk-footer__list-item">
+                            <a class="govuk-footer__link" href="https://dfe-digital.github.io/architecture/#dfe-architecture">
+                                Architecture Manual
+                            </a>
+                        </li>
+
+
+                    </ul>
+
+                </div>
+
+            </div>
+            <hr class="govuk-footer__section-break">
+
+            <div class="govuk-footer__meta">
+                <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
+
+                    <svg aria-hidden="true"
+                         focusable="false"
+                         class="govuk-footer__licence-logo"
+                         xmlns="http://www.w3.org/2000/svg"
+                         viewBox="0 0 483.2 195.7"
+                         height="17"
+                         width="41">
+                        <path fill="currentColor"
+                              d="M421.5 142.8V.1l-50.7 32.3v161.1h112.4v-50.7zm-122.3-9.6A47.12 47.12 0 0 1 221 97.8c0-26 21.1-47.1 47.1-47.1 16.7 0 31.4 8.7 39.7 21.8l42.7-27.2A97.63 97.63 0 0 0 268.1 0c-36.5 0-68.3 20.1-85.1 49.7A98 98 0 0 0 97.8 0C43.9 0 0 43.9 0 97.8s43.9 97.8 97.8 97.8c36.5 0 68.3-20.1 85.1-49.7a97.76 97.76 0 0 0 149.6 25.4l19.4 22.2h3v-87.8h-80l24.3 27.5zM97.8 145c-26 0-47.1-21.1-47.1-47.1s21.1-47.1 47.1-47.1 47.2 21 47.2 47S123.8 145 97.8 145" />
+                    </svg>
+                    <span class="govuk-footer__licence-description">
+
+                        All content is available under the
+                        <a class="govuk-footer__link"
+                           href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+                           rel="license">Open Government Licence v3.0</a>, except where otherwise stated
+
+                    </span>
+                </div>
+                <div class="govuk-footer__meta-item">
+                    <a class="govuk-footer__link govuk-footer__copyright-logo"
+                       href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/">© Crown copyright</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</div>
+@* <div>
+@foreach (var componentTitle in Model)
+{
+    <h2>Issue :@componentTitle.internalName</h2>
+    <h2>Type : @componentTitle.Text</h2>
+}
+</div> *@
