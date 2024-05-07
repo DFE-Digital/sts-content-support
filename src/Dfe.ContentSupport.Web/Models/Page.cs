@@ -20,8 +20,6 @@
 
         public List<dynamic> BeforeTitleContent { get; init; } = [];
 
-        public string Title { get; set; } = null;
-
         public string? OrganisationName { get; set; }
 
         public List<dynamic> Content { get; init; } = [];

@@ -1,5 +1,4 @@
 using Contentful.AspNetCore;
-using Dfe.ContentSupport.Web.Configuration;
 using GovUk.Frontend.AspNetCore;
 
 
