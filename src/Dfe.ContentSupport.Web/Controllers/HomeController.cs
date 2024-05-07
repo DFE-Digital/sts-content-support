@@ -7,15 +7,18 @@ namespace Dfe.ContentSupport.Web.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly IContentfulService _contentfulService;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, IContentfulService contentfulService)
     {
         _logger = logger;
+        _contentfulService = contentfulService;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        return View();
+        var resp =  await _contentfulService.GetContent();
+        return View(resp);
     }
 
     public IActionResult Privacy()

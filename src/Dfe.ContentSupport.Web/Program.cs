@@ -1,12 +1,17 @@
+using Contentful.AspNetCore;
+using Dfe.ContentSupport.Web.Configuration;
 using GovUk.Frontend.AspNetCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddTransient<IContentService,ContentService>();
+builder.Services.AddContentful(builder.Configuration);
+builder.Services.AddTransient<IContentfulService,ContentfulService>();
 builder.Services.AddGovUkFrontend();
+
 
 var app = builder.Build();
 
