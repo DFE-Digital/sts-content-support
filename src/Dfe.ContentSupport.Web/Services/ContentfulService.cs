@@ -1,5 +1,6 @@
 using System.Xml.Linq;
 using Contentful.Core;
+using Contentful.Core.Models;
 using Contentful.Core.Search;
 using Dfe.ContentSupport.Web.Models;
 
@@ -9,17 +10,13 @@ public class ContentfulService(IContentfulClient contentfulClient) : IContentful
 {
     public async Task<object> GetContent(string slug)
     {
-        var builder = QueryBuilder<ContentSupportPage>.New.ContentTypeIs(nameof(ContentSupportPage))
-            .FieldEquals($"fields.{nameof(ContentSupportPage.Slug)}", slug);
-        var resp = await contentfulClient.GetEntries(builder);
+        var resp = await GetContentSupportPages(nameof(ContentSupportPage.Slug), slug);
         return resp.FirstOrDefault();
     }
 
     public async Task<string> GenerateSitemap(string baseUrl)
     {
-        var builder = QueryBuilder<ContentSupportPage>.New.ContentTypeIs(nameof(ContentSupportPage))
-            .FieldEquals($"fields.{nameof(ContentSupportPage.IsSitemap)}", "true");
-        var resp = await contentfulClient.GetEntries(builder);
+        var resp = await GetContentSupportPages(nameof(ContentSupportPage.IsSitemap), "true");
 
         XNamespace xmlns = "http://www.sitemaps.org/schemas/sitemap/0.9";
         var sitemap = new XDocument(
@@ -35,5 +32,13 @@ public class ContentfulService(IContentfulClient contentfulClient) : IContentful
         );
 
         return sitemap.ToString();
+    }
+
+    private async Task<ContentfulCollection<ContentSupportPage>> GetContentSupportPages(string field,
+        string value)
+    {
+        var builder = QueryBuilder<ContentSupportPage>.New.ContentTypeIs(nameof(ContentSupportPage))
+            .FieldEquals($"fields.{field}", value);
+        return await contentfulClient.GetEntries(builder);
     }
 }
