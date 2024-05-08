@@ -1,23 +1,16 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Dfe.ContentSupport.Web.Models;
+using Dfe.ContentSupport.Web.Services;
 
 namespace Dfe.ContentSupport.Web.Controllers;
 
-public class HomeController : Controller
+public class HomeController(IContentfulService contentfulService)
+    : Controller
 {
-    private readonly ILogger<HomeController> _logger;
-    private readonly IContentfulService _contentfulService;
-
-    public HomeController(ILogger<HomeController> logger, IContentfulService contentfulService)
-    {
-        _logger = logger;
-        _contentfulService = contentfulService;
-    }
-
     public async Task<IActionResult> Index()
     {
-        var resp =  await _contentfulService.GetContent();
+        var resp =  await contentfulService.GetContent();
         return View(resp);
     }
 

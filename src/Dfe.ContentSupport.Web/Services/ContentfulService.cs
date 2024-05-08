@@ -1,19 +1,12 @@
-
-
 using Contentful.Core;
 using Dfe.ContentSupport.Web.Models;
 
-public class ContentfulService : IContentfulService
+namespace Dfe.ContentSupport.Web.Services;
+
+public class ContentfulService(IContentfulClient contentfulClient) : IContentfulService
 {
-
-    private readonly IContentfulClient _contentfulClient;
-
-    public ContentfulService(IContentfulClient contentfulClient)
-    {
-        _contentfulClient = contentfulClient;
-    }
     public async Task<object> GetContent()
     {
-        return await _contentfulClient.GetEntries<Page>();
+        return await contentfulClient.GetEntries<Page>();
     }
 }
