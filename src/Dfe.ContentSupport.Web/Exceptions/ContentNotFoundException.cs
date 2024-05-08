@@ -1,7 +1,3 @@
-﻿namespace Dfe.ContentSupport.Web.Exceptions
-{
-    public class ContentNotFoundException : Exception
-    {
-        public ContentNotFoundException(string message): base(message) { }
-    }
-}
+﻿namespace Dfe.ContentSupport.Web.Exceptions;
+
+public class ContentNotFoundException(string message) : Exception(message);

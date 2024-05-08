@@ -1,7 +1,6 @@
-﻿namespace Dfe.ContentSupport.Web.Models
+﻿namespace Dfe.ContentSupport.Web.Models;
+
+public class Title
 {
-    public class Title
-    {
-        public string Text { get; init; } = null!;
-    }
+    public string Text { get; init; } = null!;
 }
