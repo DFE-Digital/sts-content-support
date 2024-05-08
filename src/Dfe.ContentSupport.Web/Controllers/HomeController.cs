@@ -8,9 +8,14 @@ namespace Dfe.ContentSupport.Web.Controllers;
 public class HomeController(IContentfulService contentfulService)
     : Controller
 {
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string slug)
     {
-        var resp = await contentfulService.GetContent();
+        if (string.IsNullOrEmpty(slug))
+        {
+            return View();
+        }
+
+        var resp = await contentfulService.GetContent(slug);
         return View(resp);
     }
 
