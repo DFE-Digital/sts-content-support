@@ -9,16 +9,16 @@ public class ContentfulService(IContentfulClient contentfulClient) : IContentful
 {
     public async Task<object> GetContent(string slug)
     {
-        var builder = QueryBuilder<ContentSupportPage>.New.ContentTypeIs("contentSupportPage")
-            .FieldEquals("fields.slug", slug);
+        var builder = QueryBuilder<ContentSupportPage>.New.ContentTypeIs(nameof(ContentSupportPage))
+            .FieldEquals($"fields.{nameof(ContentSupportPage.Slug)}", slug);
         var resp = await contentfulClient.GetEntries(builder);
         return resp.FirstOrDefault();
     }
 
     public async Task<string> GenerateSitemap(string baseUrl)
     {
-        var builder = QueryBuilder<ContentSupportPage>.New.ContentTypeIs("contentSupportPage")
-            .FieldEquals("fields.isSitemap", "true");
+        var builder = QueryBuilder<ContentSupportPage>.New.ContentTypeIs(nameof(ContentSupportPage))
+            .FieldEquals($"fields.{nameof(ContentSupportPage.IsSitemap)}", "true");
         var resp = await contentfulClient.GetEntries(builder);
 
         XNamespace xmlns = "http://www.sitemaps.org/schemas/sitemap/0.9";
