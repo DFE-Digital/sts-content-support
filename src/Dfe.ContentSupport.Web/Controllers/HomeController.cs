@@ -10,10 +10,7 @@ public class HomeController(IContentfulService contentfulService)
 {
     public async Task<IActionResult> Index(string slug)
     {
-        if (string.IsNullOrEmpty(slug))
-        {
-            return View();
-        }
+        if (string.IsNullOrEmpty(slug)) return View();
 
         var resp = await contentfulService.GetContent(slug);
         return View(resp);

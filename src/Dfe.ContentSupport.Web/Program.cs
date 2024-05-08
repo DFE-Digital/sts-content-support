@@ -20,15 +20,15 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
 
-app.MapControllerRoute(name: "sitemap",
-    pattern: "sitemap.xml",
-    defaults: new { controller = "Sitemap", action = "Index" }
-    );
+app.MapControllerRoute("sitemap",
+    "sitemap.xml",
+    new { controller = "Sitemap", action = "Index" }
+);
 
 app.MapControllerRoute(
-    name: "default/{slug}",
-    pattern: "{slug?}",
-    defaults: new { controller = "Home", action = "Index" }
-    );
+    "default/{slug}",
+    "{slug?}",
+    new { controller = "Home", action = "Index" }
+);
 
 app.Run();
