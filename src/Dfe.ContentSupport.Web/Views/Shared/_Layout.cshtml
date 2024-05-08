@@ -1,4 +1,5 @@
-﻿@inject GovUk.Frontend.AspNetCore.PageTemplateHelper PageTemplateHelper
+﻿@using GovUk.Frontend.AspNetCore
+@inject PageTemplateHelper PageTemplateHelper
 
 
 @{
@@ -6,22 +7,22 @@
 }
 
 @section Header {
-      <link rel="stylesheet" as="style" href="~/css/application.css">
-    <partial name="_Header" />
+    <link rel="stylesheet" as="style" href="~/css/application.css">
+    <partial name="_Header"/>
     @RenderSection("Header", false)
 }
 
 @section BeforeContent {
     <script defer>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
-    <partial name="_BetaHeader" />
+    <partial name="_BetaHeader"/>
 
-    @RenderSection("BeforeContent", required: false)
+    @RenderSection("BeforeContent", false)
 }
 
 @RenderBody()
 
 @section Footer {
-    <partial name="_Footer" />
+    <partial name="_Footer"/>
 }
 
 @section BodyEnd {
@@ -30,5 +31,5 @@
         govuk.initAll();
     </script>
 
-    @RenderSection("BodyEnd", required: false)
+    @RenderSection("BodyEnd", false)
 }

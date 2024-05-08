@@ -1,7 +1,7 @@
 using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
 using Dfe.ContentSupport.Web.Models;
 using Dfe.ContentSupport.Web.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Dfe.ContentSupport.Web.Controllers;
 
@@ -10,7 +10,7 @@ public class HomeController(IContentfulService contentfulService)
 {
     public async Task<IActionResult> Index()
     {
-        var resp =  await contentfulService.GetContent();
+        var resp = await contentfulService.GetContent();
         return View(resp);
     }
 
@@ -22,6 +22,7 @@ public class HomeController(IContentfulService contentfulService)
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        return View(new ErrorViewModel
+            { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }
