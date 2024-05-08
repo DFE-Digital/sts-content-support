@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddContentful(builder.Configuration);
-builder.Services.AddTransient<IContentfulService,ContentfulService>();
+builder.Services.AddTransient<IContentfulService, ContentfulService>();
 builder.Services.AddGovUkFrontend();
 
 
@@ -29,8 +29,21 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+
+app.MapControllerRoute(name: "sitemap",
+    pattern: "sitemap.xml",
+    defaults: new { controller = "Sitemap", action = "Index" }
+    );
+
+
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    name: "default/{slug}",
+    pattern: "{slug?}",
+    defaults: new { controller = "Home", action = "Index" }
+    );
+
+
+
+
 
 app.Run();

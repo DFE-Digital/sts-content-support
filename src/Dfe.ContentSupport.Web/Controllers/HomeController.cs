@@ -15,9 +15,15 @@ public class HomeController : Controller
         _contentfulService = contentfulService;
     }
 
-    public async Task<IActionResult> Index()
+
+    public async Task<IActionResult> Index(string slug)
     {
-        var resp =  await _contentfulService.GetContent();
+        if (string.IsNullOrEmpty(slug))
+        {
+            return View();
+        }
+
+        var resp = await _contentfulService.GetContent(slug);
         return View(resp);
     }
 
