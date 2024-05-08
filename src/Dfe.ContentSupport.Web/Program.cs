@@ -1,4 +1,5 @@
 using Contentful.AspNetCore;
+using Dfe.ContentSupport.Web.Extensions;
 using GovUk.Frontend.AspNetCore;
 
 
@@ -8,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddContentful(builder.Configuration);
-builder.Services.AddTransient<IContentfulService, ContentfulService>();
+builder.InitDependencyInjection();
 builder.Services.AddGovUkFrontend();
 
 

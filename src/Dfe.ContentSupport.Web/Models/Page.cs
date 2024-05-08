@@ -6,21 +6,11 @@
 
         public string Slug { get; init; } = null!;
 
-        public bool DisplayBackButton { get; init; }
-
-        public bool DisplayHomeButton { get; init; }
-
-        public bool DisplayTopicTitle { get; init; }
-
-        public bool DisplayOrganisationName { get; init; }
-
-        public bool RequiresAuthorisation { get; init; } = true;
-
         public string? SectionTitle { get; set; }
 
         public List<dynamic> BeforeTitleContent { get; init; } = [];
 
-        public string? OrganisationName { get; set; }
+        public bool IsSitemap { get; init; } = false;
 
         public List<dynamic> Content { get; init; } = [];
     }
