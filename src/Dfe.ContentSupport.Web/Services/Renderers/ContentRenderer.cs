@@ -4,7 +4,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Dfe.ContentSupport.Web.Services;
 
-public class ContentRenderer
+public class ContentRenderer : IContentRenderer
 {
     public string Render(ContentSupportPage page)
     {
