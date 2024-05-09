@@ -1,19 +1,25 @@
 using System.Diagnostics;
 using Dfe.ContentSupport.Web.Models;
 using Dfe.ContentSupport.Web.Services;
+using Microsoft.AspNetCore.Components.RenderTree;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dfe.ContentSupport.Web.Controllers;
 
-public class HomeController(IContentfulService contentfulService)
-    : Controller
+public class HomeController(IContentfulService contentfulService) : Controller
 {
     public async Task<IActionResult> Index(string slug)
     {
-        if (string.IsNullOrEmpty(slug)) return View();
+        if (string.IsNullOrEmpty(slug))
+            return View();
 
-        var resp = await contentfulService.GetContent(slug);
-        return View(resp);
+        var renderer = new ContentRenderer();
+
+        var resp = await contentfulService.GetContent(slug) as ContentSupportPage;
+
+        var renderedContent = renderer.Render(resp);
+
+        return View((object)renderedContent);
     }
 
     public IActionResult Privacy()
@@ -24,7 +30,8 @@ public class HomeController(IContentfulService contentfulService)
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
-        return View(new ErrorViewModel
-            { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        return View(
+            new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier }
+        );
     }
 }
