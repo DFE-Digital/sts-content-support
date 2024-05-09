@@ -1,7 +1,6 @@
 using System.Diagnostics;
 using Dfe.ContentSupport.Web.Models;
 using Dfe.ContentSupport.Web.Services;
-using Microsoft.AspNetCore.Components.RenderTree;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dfe.ContentSupport.Web.Controllers;
