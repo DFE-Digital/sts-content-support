@@ -34,8 +34,7 @@ public class ContentfulService(IContentfulClient contentfulClient) : IContentful
         return sitemap.ToString();
     }
 
-    private async Task<ContentfulCollection<ContentSupportPage>> GetContentSupportPages(string field,
-        string value)
+    private async Task<ContentfulCollection<ContentSupportPage>> GetContentSupportPages(string field, string value)
     {
         var builder = QueryBuilder<ContentSupportPage>.New.ContentTypeIs(nameof(ContentSupportPage))
             .FieldEquals($"fields.{field}", value);
