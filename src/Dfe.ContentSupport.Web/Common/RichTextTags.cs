@@ -1,4 +1,4 @@
-namespace Dfe.ContentSupport.Web.Services;
+namespace Dfe.ContentSupport.Web.Common;
 public static class RichTextTags
 {
     public const string Document = "document";

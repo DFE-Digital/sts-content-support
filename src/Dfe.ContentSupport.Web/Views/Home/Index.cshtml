@@ -1,5 +1,14 @@
-﻿@model string
+﻿@using Newtonsoft.Json.Linq
+@model ContentSupportPage
 
-<div>
-    @Html.Raw(Model)
-</div>
+<h1>@Model.Title.Text</h1>
+
+@foreach (var content in @Model.Content)
+{
+    var richText = content["richText"];
+
+    if (richText != null && richText["nodeType"] != null)
+    {
+        <partial name="RichText/_RichText" model="@richText" />
+    }
+}

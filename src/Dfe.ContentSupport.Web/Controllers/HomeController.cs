@@ -12,13 +12,9 @@ public class HomeController(IContentfulService contentfulService) : Controller
         if (string.IsNullOrEmpty(slug))
             return View();
 
-        var renderer = new ContentRenderer();
-
         var resp = await contentfulService.GetContent(slug) as ContentSupportPage;
 
-        var renderedContent = renderer.Render(resp);
-
-        return View((object)renderedContent);
+        return View(resp);
     }
 
     public IActionResult Privacy()
