@@ -2,11 +2,30 @@
 @model JToken
 
 <table>
-    @if (Model["content"] is JArray childNodes)
-    {
-        foreach (var childNode in childNodes)
+    <thead>
+        @if (Model["content"] is JArray headerNodes)
         {
-            <partial name="RichText/_RichText" model="@childNode" />
+            foreach (var childNode in headerNodes)
+            {
+                if (childNode["nodeType"].ToString() == "table-row" && childNode["content"][0]["nodeType"].ToString() ==
+                "table-header-cell")
+                {
+                    <partial name="RichText/_TableRow" model="@childNode" />
+                }
+            }
         }
-    }
+    </thead>
+    <tbody>
+        @if (Model["content"] is JArray bodyNodes)
+        {
+            foreach (var childNode in bodyNodes)
+            {
+                if (childNode["nodeType"].ToString() == "table-row" && childNode["content"][0]["nodeType"].ToString() ==
+                "table-cell")
+                {
+                    <partial name="RichText/_TableRow" model="@childNode" />
+                }
+            }
+        }
+    </tbody>
 </table>
