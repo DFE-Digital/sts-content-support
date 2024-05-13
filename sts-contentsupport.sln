@@ -7,6 +7,32 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2D8B0FB2-8AE
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dfe.ContentSupport.Web", "src\Dfe.ContentSupport.Web\Dfe.ContentSupport.Web.csproj", "{31E67616-DFFB-43FE-B8E8-CAEB43B56AB8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{D219CA46-837C-4349-A60B-61AF0FDE48F8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "adr", "adr", "{3E4B19B1-1EF1-4C53-8E0D-08548B586D58}"
+	ProjectSection(SolutionItems) = preProject
+		docs\adr\0001-web-framework.md = docs\adr\0001-web-framework.md
+		docs\adr\0002-application-framework.md = docs\adr\0002-application-framework.md
+		docs\adr\0003-build-test-deploy-environment.md = docs\adr\0003-build-test-deploy-environment.md
+		docs\adr\0004-hosting-platform.md = docs\adr\0004-hosting-platform.md
+		docs\adr\0005-source-repository.md = docs\adr\0005-source-repository.md
+		docs\adr\0006-deployment-tooling.md = docs\adr\0006-deployment-tooling.md
+		docs\adr\0007-infrastructure-as-code.md = docs\adr\0007-infrastructure-as-code.md
+		docs\adr\0008-container-registry.md = docs\adr\0008-container-registry.md
+		docs\adr\0009-secrets-management.md = docs\adr\0009-secrets-management.md
+		docs\adr\0010-content-management.md = docs\adr\0010-content-management.md
+		docs\adr\0011-software-architecture.md = docs\adr\0011-software-architecture.md
+		docs\adr\0012-executing-unit-tests.md = docs\adr\0012-executing-unit-tests.md
+		docs\adr\0013-tool-for-ui-testing.md = docs\adr\0013-tool-for-ui-testing.md
+		docs\adr\0014-tools-for-building-unit-tests.md = docs\adr\0014-tools-for-building-unit-tests.md
+		docs\adr\0015-unit-test-project-name-and-location.md = docs\adr\0015-unit-test-project-name-and-location.md
+		docs\adr\0016-project-and-namespace-naming-convention.md = docs\adr\0016-project-and-namespace-naming-convention.md
+		docs\adr\0017-contentful-integration.md = docs\adr\0017-contentful-integration.md
+		docs\adr\0018-github-actions-locations.md = docs\adr\0018-github-actions-locations.md
+		docs\adr\0019-executing-terraform-within-github-workflows.md = docs\adr\0019-executing-terraform-within-github-workflows.md
+		docs\adr\0020-accesibility-testing.md = docs\adr\0020-accesibility-testing.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,16 +43,13 @@ Global
 		{31E67616-DFFB-43FE-B8E8-CAEB43B56AB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31E67616-DFFB-43FE-B8E8-CAEB43B56AB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31E67616-DFFB-43FE-B8E8-CAEB43B56AB8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2D9F7EC4-7F84-45A2-A2D5-F462C17AF2A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2D9F7EC4-7F84-45A2-A2D5-F462C17AF2A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2D9F7EC4-7F84-45A2-A2D5-F462C17AF2A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2D9F7EC4-7F84-45A2-A2D5-F462C17AF2A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{31E67616-DFFB-43FE-B8E8-CAEB43B56AB8} = {2D8B0FB2-8AEF-42C5-8E1B-ABD12FF5AC1F}
+		{3E4B19B1-1EF1-4C53-8E0D-08548B586D58} = {D219CA46-837C-4349-A60B-61AF0FDE48F8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {35FAEB06-D3EF-49AB-846B-335090792BE1}
