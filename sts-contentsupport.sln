@@ -11,7 +11,26 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{E846F495-A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "adr", "adr", "{63466CDA-BC75-446B-9840-26D5C25F74F0}"
 	ProjectSection(SolutionItems) = preProject
-		0001-web-framework.md = 0001-web-framework.md
+		docs\adr\0001-web-framework.md = docs\adr\0001-web-framework.md
+		docs\adr\0002-application-framework.md = docs\adr\0002-application-framework.md
+		docs\adr\0003-build-test-deploy-environment.md = docs\adr\0003-build-test-deploy-environment.md
+		docs\adr\0004-hosting-platform.md = docs\adr\0004-hosting-platform.md
+		docs\adr\0005-source-repository.md = docs\adr\0005-source-repository.md
+		docs\adr\0006-deployment-tooling.md = docs\adr\0006-deployment-tooling.md
+		docs\adr\0007-infrastructure-as-code.md = docs\adr\0007-infrastructure-as-code.md
+		docs\adr\0008-container-registry.md = docs\adr\0008-container-registry.md
+		docs\adr\0009-secrets-management.md = docs\adr\0009-secrets-management.md
+		docs\adr\0010-content-management.md = docs\adr\0010-content-management.md
+		docs\adr\0011-software-architecture.md = docs\adr\0011-software-architecture.md
+		docs\adr\0012-executing-unit-tests.md = docs\adr\0012-executing-unit-tests.md
+		docs\adr\0013-tool-for-ui-testing.md = docs\adr\0013-tool-for-ui-testing.md
+		docs\adr\0014-tools-for-building-unit-tests.md = docs\adr\0014-tools-for-building-unit-tests.md
+		docs\adr\0015-unit-test-project-name-and-location.md = docs\adr\0015-unit-test-project-name-and-location.md
+		docs\adr\0016-project-and-namespace-naming-convention.md = docs\adr\0016-project-and-namespace-naming-convention.md
+		docs\adr\0017-contentful-integration.md = docs\adr\0017-contentful-integration.md
+		docs\adr\0018-github-actions-locations.md = docs\adr\0018-github-actions-locations.md
+		docs\adr\0019-executing-terraform-within-github-workflows.md = docs\adr\0019-executing-terraform-within-github-workflows.md
+		docs\adr\0020-accesibility-testing.md = docs\adr\0020-accesibility-testing.md
 	EndProjectSection
 EndProject
 Global
