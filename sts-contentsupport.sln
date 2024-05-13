@@ -7,6 +7,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2D8B0FB2-8AE
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dfe.ContentSupport.Web", "src\Dfe.ContentSupport.Web\Dfe.ContentSupport.Web.csproj", "{31E67616-DFFB-43FE-B8E8-CAEB43B56AB8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{E846F495-AA45-4DC9-BF1A-AC47148DD44E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "adr", "adr", "{63466CDA-BC75-446B-9840-26D5C25F74F0}"
+	ProjectSection(SolutionItems) = preProject
+		0001-web-framework.md = 0001-web-framework.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +30,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{31E67616-DFFB-43FE-B8E8-CAEB43B56AB8} = {2D8B0FB2-8AEF-42C5-8E1B-ABD12FF5AC1F}
+		{63466CDA-BC75-446B-9840-26D5C25F74F0} = {E846F495-AA45-4DC9-BF1A-AC47148DD44E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {35FAEB06-D3EF-49AB-846B-335090792BE1}
