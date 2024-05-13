@@ -11,7 +11,7 @@ public class ContentfulService(IContentfulClient contentfulClient) : IContentful
     public async Task<object> GetContent(string slug)
     {
         var resp = await GetContentSupportPages(nameof(ContentSupportPage.Slug), slug);
-        return resp.FirstOrDefault();
+        return resp is null ? new ContentSupportPage() : resp.First();
     }
 
     public async Task<string> GenerateSitemap(string baseUrl)
