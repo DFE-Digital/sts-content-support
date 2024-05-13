@@ -11,7 +11,7 @@ public class ContentfulService(IContentfulClient contentfulClient) : IContentful
     public async Task<object> GetContent(string slug)
     {
         var resp = await GetContentSupportPages(nameof(ContentSupportPage.Slug), slug);
-        return resp.FirstOrDefault();
+        return resp is null ? new ContentSupportPage() : resp.First();
     }
 
     public async Task<string> GenerateSitemap(string baseUrl)
@@ -34,8 +34,7 @@ public class ContentfulService(IContentfulClient contentfulClient) : IContentful
         return sitemap.ToString();
     }
 
-    private async Task<ContentfulCollection<ContentSupportPage>> GetContentSupportPages(string field,
-        string value)
+    private async Task<ContentfulCollection<ContentSupportPage>> GetContentSupportPages(string field, string value)
     {
         var builder = QueryBuilder<ContentSupportPage>.New.ContentTypeIs(nameof(ContentSupportPage))
             .FieldEquals($"fields.{field}", value);
