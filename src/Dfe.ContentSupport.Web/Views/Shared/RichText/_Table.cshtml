@@ -1,3 +1,4 @@
+@using Dfe.ContentSupport.Web.Common
 @using Newtonsoft.Json.Linq
 @model JToken
 
@@ -7,8 +8,8 @@
         {
             foreach (var childNode in headerNodes)
             {
-                if (childNode["nodeType"].ToString() == "table-row" && childNode["content"][0]["nodeType"].ToString() ==
-                "table-header-cell")
+                if (childNode["nodeType"].ToString() == RichTextTags.TableRow && childNode["content"][0]["nodeType"].ToString() ==
+                RichTextTags.TableHeaderCell)
                 {
                     <partial name="RichText/_TableRow" model="@childNode" />
                 }
@@ -20,8 +21,8 @@
         {
             foreach (var childNode in bodyNodes)
             {
-                if (childNode["nodeType"].ToString() == "table-row" && childNode["content"][0]["nodeType"].ToString() ==
-                "table-cell")
+                if (childNode["nodeType"].ToString() == RichTextTags.TableRow && childNode["content"][0]["nodeType"].ToString() ==
+                RichTextTags.TableCell)
                 {
                     <partial name="RichText/_TableRow" model="@childNode" />
                 }

@@ -1,6 +1,4 @@
-﻿using Contentful.Core.Models;
-
-namespace Dfe.ContentSupport.Web.Models;
+﻿namespace Dfe.ContentSupport.Web.Models;
 
 public class ContentSupportPage
 {
