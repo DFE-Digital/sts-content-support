@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Dfe.ContentSupport.Web.Controllers;
 
-public class SitemapController(IContentfulService contentfulService) : Controller
+public class SitemapController(IContentService contentfulService) : Controller
 {
     public async Task<IActionResult> Index()
     {

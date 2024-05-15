@@ -6,7 +6,7 @@ namespace Dfe.ContentSupport.Web.Tests.Controllers;
 
 public class HomeControllerTests
 {
-    private readonly Mock<IContentfulService> _contentfulServiceMock = new();
+    private readonly Mock<IContentService> _contentfulServiceMock = new();
     private HomeController GetController() => new(_contentfulServiceMock.Object);
 
     [Fact]

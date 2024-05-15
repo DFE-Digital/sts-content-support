@@ -1,7 +1,9 @@
-namespace Dfe.ContentSupport.Web.Services;
+﻿using Contentful.Core;
 
-public interface IContentfulService
+namespace Dfe.ContentSupport.Web.Services
 {
-    Task<object> GetContent(string slug);
-    Task<string> GenerateSitemap(string baseUrl);
+    public interface IContentfulService
+    {
+        IContentfulClient ContentfulClient(bool isPreview = false);
+    }
 }

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Dfe.ContentSupport.Web.Controllers;
 
-public class HomeController(IContentfulService contentfulService)
+public class HomeController(IContentService contentfulService)
     : Controller
 {
     public async Task<IActionResult> Index(string slug)

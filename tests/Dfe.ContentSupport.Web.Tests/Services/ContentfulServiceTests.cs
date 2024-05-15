@@ -18,7 +18,7 @@ public class ContentfulServiceTests
         }
     };
 
-    private ContentfulService GetService() => new(_contentfulClientMock.Object);
+    private ContentService GetService() => new(_contentfulClientMock.Object);
 
     private void SetupResponse()
     {
