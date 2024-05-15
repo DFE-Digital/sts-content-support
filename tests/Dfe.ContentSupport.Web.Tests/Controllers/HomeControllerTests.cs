@@ -28,10 +28,32 @@ public class HomeControllerTests
 
         result.Should().BeOfType<RedirectToActionResult>();
         (result as RedirectToActionResult)!.ActionName.Should().BeEquivalentTo("error");
-    }
+    }    
+    
+    [Fact]
+    public async void Index_Calls_Service_GetContent()
+    {
+        var sut = GetController();
+
+        await sut.Index("slug");
+
+       _contentfulServiceMock.Verify(o=>o.GetContent(It.IsAny<string>()),Times.Once);
+    } 
 
     [Fact]
-    public async void Index_WithSlug_Returns_EmptyView()
+    public async void Index_NullResponse_ReturnsErrorAction()
+    {
+        _contentfulServiceMock.Setup(o => o.GetContent(It.IsAny<string>())).ReturnsAsync((ContentSupportPage?)null);
+        var sut = GetController();
+
+        var result = await sut.Index("slug");
+
+        result.Should().BeOfType<RedirectToActionResult>();
+        (result as RedirectToActionResult)!.ActionName.Should().BeEquivalentTo("error");
+    } 
+    
+    [Fact]
+    public async void Index_WithSlug_Returns_View()
     {
         _contentfulServiceMock.Setup(o => o.GetContent(It.IsAny<string>()))
             .ReturnsAsync(new ContentSupportPage());

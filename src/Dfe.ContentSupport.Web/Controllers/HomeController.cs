@@ -13,6 +13,7 @@ public class HomeController(IContentfulService contentfulService)
         if (string.IsNullOrEmpty(slug)) return RedirectToAction("error");
 
         var resp = await contentfulService.GetContent(slug);
+        if(resp is null) return RedirectToAction("error"); 
         return View(resp);
     }
 

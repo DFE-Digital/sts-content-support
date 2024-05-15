@@ -8,10 +8,10 @@ namespace Dfe.ContentSupport.Web.Services;
 
 public class ContentfulService(IContentfulClient contentfulClient) : IContentfulService
 {
-    public async Task<object> GetContent(string slug)
+    public async Task<ContentSupportPage?> GetContent(string slug)
     {
         var resp = await GetContentSupportPages(nameof(ContentSupportPage.Slug), slug);
-        return resp is null ? new ContentSupportPage() : resp.First();
+        return resp is not null &&resp.Any() ? resp.First() : null;
     }
 
     public async Task<string> GenerateSitemap(string baseUrl)

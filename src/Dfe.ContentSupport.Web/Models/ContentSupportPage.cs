@@ -1,5 +1,8 @@
-﻿namespace Dfe.ContentSupport.Web.Models;
+﻿using System.Diagnostics.CodeAnalysis;
 
+namespace Dfe.ContentSupport.Web.Models;
+
+[ExcludeFromCodeCoverage]
 public class ContentSupportPage
 {
     public string InternalName { get; init; } = null!;
@@ -12,7 +15,6 @@ public class ContentSupportPage
     public List<dynamic> Content { get; init; } = [];
 
     public bool DisplayBackButton { get; init; }
-
     public bool IsSitemap { get; init; }
 
     public DateTime? CreatedAt { get; init; }
