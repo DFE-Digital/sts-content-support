@@ -8,7 +8,7 @@ public class ContentNotFoundExceptionTests
     public void Exception_Generates_Expected()
     {
         const string message = "dummy";
-        
+
         ContentNotFoundException ex = new ContentNotFoundException(message);
 
         ex.Should().BeOfType<ContentNotFoundException>();
