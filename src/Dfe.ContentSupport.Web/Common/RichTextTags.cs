@@ -18,5 +18,6 @@ public static class RichTextTags
     public const string Heading5 = "heading-5";
     public const string Heading6 = "heading-6";
     public const string HR = "hr";
+    public const string EmbeddedAsset = "embedded-asset-block";
     public const string Text = "text";
 }

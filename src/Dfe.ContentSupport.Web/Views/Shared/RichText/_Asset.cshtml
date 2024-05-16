@@ -1,0 +1,11 @@
+@{
+    var asset = Model.data.target.fields.file;
+}
+<div class="column-full">
+    @{
+        if (asset.contentType == "image/jpeg" || asset.contentType == "image/png")
+        {
+            <img src="@asset.url" alt="@Model.data.target.fields.description" title="@Model.data.target.fields.title" />
+        }
+    }
+</div>

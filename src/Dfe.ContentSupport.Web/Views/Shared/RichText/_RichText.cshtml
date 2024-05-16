@@ -55,6 +55,9 @@
         case RichTextTags.HR:
             <hr />
             break;
+        case RichTextTags.EmbeddedAsset:
+            <partial name="RichText/_Asset" model="@Model" />
+            break;
         case RichTextTags.Text:
             <partial name="RichText/_Text" model="@Model" />
             break;
