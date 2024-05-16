@@ -2,12 +2,14 @@
   "InternalName": "MockContent",
   "Slug": "mock-slug",
   "BeforeTitleContent": [],
-  "Title": {
-    "Text": "Mock Content"
+  "Heading": {
+    "InternalName": "MockHeading",
+    "Title": "Mock Content",
+    "Subtitle": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur sollicitudin, mi rutrum consequat facilisis, leo dolor ornare neque, id pellentesque ante urna a lacus. Etiam tempus ex feugiat nisi consectetur, pretium eleifend elit elementum."
   },
   "Content": [
     {
-      "internalName": "HelloWorldBody",
+      "internalName": "MockContentBody",
       "RichText": {
         "nodeType": "document",
         "data": {},
