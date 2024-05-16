@@ -1,4 +1,4 @@
-name: Terraform Plan
+name: Terraform DNS Plan
 
 on:
   workflow_dispatch:
@@ -14,8 +14,6 @@ on:
         required: true
 
 env:
-  DOTNET_VERSION: ${{ vars.DOTNET_VERSION }}
-
   ARM_TENANT_ID: ${{ secrets.AZ_TENANT_ID }}
   ARM_SUBSCRIPTION_ID: ${{ secrets.AZ_SUBSCRIPTION_ID }}
   ARM_CLIENT_ID: ${{ secrets.AZ_CLIENT_ID }}
@@ -25,22 +23,16 @@ env:
 
   TF_BACKEND_STORAGE_ACCOUNT_NAME: ${{ secrets.TF_BACKEND_STORAGE_ACCOUNT_NAME }}
   TF_BACKEND_CONTAINER_NAME: ${{ secrets.TF_BACKEND_CONTAINER_NAME }}
-  TF_BACKEND_KEY: ${{ secrets.TF_BACKEND_KEY }}
+  TF_BACKEND_KEY: "terraform-dns.tfstate"
   TF_BACKEND_RESOURCE_GROUP: ${{ secrets.TF_BACKEND_RESOURCE_GROUP }}
 
   TF_VAR_project_name: ${{ secrets.DFE_PROJECT_NAME }}
   TF_VAR_environment: ${{ secrets.AZ_ENVIRONMENT }}
   TF_VAR_azure_location: ${{ vars.AZ_LOCATION }}
-  TF_VAR_az_app_kestrel_endpoint: ${{ vars.KESTRELENDPOINT }}
-  TF_VAR_az_tag_environment: ${{ vars.AZ_TAG_ENVIRONMENT }}
-  TF_VAR_az_tag_product: ${{ vars.AZ_TAG_PRODUCT }}
-  TF_VAR_cdn_frontdoor_origin_host_header_override: ${{secrets.AZ_CDN_FRONTDOOR_ORIGIN_HOST_HEADER_OVERRIDE}}
-  TF_VAR_registry_server: "ghcr.io"
-  TF_VAR_registry_username: ${{ github.repository_owner }}
-  TF_VAR_registry_custom_image_url: "ghcr.io/dfe-digital/sts-content-and-support:latest"
-  TF_VAR_registry_password: ${{ secrets.GITHUB_TOKEN }}
+  TF_VAR_primary_fqdn: "plan-technology-for-your-school.education.gov.uk"
+  TF_VAR_subdomains: "staging"
 
-  TF_WORKING_DIRECTORY: terraform/container-app
+  TF_WORKING_DIRECTORY: terraform/dns-zone
 
 jobs:
   terraform-plan:

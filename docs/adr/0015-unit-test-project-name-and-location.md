@@ -19,4 +19,4 @@ Where should the unit test projects be called and where should the be located?
 
 ## Decision Outcome
 
-Keeping with consistency and decisions made in `Dfe.Plantech` the preferred location is `/tests` This directory will contain other types of unit tests.
+Keeping with consistency and decisions made in `Dfe.ContentSupport` the preferred location is `/tests` This directory will contain other types of unit tests.

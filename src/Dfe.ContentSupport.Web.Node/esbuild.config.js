@@ -97,7 +97,7 @@ copyFileSync(
   "./out/js/govuk-frontend.min.js"
 );
 
-//Copy to Dfe.PlanTech.Web
+
 const targetDir = "../Dfe.ContentSupport.Web/wwwroot";
 const folders = ["css", "assets", "js"];
 
