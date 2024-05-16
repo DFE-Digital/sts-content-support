@@ -1,10 +1,10 @@
 describe('Rich Text Rendering', () => {
   beforeEach(() => {
-    cy.visit('/hello-world');
+    cy.visit('Home/MockContent');
   });
 
   it('renders heading', () => {
-    cy.get('h1').should('have.text', 'Hello World');
+    cy.get('h1').should('have.text', 'Mock Content');
   });
 
   it('renders paragraph text', () => {

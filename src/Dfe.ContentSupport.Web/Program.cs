@@ -31,4 +31,10 @@ app.MapControllerRoute(
     new { controller = "Home", action = "Index" }
 );
 
+app.MapControllerRoute(
+    "mockContent",
+    "Home/MockContent",
+    new { controller = "Home", action = "MockContent" }
+);
+
 app.Run();
