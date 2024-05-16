@@ -7,11 +7,7 @@
 
     var isBold = marks?.Any(mark => mark["type"]?.ToString() == "bold") ?? false;
 
-    if (string.IsNullOrWhiteSpace(value))
-    {
-        @: <br />
-    }
-    else if (isBold)
+    if (isBold)
     {
         <strong>@value</strong>
     }

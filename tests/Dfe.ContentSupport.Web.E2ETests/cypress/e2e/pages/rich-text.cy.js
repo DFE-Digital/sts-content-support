@@ -81,4 +81,9 @@ describe('Rich Text Rendering', () => {
         'https://technical-guidance.education.gov.uk/'
       );
   });
+
+  it('renders hr', () => {
+    cy.get('hr').should('exist');
+    cy.get('h2').prev('hr').should('exist');
+  });
 });

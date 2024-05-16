@@ -52,6 +52,9 @@
         case RichTextTags.TableCell:
             <partial name="RichText/_TableCell" model="@Model" />
             break;
+        case RichTextTags.HR:
+            <hr />
+            break;
         case RichTextTags.Text:
             <partial name="RichText/_Text" model="@Model" />
             break;
