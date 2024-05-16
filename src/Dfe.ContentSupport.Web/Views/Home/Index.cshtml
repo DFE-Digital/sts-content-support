@@ -1,14 +1,12 @@
 ﻿@using Newtonsoft.Json.Linq
 @model ContentSupportPage
 
-<h1>@Model.Title.Text</h1>
+<partial name="_Hero" model="@Model.Heading" />
 
-@foreach (var content in @Model.Content)
-{
-    var richText = content["richText"];
-
-    if (richText != null && richText["nodeType"] != null)
+<main class="govuk-main-wrapper" id="main-content" role="main">
+    @foreach (var content in @Model.Content)
     {
-        <partial name="RichText/_RichText" model="@richText" />
+        <partial name="_Content" model="@content" />
     }
-}
+
+</main>

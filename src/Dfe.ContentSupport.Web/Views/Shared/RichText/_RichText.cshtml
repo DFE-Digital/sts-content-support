@@ -13,6 +13,21 @@
         case RichTextTags.Paragraph:
             <partial name="RichText/_Paragraph" model="@Model" />
             break;
+        case RichTextTags.Heading2:
+            <partial name="RichText/_H2" model="@Model" />
+            break;
+        case RichTextTags.Heading3:
+            <partial name="RichText/_H3" model="@Model" />
+            break;
+        case RichTextTags.Heading4:
+            <partial name="RichText/_H4" model="@Model" />
+            break;
+        case RichTextTags.Heading5:
+            <partial name="RichText/_H5" model="@Model" />
+            break;
+        case RichTextTags.Heading6:
+            <partial name="RichText/_H6" model="@Model" />
+            break;
         case RichTextTags.UnorderedList:
             <partial name="RichText/_UnorderedList" model="@Model" />
             break;

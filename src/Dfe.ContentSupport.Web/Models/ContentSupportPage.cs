@@ -7,7 +7,7 @@ public class ContentSupportPage
 
     public List<dynamic> BeforeTitleContent { get; init; } = [];
 
-    public Title Title { get; init; } = null!;
+    public Heading Heading { get; init; } = null!;
 
     public List<dynamic> Content { get; init; } = [];
 

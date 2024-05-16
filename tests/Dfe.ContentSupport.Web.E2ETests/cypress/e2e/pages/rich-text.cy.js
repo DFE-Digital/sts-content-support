@@ -3,8 +3,16 @@ describe('Rich Text Rendering', () => {
     cy.visit('Home/MockContent');
   });
 
-  it('renders heading', () => {
+  it('renders main heading', () => {
     cy.get('h1').should('have.text', 'Mock Content');
+  });
+
+  it('renders sub headings', () => {
+    cy.get('h2').should('contain', 'Heading 2');
+    cy.get('h3').should('contain', 'Heading 3');
+    cy.get('h4').should('contain', 'Heading 4');
+    cy.get('h5').should('contain', 'Heading 5');
+    cy.get('h6').should('contain', 'Heading 6');
   });
 
   it('renders paragraph text', () => {
