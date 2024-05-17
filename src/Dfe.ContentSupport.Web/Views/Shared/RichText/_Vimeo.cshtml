@@ -1,0 +1,11 @@
+@using Newtonsoft.Json.Linq
+@model JObject
+
+@{
+    var vimeoId = Model["data"]["uri"]?.ToString().Split('/').Last();
+}
+
+<div class="column-full vimeo-player">
+    <iframe src="https://player.vimeo.com/video/@vimeoId" width="640" height="360" frameborder="0"
+        allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+</div>
