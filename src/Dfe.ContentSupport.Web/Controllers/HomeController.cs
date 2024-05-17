@@ -11,8 +11,9 @@ public class HomeController(IContentfulService contentfulService) : Controller
     public async Task<IActionResult> Index(string slug)
     {
         if (string.IsNullOrEmpty(slug)) return RedirectToAction("error");
-        var resp = await contentfulService.GetContent(slug) as ContentSupportPage;
+        var resp = await contentfulService.GetContent(slug);
 
+        if(resp is null) return RedirectToAction("error"); 
         return View(resp);
     }
 

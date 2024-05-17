@@ -1,5 +1,8 @@
-﻿namespace Dfe.ContentSupport.Web.Configuration;
+﻿using System.Diagnostics.CodeAnalysis;
 
+namespace Dfe.ContentSupport.Web.Configuration;
+
+[ExcludeFromCodeCoverage]
 public class ContentfulOptions
 {
     public string? DeliveryApiKey { get; set; }
