@@ -25,27 +25,8 @@ env:
   ORG_NAME: dfe-digital
 
 jobs:
-  upgrade-database:
-    runs-on: ubuntu-22.04
-    name: Update Database for ${{ inputs.environment }}
-    environment: ${{ inputs.environment }}
-
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref }}
-
-      - name: Azure CLI Login
-        uses: ./.github/actions/azure-login
-        with:
-          az_tenant_id: ${{ secrets.AZ_TENANT_ID }}
-          az_subscription_id: ${{ secrets.AZ_SUBSCRIPTION_ID }}
-          az_client_id: ${{ secrets.AZ_CLIENT_ID }}
-          az_client_secret: ${{ secrets.AZ_CLIENT_SECRET }}
-
-
   pull-image-from-gcr-and-publish-to-acr:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     name: Pull Image From GitHub Container Registry and Publish to Azure Container Registry
     environment: ${{ inputs.environment }}
     needs: upgrade-database
@@ -74,7 +55,7 @@ jobs:
           docker push ${{ secrets.AZ_ACR_URL }}/${{ env.ACR_DOCKER_IMAGE }}:${{ inputs.branch }}-${{ inputs.checked-out-sha }}-${{ inputs.environment }}
 
   deploy-image:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     name: Deploy Image To ${{ inputs.environment }}
     environment: ${{ inputs.environment }}
     needs: [upgrade-database, pull-image-from-gcr-and-publish-to-acr]

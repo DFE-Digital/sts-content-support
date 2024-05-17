@@ -1,0 +1,9 @@
+project_name                              = "contentsupport"
+environment                               = ""
+azure_location                            = ""
+az_tag_environment                        = "Dev"
+az_tag_product                            = "STS Content and Support"
+az_sql_admin_password                     = ""
+az_sql_admin_userid_postfix               = ""
+az_app_kestrel_endpoint                   = "http://*:8080"
+container_port                            = 8080

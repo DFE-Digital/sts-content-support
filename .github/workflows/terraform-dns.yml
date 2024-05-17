@@ -37,7 +37,7 @@ env:
 jobs:
   terraform-plan:
     name: Terraform plan
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ${{env.TF_WORKING_DIRECTORY}}

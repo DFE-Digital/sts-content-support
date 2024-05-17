@@ -13,7 +13,7 @@ concurrency:
 jobs:
   build-web-resouces:
     name: Build JS and SCSS files
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./src/Dfe.ContentSupport.Web.Node/
