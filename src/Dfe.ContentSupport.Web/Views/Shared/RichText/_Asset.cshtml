@@ -7,5 +7,12 @@
         {
             <img src="@asset.url" alt="@Model.data.target.fields.description" title="@Model.data.target.fields.title" />
         }
+        else if (asset.contentType == "video/mp4" || asset.contentType == "video/quicktime")
+        {
+            <video controls>
+                <source src="@asset.url" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        }
     }
 </div>
