@@ -3,7 +3,7 @@
 namespace Dfe.ContentSupport.Web.Models;
 
 [ExcludeFromCodeCoverage]
-public class Title
+public class Entry : ContentBase
 {
-    public string Text { get; init; } = null!;
+    public RichText RichText { get; set; } = null!;
 }
