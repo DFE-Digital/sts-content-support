@@ -3,6 +3,8 @@ using Contentful.AspNetCore;
 using Dfe.ContentSupport.Web.Extensions;
 using GovUk.Frontend.AspNetCore;
 
+namespace Dfe.ContentSupport.Web;
+
 [ExcludeFromCodeCoverage]
 internal static class Program
 {

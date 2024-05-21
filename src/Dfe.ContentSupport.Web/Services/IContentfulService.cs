@@ -1,4 +1,4 @@
-using Dfe.ContentSupport.Web.Models;
+using Dfe.ContentSupport.Web.ViewModels;
 
 namespace Dfe.ContentSupport.Web.Services;
 

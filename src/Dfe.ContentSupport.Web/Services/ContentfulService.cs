@@ -2,7 +2,7 @@ using System.Xml.Linq;
 using Contentful.Core;
 using Contentful.Core.Models;
 using Contentful.Core.Search;
-using Dfe.ContentSupport.Web.Models;
+using Dfe.ContentSupport.Web.ViewModels;
 
 namespace Dfe.ContentSupport.Web.Services;
 

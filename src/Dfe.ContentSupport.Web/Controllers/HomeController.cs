@@ -1,6 +1,6 @@
 using System.Diagnostics;
-using Dfe.ContentSupport.Web.Models;
 using Dfe.ContentSupport.Web.Services;
+using Dfe.ContentSupport.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
