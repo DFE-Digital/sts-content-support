@@ -1,22 +1,21 @@
 @using Dfe.ContentSupport.Web.Common
-@using Newtonsoft.Json.Linq
-@model JToken
+@model ContentItemBase
 
 <th scope="col">
-    @if (Model["content"] is JArray childNodes)
+    @if (Model.Content.Any())
     {
-        foreach (var childNode in childNodes)
+        foreach (var childNode in Model.Content)
         {
-            if (childNode["nodeType"].ToString() == RichTextTags.Paragraph)
+            if (childNode.NodeType == RichTextTags.Paragraph)
             {
-                foreach (var grandChildNode in childNode["content"])
+                foreach (var grandChildNode in childNode.Content)
                 {
-                    <partial name="RichText/_RichText" model="@grandChildNode" />
+                    <partial name="RichText/_RichText" model="@grandChildNode"/>
                 }
             }
             else
             {
-                <partial name="RichText/_RichText" model="@childNode" />
+                <partial name="RichText/_RichText" model="@childNode"/>
             }
         }
     }

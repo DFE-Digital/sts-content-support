@@ -1,10 +1,9 @@
-@using Newtonsoft.Json.Linq
-@model JToken
+@model ContentItemBase
 
 <ul>
-    @if (Model["content"] is JArray childNodes)
+    @if (Model.Content.Any())
     {
-        foreach (var childNode in childNodes)
+        foreach (var childNode in Model.Content)
         {
             <partial name="RichText/_RichText" model="@childNode" />
         }

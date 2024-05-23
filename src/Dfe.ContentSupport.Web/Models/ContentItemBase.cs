@@ -3,7 +3,7 @@
 namespace Dfe.ContentSupport.Web.Models;
 
 [ExcludeFromCodeCoverage]
-public class RichText
+public class ContentItemBase
 {
     public string NodeType { get; set; } = null!;
     public Data Data { get; set; } = null!;

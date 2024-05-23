@@ -1,8 +1,9 @@
+@model Entry;
 <div>
     @{
-        var richText = Model["RichText"];
+        var richText = Model.RichText;
 
-        if (richText != null && richText["nodeType"] != null)
+        if (richText is { NodeType: not null })
         {
             <partial name="RichText/_RichText" model="@richText" />
         }

@@ -1,32 +1,31 @@
 @using Dfe.ContentSupport.Web.Common
-@using Newtonsoft.Json.Linq
-@model JToken
+@model ContentItemBase
 
 <table>
     <thead>
-        @if (Model["content"] is JArray headerNodes)
+    @if (Model.Content.Any())
+    {
+        foreach (var childNode in Model.Content)
         {
-            foreach (var childNode in headerNodes)
-            {
-                if (childNode["nodeType"].ToString() == RichTextTags.TableRow && childNode["content"][0]["nodeType"].ToString() ==
+            if (childNode.NodeType == RichTextTags.TableRow && childNode.Content[0].NodeType ==
                 RichTextTags.TableHeaderCell)
-                {
-                    <partial name="RichText/_TableRow" model="@childNode" />
-                }
+            {
+                <partial name="RichText/_TableRow" model="@childNode"/>
             }
         }
+    }
     </thead>
     <tbody>
-        @if (Model["content"] is JArray bodyNodes)
+    @if (Model.Content.Any())
+    {
+        foreach (var childNode in Model.Content)
         {
-            foreach (var childNode in bodyNodes)
-            {
-                if (childNode["nodeType"].ToString() == RichTextTags.TableRow && childNode["content"][0]["nodeType"].ToString() ==
+            if (childNode.NodeType == RichTextTags.TableRow && childNode.Content[0].NodeType ==
                 RichTextTags.TableCell)
-                {
-                    <partial name="RichText/_TableRow" model="@childNode" />
-                }
+            {
+                <partial name="RichText/_TableRow" model="@childNode"/>
             }
         }
+    }
     </tbody>
 </table>

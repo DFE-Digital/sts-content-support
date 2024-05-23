@@ -1,18 +1,20 @@
+@model ContentItemBase
+
 @{
-    var asset = Model.data.target.fields.file;
+    var asset = Model.Data.Target.Fields.File;
 }
 <div class="column-full">
-    @{
-        if (asset.contentType == "image/jpeg" || asset.contentType == "image/png")
-        {
-            <img src="@asset.url" alt="@Model.data.target.fields.description" title="@Model.data.target.fields.title" />
-        }
-        else if (asset.contentType == "video/mp4" || asset.contentType == "video/quicktime")
-        {
+
+    @switch (asset.ContentType)
+    {
+        case "image/jpeg" or "image/png":
+            <img src="@asset.Url" alt="@Model.Data.Target.Fields.Description" title="@Model.Data.Target.Fields.Title"/>
+            break;
+        case "video/mp4" or "video/quicktime":
             <video controls>
-                <source src="@asset.url" type="video/mp4">
+                <source src="@asset.Url" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
-        }
+            break;
     }
 </div>

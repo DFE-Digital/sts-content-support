@@ -1,9 +1,8 @@
 @using Dfe.ContentSupport.Web.Common
-@using Newtonsoft.Json.Linq
-@model JObject
+@model ContentItemBase
 
 @{
-    var nodeType = Model["nodeType"]?.ToString();
+    var nodeType = Model.NodeType;
 
     switch (nodeType)
     {
@@ -60,8 +59,6 @@
             break;
         case RichTextTags.Text:
             <partial name="RichText/_Text" model="@Model" />
-            break;
-        default:
             break;
     }
 }

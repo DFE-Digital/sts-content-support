@@ -1,18 +1,13 @@
-@using Newtonsoft.Json.Linq
-@model JObject
+@model ContentItem
 
 @{
-    var value = Model["value"]?.ToString();
-    var marks = Model["marks"] as JArray;
-
-    var isBold = marks?.Any(mark => mark["type"]?.ToString() == "bold") ?? false;
-
+    var isBold = Model.Marks.Any(mark => mark.Type == "bold");
     if (isBold)
     {
-        <strong>@value</strong>
+        <strong>@Model.Value</strong>
     }
     else
     {
-        @value
+        @Model.Value
     }
 }
