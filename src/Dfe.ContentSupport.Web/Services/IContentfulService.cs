@@ -1,4 +1,4 @@
-﻿using Contentful.Core;
+using Contentful.Core;
 
 namespace Dfe.ContentSupport.Web.Services
 {

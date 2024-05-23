@@ -1,4 +1,4 @@
-﻿using Contentful.Core;
+using Contentful.Core;
 using Contentful.Core.Configuration;
 using System.Net.Http;
 
@@ -9,7 +9,7 @@ namespace Dfe.ContentSupport.Web.Services
 
         public IContentfulClient ContentfulClient(bool isPreview = false)
         {
-            var options = new ContentfulOptions()
+            var options = new ContentfulOptions
             {
                 UsePreviewApi = isPreview,
                 DeliveryApiKey = contentfulOptions.DeliveryApiKey,
