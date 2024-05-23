@@ -29,7 +29,7 @@ public class HomeControllerTests
         result.Should().BeOfType<RedirectToActionResult>();
         (result as RedirectToActionResult)!.ActionName.Should().BeEquivalentTo("error");
     }    
-
+    
     [Fact]
     public async void Index_Calls_Service_GetContent()
     {
@@ -51,7 +51,7 @@ public class HomeControllerTests
         result.Should().BeOfType<RedirectToActionResult>();
         (result as RedirectToActionResult)!.ActionName.Should().BeEquivalentTo("error");
     } 
-
+    
     [Fact]
     public async void Index_WithSlug_Returns_View()
     {
