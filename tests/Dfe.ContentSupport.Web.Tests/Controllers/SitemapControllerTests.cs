@@ -7,7 +7,7 @@ namespace Dfe.ContentSupport.Web.Tests.Controllers;
 
 public class SitemapControllerTests
 {
-    private readonly Mock<IContentService> _contentfulServiceMock = new();
+    private readonly Mock<IContentfulService> _contentfulServiceMock = new();
     private SitemapController GetController() => new(_contentfulServiceMock.Object);
 
     [Fact]
