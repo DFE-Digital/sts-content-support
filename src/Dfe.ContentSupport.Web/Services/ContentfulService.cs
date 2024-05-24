@@ -1,43 +1,26 @@
-using System.Xml.Linq;
 using Contentful.Core;
-using Contentful.Core.Models;
-using Contentful.Core.Search;
-using Dfe.ContentSupport.Web.ViewModels;
+using Contentful.Core.Configuration;
+using System.Net.Http;
 
-namespace Dfe.ContentSupport.Web.Services;
-
-public class ContentfulService(IContentfulClient contentfulClient) : IContentfulService
+namespace Dfe.ContentSupport.Web.Services
 {
-    public async Task<ContentSupportPage?> GetContent(string slug)
+    public class ContentfulService(ContentfulOptions contentfulOptions, HttpClient httpClient) : IContentfulService
     {
-        var resp = await GetContentSupportPages(nameof(ContentSupportPage.Slug), slug);
-        return resp is not null &&resp.Any() ? resp.First() : null;
-    }
 
-    public async Task<string> GenerateSitemap(string baseUrl)
-    {
-        var resp = await GetContentSupportPages(nameof(ContentSupportPage.IsSitemap), "true");
+        public IContentfulClient ContentfulClient(bool isPreview = false)
+        {
+            var options = new ContentfulOptions
+            {
+                UsePreviewApi = isPreview,
+                DeliveryApiKey = contentfulOptions.DeliveryApiKey,
+                Environment = contentfulOptions.Environment,
+                ManagementApiKey = contentfulOptions.ManagementApiKey,
+                PreviewApiKey = contentfulOptions.PreviewApiKey,
+                SpaceId = contentfulOptions.SpaceId,
+            };
 
-        XNamespace xmlns = "http://www.sitemaps.org/schemas/sitemap/0.9";
-        var sitemap = new XDocument(
-            new XDeclaration("1.0", "UTF-8", null),
-            new XElement(xmlns + "urlset", new XAttribute("xmlns", xmlns),
-                from url in resp
-                select
-                    new XElement(xmlns + "url",
-                        new XElement(xmlns + "loc", $"{baseUrl}{url.Slug}"),
-                        new XElement(xmlns + "changefreq", "yearly")
-                    )
-            )
-        );
+            return new ContentfulClient(httpClient, options);
 
-        return sitemap.ToString();
-    }
-
-    private async Task<ContentfulCollection<ContentSupportPage>> GetContentSupportPages(string field, string value)
-    {
-        var builder = QueryBuilder<ContentSupportPage>.New.ContentTypeIs(nameof(ContentSupportPage))
-            .FieldEquals($"fields.{field}", value);
-        return await contentfulClient.GetEntries(builder);
+        }
     }
 }
