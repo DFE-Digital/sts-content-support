@@ -14,7 +14,7 @@ namespace Dfe.ContentSupport.Web.Http
 
         public async Task<ContentfulCollection<T>> Query<T>(QueryBuilder<T> queryBuilder, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var json = System.IO.File.ReadAllText("MockData/mockContent.json");
+            var json = System.IO.File.ReadAllText("Http/StubData/ContentfulCollection.json");
             var resp = JsonConvert.DeserializeObject<ContentfulCollection<T>>(json);
             return await Task.FromResult<ContentfulCollection<T>>(resp);
         }
