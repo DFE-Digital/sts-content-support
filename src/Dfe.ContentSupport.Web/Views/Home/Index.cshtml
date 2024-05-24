@@ -1,12 +1,8 @@
-﻿@using Newtonsoft.Json.Linq
-@model ContentSupportPage
+﻿@model ContentSupportPage
 
-<partial name="_Hero" model="@Model.Heading" />
+<partial name="_Hero" model="@Model.Heading"/>
 
-<main class="govuk-main-wrapper" id="main-content" role="main">
-    @foreach (var content in @Model.Content)
-    {
-        <partial name="_Content" model="@content" />
-    }
-
-</main>
+@foreach (var content in @Model.Content)
+{
+    <partial name="_Content" model="@content"/>
+}
