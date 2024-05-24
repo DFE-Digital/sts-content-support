@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿
+using System.Diagnostics.CodeAnalysis;
 
 namespace Dfe.ContentSupport.Web.Models;
 
@@ -6,4 +7,5 @@ namespace Dfe.ContentSupport.Web.Models;
 public class Data
 {
     public Target Target { get; set; } = null!;
+    public Uri Uri { get; set; } = null!;
 }

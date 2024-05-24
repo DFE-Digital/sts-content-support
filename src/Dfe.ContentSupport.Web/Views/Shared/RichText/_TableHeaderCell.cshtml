@@ -1,0 +1,22 @@
+@using Dfe.ContentSupport.Web.Common
+@model ContentItemBase
+
+<th scope="col">
+    @if (Model.Content.Any())
+    {
+        foreach (var childNode in Model.Content)
+        {
+            if (childNode.NodeType == RichTextTags.Paragraph)
+            {
+                foreach (var grandChildNode in childNode.Content)
+                {
+                    <partial name="RichText/_RichText" model="@grandChildNode"/>
+                }
+            }
+            else
+            {
+                <partial name="RichText/_RichText" model="@childNode"/>
+            }
+        }
+    }
+</th>

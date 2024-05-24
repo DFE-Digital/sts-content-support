@@ -1,0 +1,31 @@
+@using Dfe.ContentSupport.Web.Common
+@model ContentItemBase
+
+<table>
+    <thead>
+    @if (Model.Content.Any())
+    {
+        foreach (var childNode in Model.Content)
+        {
+            if (childNode.NodeType == RichTextTags.TableRow && childNode.Content[0].NodeType ==
+                RichTextTags.TableHeaderCell)
+            {
+                <partial name="RichText/_TableRow" model="@childNode"/>
+            }
+        }
+    }
+    </thead>
+    <tbody>
+    @if (Model.Content.Any())
+    {
+        foreach (var childNode in Model.Content)
+        {
+            if (childNode.NodeType == RichTextTags.TableRow && childNode.Content[0].NodeType ==
+                RichTextTags.TableCell)
+            {
+                <partial name="RichText/_TableRow" model="@childNode"/>
+            }
+        }
+    }
+    </tbody>
+</table>

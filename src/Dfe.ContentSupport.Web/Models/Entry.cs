@@ -5,5 +5,5 @@ namespace Dfe.ContentSupport.Web.Models;
 [ExcludeFromCodeCoverage]
 public class Entry : ContentBase
 {
-    public RichText RichText { get; set; } = null!;
+    public ContentItemBase RichText { get; set; } = null!;
 }
