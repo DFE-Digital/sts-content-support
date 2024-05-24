@@ -1,4 +1,6 @@
-﻿using Contentful.Core.Configuration;
+﻿using Contentful.Core;
+using Contentful.Core.Configuration;
+using Dfe.ContentSupport.Web.Http;
 using Dfe.ContentSupport.Web.Services;
 using Microsoft.Extensions.Configuration;
 
@@ -12,7 +14,19 @@ public static class WebApplicationBuilderExtensions
         app.Configuration.GetSection("ContentfulOptions").Bind(contentfulOptions);
         app.Services.AddSingleton(contentfulOptions);
 
+
         app.Services.AddTransient<IContentfulService, ContentfulService>();
         app.Services.AddTransient<IContentService, ContentService>();
+
+        if (!app.Environment.Equals("e2e"))
+        {
+            app.Services.AddTransient<IHttpContentfulClient, HttpContentfulClient>();
+        }
+        else
+        {
+            app.Services.AddTransient<IHttpContentfulClient, StubHttpContentfulClient>();
+        }
+
+
     }
 }

@@ -1,5 +1,6 @@
 using Contentful.Core;
 using Contentful.Core.Configuration;
+using Dfe.ContentSupport.Web.Http;
 using System.Net.Http;
 
 namespace Dfe.ContentSupport.Web.Services
@@ -7,7 +8,7 @@ namespace Dfe.ContentSupport.Web.Services
     public class ContentfulService(ContentfulOptions contentfulOptions, HttpClient httpClient) : IContentfulService
     {
 
-        public IContentfulClient ContentfulClient(bool isPreview = false)
+        public IHttpContentfulClient ContentfulClient(bool isPreview = false)
         {
             var options = new ContentfulOptions
             {
@@ -19,7 +20,7 @@ namespace Dfe.ContentSupport.Web.Services
                 SpaceId = contentfulOptions.SpaceId,
             };
 
-            return new ContentfulClient(httpClient, options);
+            return new HttpContentfulClient(httpClient, options);
 
         }
     }
