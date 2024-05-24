@@ -38,6 +38,6 @@ public class ContentService(IContentfulService contentfulService) : IContentServ
         var builder = QueryBuilder<ContentSupportPage>.New.ContentTypeIs(nameof(ContentSupportPage))
             .FieldEquals($"fields.{field}", value);
 
-        return await contentfulService.ContentfulClient(isPreview).GetEntries(builder);
+        return await contentfulService.ContentfulClient(isPreview).Query(builder);
     }
 }
