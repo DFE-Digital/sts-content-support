@@ -34,6 +34,12 @@ internal static class Program
         );
 
         app.MapControllerRoute(
+            "mockContent",
+            "Home/MockContent",
+            new { controller = "Home", action = "MockContent" }
+        );
+
+        app.MapControllerRoute(
             "default/{slug}",
             "{slug?}",
             new { controller = "Home", action = "Index" }
