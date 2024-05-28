@@ -26,7 +26,5 @@ public static class WebApplicationBuilderExtensions
         {
             app.Services.AddTransient<IHttpContentfulClient, HttpContentfulClient>();
         }
-
-
     }
 }
