@@ -9,7 +9,7 @@ public class ContentNotFoundExceptionTests
     {
         const string message = "dummy";
 
-        ContentNotFoundException ex = new ContentNotFoundException(message);
+        var ex = new ContentNotFoundException(message);
 
         ex.Should().BeOfType<ContentNotFoundException>();
         ex.Should().BeAssignableTo<Exception>();

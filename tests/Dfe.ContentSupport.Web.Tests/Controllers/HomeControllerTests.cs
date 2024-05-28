@@ -6,8 +6,63 @@ namespace Dfe.ContentSupport.Web.Tests.Controllers;
 
 public class HomeControllerTests
 {
-    private readonly Mock<IContentfulService> _contentfulServiceMock = new();
-    private HomeController GetController() => new(_contentfulServiceMock.Object);
+    private readonly Mock<IContentService> _contentServiceMock = new();
+
+    private HomeController GetController()
+    {
+        return new HomeController(_contentServiceMock.Object);
+    }
+
+
+    [Fact]
+    public async void Index_NoSlug_Returns_ErrorAction()
+    {
+        var sut = GetController();
+
+        var result = await sut.Index(string.Empty);
+
+        result.Should().BeOfType<RedirectToActionResult>();
+        (result as RedirectToActionResult)!.ActionName.Should().BeEquivalentTo("error");
+    }
+
+    [Fact]
+    public async void Index_Calls_Service_GetContent()
+    {
+        const string dummySlug = "dummySlug";
+        const bool isPreview = true;
+        var sut = GetController();
+
+        await sut.Index(dummySlug, isPreview);
+
+        _contentServiceMock.Verify(o => o.GetContent(dummySlug, isPreview), Times.Once);
+    }
+
+    [Fact]
+    public async void Index_NullResponse_ReturnsErrorAction()
+    {
+        _contentServiceMock.Setup(o => o.GetContent(It.IsAny<string>(), It.IsAny<bool>()))
+            .ReturnsAsync((ContentSupportPage?)null);
+
+        var sut = GetController();
+
+        var result = await sut.Index("slug");
+
+        result.Should().BeOfType<RedirectToActionResult>();
+        (result as RedirectToActionResult)!.ActionName.Should().BeEquivalentTo("error");
+    }
+
+    [Fact]
+    public async void Index_WithSlug_Returns_View()
+    {
+        _contentServiceMock.Setup(o => o.GetContent(It.IsAny<string>(), It.IsAny<bool>()))
+            .ReturnsAsync(new ContentSupportPage());
+
+        var sut = GetController();
+        var result = await sut.Index("slug1");
+
+        result.Should().BeOfType<ViewResult>();
+        (result as ViewResult)!.Model.Should().BeOfType<ContentSupportPage>();
+    }
 
     [Fact]
     public void Privacy_Returns_EmptyView()
@@ -20,57 +75,11 @@ public class HomeControllerTests
     }
 
     [Fact]
-    public async void Index_NoSlug_Returns_ErrorAction()
-    {
-        var sut = GetController();
-
-        var result = await sut.Index(string.Empty);
-
-        result.Should().BeOfType<RedirectToActionResult>();
-        (result as RedirectToActionResult)!.ActionName.Should().BeEquivalentTo("error");
-    }    
-    
-    [Fact]
-    public async void Index_Calls_Service_GetContent()
-    {
-        var sut = GetController();
-
-        await sut.Index("slug");
-
-       _contentfulServiceMock.Verify(o=>o.GetContent(It.IsAny<string>()),Times.Once);
-    } 
-
-    [Fact]
-    public async void Index_NullResponse_ReturnsErrorAction()
-    {
-        _contentfulServiceMock.Setup(o => o.GetContent(It.IsAny<string>())).ReturnsAsync((ContentSupportPage?)null);
-        var sut = GetController();
-
-        var result = await sut.Index("slug");
-
-        result.Should().BeOfType<RedirectToActionResult>();
-        (result as RedirectToActionResult)!.ActionName.Should().BeEquivalentTo("error");
-    } 
-    
-    [Fact]
-    public async void Index_WithSlug_Returns_View()
-    {
-        _contentfulServiceMock.Setup(o => o.GetContent(It.IsAny<string>()))
-            .ReturnsAsync(new ContentSupportPage());
-
-        var sut = GetController();
-        var result = await sut.Index("slug1");
-
-        result.Should().BeOfType<ViewResult>();
-        (result as ViewResult)!.Model.Should().BeOfType<ContentSupportPage>();
-    }
-
-    [Fact]
-    public  void Error_Returns_ErrorView()
+    public void Error_Returns_ErrorView()
     {
         var sut = GetController();
         sut.ControllerContext.HttpContext = new DefaultHttpContext();
-        var result =  sut.Error();
+        var result = sut.Error();
 
         result.Should().BeOfType<ViewResult>();
         (result as ViewResult)!.Model.Should().BeOfType<ErrorViewModel>();
