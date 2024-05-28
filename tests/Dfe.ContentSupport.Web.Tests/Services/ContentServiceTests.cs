@@ -10,17 +10,6 @@ public class ContentServiceTests
 {
     private readonly Mock<IHttpContentfulClient> _httpContentClientMock = new();
 
-    private ContentService GetService() => new(GetClient());
-
-    private IContentfulService GetClient() =>
-        new ContentfulService(new ContentfulOptions(), _httpContentClientMock.Object);
-
-    private void SetupResponse(ContentfulCollection<ContentSupportPage>? response = null)
-    {
-        _httpContentClientMock.Setup(o => o.Query(It.IsAny<QueryBuilder<ContentSupportPage>>(),
-            It.IsAny<CancellationToken>())).ReturnsAsync(response ?? _response);
-    }
-
 
     private readonly ContentfulCollection<ContentSupportPage> _response = new()
     {
@@ -28,9 +17,25 @@ public class ContentServiceTests
         {
             new() { Slug = "slug1", IsSitemap = true },
             new() { Slug = "slug2", IsSitemap = false },
-            new() { Slug = "slug3", IsSitemap = true },
+            new() { Slug = "slug3", IsSitemap = true }
         }
     };
+
+    private ContentService GetService()
+    {
+        return new ContentService(GetClient());
+    }
+
+    private IContentfulService GetClient()
+    {
+        return new ContentfulService(new ContentfulOptions(), _httpContentClientMock.Object);
+    }
+
+    private void SetupResponse(ContentfulCollection<ContentSupportPage>? response = null)
+    {
+        _httpContentClientMock.Setup(o => o.Query(It.IsAny<QueryBuilder<ContentSupportPage>>(),
+            It.IsAny<CancellationToken>())).ReturnsAsync(response ?? _response);
+    }
 
     [Fact]
     public async void GetContent_Calls_Client_Once()

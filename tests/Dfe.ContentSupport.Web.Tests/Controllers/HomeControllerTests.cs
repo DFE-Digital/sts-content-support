@@ -7,7 +7,11 @@ namespace Dfe.ContentSupport.Web.Tests.Controllers;
 public class HomeControllerTests
 {
     private readonly Mock<IContentService> _contentServiceMock = new();
-    private HomeController GetController() => new(_contentServiceMock.Object);
+
+    private HomeController GetController()
+    {
+        return new HomeController(_contentServiceMock.Object);
+    }
 
 
     [Fact]

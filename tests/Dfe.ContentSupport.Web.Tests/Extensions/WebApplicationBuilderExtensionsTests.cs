@@ -19,9 +19,7 @@ public class WebApplicationBuilderExtensionsTests
             typeof(IHttpContentfulClient)
         };
         foreach (var type in types)
-        {
             builder.Services.Where(o => o.ServiceType == type).Should().ContainSingle();
-        }
     }
 
     [Fact]
@@ -42,7 +40,7 @@ public class WebApplicationBuilderExtensionsTests
         {
             EnvironmentName = "e2e"
         });
-        
+
         builder.InitDependencyInjection();
 
         var service = builder.Services.First(o => o.ServiceType == typeof(IHttpContentfulClient));

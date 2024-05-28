@@ -7,14 +7,18 @@ namespace Dfe.ContentSupport.Web.Tests.Controllers;
 public class SitemapControllerTests
 {
     private readonly Mock<IContentService> _contentServiceMock = new();
-    private SitemapController GetController() => new(_contentServiceMock.Object);
+
+    private SitemapController GetController()
+    {
+        return new SitemapController(_contentServiceMock.Object);
+    }
 
     [Fact]
     public async void Index_Calls_Service_GenerateSitemap()
     {
         var sut = GetController();
         sut.ControllerContext.HttpContext = new DefaultHttpContext();
-        string baseUrl =
+        var baseUrl =
             $"{sut.ControllerContext.HttpContext.Request.Scheme}://{sut.ControllerContext.HttpContext.Request.Host}/";
 
         await sut.Index();
