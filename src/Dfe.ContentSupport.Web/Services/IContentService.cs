@@ -4,6 +4,6 @@ namespace Dfe.ContentSupport.Web.Services;
 
 public interface IContentService
 {
-    Task<ContentSupportPage> GetContent(string slug, bool isPreview);
+    Task<ContentSupportPage?> GetContent(string slug, bool isPreview);
     Task<string> GenerateSitemap(string baseUrl);
 }

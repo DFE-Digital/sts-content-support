@@ -5,14 +5,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Dfe.ContentSupport.Web.Controllers;
 
-public class HomeController(IContentService contentfulService)
+public class HomeController(IContentService contentService)
     : Controller
 {
     public async Task<IActionResult> Index(string slug, bool isPreview = false)
     {
         if (string.IsNullOrEmpty(slug)) return RedirectToAction("error");
 
-        var resp = await contentfulService.GetContent(slug, isPreview);
+        var resp = await contentService.GetContent(slug, isPreview);
         if(resp is null) return RedirectToAction("error"); 
         return View(resp);
     }

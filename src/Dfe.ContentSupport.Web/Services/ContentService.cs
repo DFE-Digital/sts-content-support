@@ -7,15 +7,16 @@ namespace Dfe.ContentSupport.Web.Services;
 
 public class ContentService(IContentfulService contentfulService) : IContentService
 {
-    public async Task<ContentSupportPage> GetContent(string slug, bool isPreview= false)
+    public async Task<ContentSupportPage?> GetContent(string slug, bool isPreview = false)
     {
         var resp = await GetContentSupportPages(nameof(ContentSupportPage.Slug), slug, isPreview);
-        return resp is null ? new ContentSupportPage() : resp.First();
+        return resp is not null && resp.Any() ? resp.First() : null;
     }
 
     public async Task<string> GenerateSitemap(string baseUrl)
     {
-        var resp = await GetContentSupportPages(nameof(ContentSupportPage.IsSitemap), "true",false);
+        var resp =
+            await GetContentSupportPages(nameof(ContentSupportPage.IsSitemap), "true", false);
 
         XNamespace xmlns = "http://www.sitemaps.org/schemas/sitemap/0.9";
         var sitemap = new XDocument(
@@ -33,7 +34,8 @@ public class ContentService(IContentfulService contentfulService) : IContentServ
         return sitemap.ToString();
     }
 
-    private async Task<ContentfulCollection<ContentSupportPage>> GetContentSupportPages(string field, string value, bool isPreview)
+    private async Task<ContentfulCollection<ContentSupportPage>> GetContentSupportPages(
+        string field, string value, bool isPreview)
     {
         var builder = QueryBuilder<ContentSupportPage>.New.ContentTypeIs(nameof(ContentSupportPage))
             .FieldEquals($"fields.{field}", value);
