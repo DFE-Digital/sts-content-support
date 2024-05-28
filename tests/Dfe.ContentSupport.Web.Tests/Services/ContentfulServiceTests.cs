@@ -1,90 +1,22 @@
-﻿using System.Xml.Linq;
-using Contentful.Core;
-using Contentful.Core.Models;
-using Contentful.Core.Search;
+﻿using Contentful.Core.Configuration;
+using Dfe.ContentSupport.Web.Http;
 
 namespace Dfe.ContentSupport.Web.Tests.Services;
 
 public class ContentfulServiceTests
 {
-    private readonly Mock<IContentfulClient> _contentfulClientMock = new();
-
-    private readonly ContentfulCollection<ContentSupportPage> _response = new()
-    {
-        Items = new List<ContentSupportPage>
-        {
-            new() { Slug = "slug1", IsSitemap = true },
-            new() { Slug = "slug2", IsSitemap = false },
-            new() { Slug = "slug3", IsSitemap = true },
-        }
-    };
-
-    private ContentfulService GetService() => new(_contentfulClientMock.Object);
-
-    private void SetupResponse(ContentfulCollection<ContentSupportPage>? response = null)
-    {
-        _contentfulClientMock.Setup(o => o.GetEntries(It.IsAny<QueryBuilder<ContentSupportPage>>(),
-            It.IsAny<CancellationToken>())).ReturnsAsync(response ?? _response);
-    }
-
+    private readonly Mock<IHttpContentfulClient> _httpContentClientMock = new();
 
     [Fact]
-    public async void GetContent_Calls_Client_Once()
+    public void ContentfulClient_Sets_IsPreview()
     {
-        var sut = GetService();
-        await sut.GetContent(It.IsAny<string>());
+        var options = new ContentfulOptions();
 
-        _contentfulClientMock.Verify(o =>
-                o.GetEntries(
-                    It.IsAny<QueryBuilder<ContentSupportPage>>(),
-                    It.IsAny<CancellationToken>()),
-            Times.Once
-        );
-    }
+        var sut = new ContentfulService(options, _httpContentClientMock.Object);
 
-    [Fact]
-    public async void GetContent_NullResponse_Returns_Null()
-    {
-        var sut = GetService();
-        var result = await sut.GetContent(It.IsAny<string>());
-
-        result.Should().BeNull();
-    }
-
-    [Fact]
-    public async void GetContent_EmptyResponse_Returns_Null()
-    {
-        SetupResponse(new ContentfulCollection<ContentSupportPage> { Items = [] });
-
-        var sut = GetService();
-        var result = await sut.GetContent(It.IsAny<string>());
-
-        result.Should().BeNull();
-    }
-
-    [Fact]
-    public async void GetContent_Returns_First_Result()
-    {
-        SetupResponse();
-
-        var sut = GetService();
-        var result = await sut.GetContent(It.IsAny<string>());
-
-        result.Should().BeEquivalentTo(_response.Items.First());
-    }
-
-    [Fact]
-    public async void GenerateSitemap_Should_Generate_Expected()
-    {
-        const string expectedStr =
-            """<?xml version="1.0" encoding="UTF-8" standalone="no"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>DUMMY_slug1</loc><changefreq>yearly</changefreq></url><url><loc>DUMMY_slug2</loc><changefreq>yearly</changefreq></url><url><loc>DUMMY_slug3</loc><changefreq>yearly</changefreq></url></urlset>""";
-        SetupResponse();
-
-        var expected = XDocument.Parse(expectedStr);
-        var sut = GetService();
-        var resultStr = await sut.GenerateSitemap("DUMMY_");
-        var result = XDocument.Parse(resultStr);
-
-        result.Should().BeEquivalentTo(expected);
+        sut.ContentfulClient(true);
+        options.UsePreviewApi.Should().BeTrue();
+        sut.ContentfulClient();
+        options.UsePreviewApi.Should().BeFalse();
     }
 }
