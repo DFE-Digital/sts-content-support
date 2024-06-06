@@ -1,10 +1,23 @@
 @model ContentItemBase
+    <section class="attachment">
+        <div class="attachment-thumbnail">
+            <a href="@Model.Data.Target.Asset.File.Url" download>
+                <img src="file icon" alt="@Model.Data.Target.Asset.File.ContentType" />
+            </a>
+        </div>
 
+        <div class="attachment-details">
+            <h2 class="attachment-title">
+                <a href="@Model.Data.Target.Asset.File.Url" aria-describedby="file-details" class="attachment-link" download>
+                    @Model.Data.Target.Title
+                </a>
+            </h2>
 
-<div>
-    <h2>Custom component</h2>
-    <h3>@Model.Data.Target.Title</h3>
-    <p>@Model.Data.Target.Asset.File.Url</p>
-    <p>@Model.Data.Target.Asset.File.Details.Size</p>
-    <p>@Model.Data.Target.Asset.File.ContentType</p>
-</div>
+            <p class="attachment-metadata">
+                <span class="attachment-attribute" aria-label="file type">@Model.Data.Target.Asset.File.ContentType.Split('/').Last().ToUpper()</span>,
+                <span class="attachment-attribute" aria-label="file size">
+                    @(Model.Data.Target.Asset.File.Details.Size / 1024) KB
+                </span>
+            </p>
+        </div>
+    </section>
