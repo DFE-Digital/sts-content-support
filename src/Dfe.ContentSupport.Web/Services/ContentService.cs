@@ -38,7 +38,8 @@ public class ContentService(IContentfulService contentfulService) : IContentServ
         string field, string value, bool isPreview)
     {
         var builder = QueryBuilder<ContentSupportPage>.New.ContentTypeIs(nameof(ContentSupportPage))
-            .FieldEquals($"fields.{field}", value);
+            .FieldEquals($"fields.{field}", value)
+            .Include(3);
 
         return await contentfulService.ContentfulClient(isPreview).Query(builder);
     }
