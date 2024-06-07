@@ -1,14 +1,37 @@
 @model ContentItemBase
-    <section class="attachment">
+    <section class="attachment govuk-!-margin-top-8">
         <div class="attachment-thumbnail">
             <a href="@Model.Data.Target.Asset.File.Url" download>
-                <img src="file icon" alt="@Model.Data.Target.Asset.File.ContentType" />
+                @{
+                    var fileExtension = Model.Data.Target.Asset.File.ContentType.Split('/').Last().ToLower();
+                    switch (fileExtension)
+                    {
+                        case "pdf":
+                            <partial name="Icons/_Pdf" />
+                            break;
+                        case "csv":
+                        case "xls":
+                        case "xlsx":
+                            <partial name="Icons/_Spreadsheet" />
+                            break;
+                        case "html":
+                        case "htm":
+                            <partial name="Icons/_Html" />
+                            break;
+                        default:
+                            <partial name="Icons/_Generic" />
+                            break;
+                        
+                    }
+                }
+                
+                
             </a>
         </div>
 
         <div class="attachment-details">
             <h2 class="attachment-title">
-                <a href="@Model.Data.Target.Asset.File.Url" aria-describedby="file-details" class="attachment-link" download>
+                <a href="@Model.Data.Target.Asset.File.Url" aria-describedby="file-details" class="govuk-link attachment-link" download>
                     @Model.Data.Target.Title
                 </a>
             </h2>
