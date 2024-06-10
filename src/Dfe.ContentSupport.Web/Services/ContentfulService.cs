@@ -1,9 +1,9 @@
-using Contentful.Core.Configuration;
+using Dfe.ContentSupport.Web.Configuration;
 using Dfe.ContentSupport.Web.Http;
 
 namespace Dfe.ContentSupport.Web.Services
 {
-    public class ContentfulService(ContentfulOptions contentfulOptions, IHttpContentfulClient httpContentfulClient) : IContentfulService
+    public class ContentfulService(CsContentfulOptions contentfulOptions, IHttpContentfulClient httpContentfulClient) : IContentfulService
     {
 
         public IHttpContentfulClient ContentfulClient(bool isPreview = false)
