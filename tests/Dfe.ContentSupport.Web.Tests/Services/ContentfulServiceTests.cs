@@ -1,4 +1,4 @@
-﻿using Contentful.Core.Configuration;
+﻿using Dfe.ContentSupport.Web.Configuration;
 using Dfe.ContentSupport.Web.Http;
 
 namespace Dfe.ContentSupport.Web.Tests.Services;
@@ -10,7 +10,7 @@ public class ContentfulServiceTests
     [Fact]
     public void ContentfulClient_Sets_IsPreview()
     {
-        var options = new ContentfulOptions();
+        var options = new CsContentfulOptions();
 
         var sut = new ContentfulService(options, _httpContentClientMock.Object);
 

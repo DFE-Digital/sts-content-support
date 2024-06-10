@@ -1,5 +1,5 @@
 ﻿using System.Xml.Linq;
-using Contentful.Core.Configuration;
+using Dfe.ContentSupport.Web.Configuration;
 using Contentful.Core.Models;
 using Contentful.Core.Search;
 using Dfe.ContentSupport.Web.Http;
@@ -28,7 +28,7 @@ public class ContentServiceTests
 
     private IContentfulService GetClient()
     {
-        return new ContentfulService(new ContentfulOptions(), _httpContentClientMock.Object);
+        return new ContentfulService(new CsContentfulOptions(), _httpContentClientMock.Object);
     }
 
     private void SetupResponse(ContentfulCollection<ContentSupportPage>? response = null)
