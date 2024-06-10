@@ -60,5 +60,9 @@
         case RichTextTags.Text:
             <partial name="RichText/_Text" model="@Model" />
             break;
+        case RichTextTags.EmbeddedEntry:
+        case RichTextTags.EmbeddedEntryInline:
+            <partial name="RichText/_Entry" model="@Model" />
+            break;
     }
 }
