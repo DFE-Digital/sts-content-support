@@ -1,0 +1,15 @@
+@model ContentItemBase
+
+@{
+    var target = Model.Data.Target;
+
+    if (target.JumpIdentifier is not null)
+    {
+        <div id=@target.JumpIdentifier></div>
+    }
+
+    if (target.RichText is { NodeType: not null })
+    {
+        <partial name="RichText/_RichText" model="@target.RichText"/>
+    }
+}

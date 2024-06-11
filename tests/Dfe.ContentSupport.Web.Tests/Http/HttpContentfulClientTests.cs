@@ -1,4 +1,4 @@
-﻿using Contentful.Core.Configuration;
+﻿using Dfe.ContentSupport.Web.Configuration;
 using Contentful.Core.Errors;
 using Contentful.Core.Search;
 using Dfe.ContentSupport.Web.Http;
@@ -10,9 +10,9 @@ public class HttpContentfulClientTests
     [Fact]
     public async void Client_Calls_Contentful_And_Bounce()
     {
-        var sut = new HttpContentfulClient(new HttpClient(), new ContentfulOptions());
+        var sut = new HttpContentfulClient(new HttpClient(), new CsContentfulOptions());
 
-        await sut.Invoking(o => o.Query(It.IsAny<QueryBuilder<dynamic>>())).Should()
+        await sut.Invoking(o => o.Query(new QueryBuilder<dynamic>())).Should()
             .ThrowExactlyAsync<ContentfulException>()
             .WithMessage("The resource could not be found.");
     }
