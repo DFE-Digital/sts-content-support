@@ -3,15 +3,12 @@
 @{
     var contentTypeId = Model.Data.Target.Sys.ContentType?.Sys.Id;
 
-    if (!string.IsNullOrEmpty(contentTypeId))
+    switch (contentTypeId)
     {
-        switch (contentTypeId)
-        {
-            case "Attachment":
-                <partial name="RichText/Custom/_Attachment" model="Model" />
-                break;
-            default:
-                break;
-        }
+        case "Attachment":
+            <partial name="RichText/Custom/_Attachment" model="Model" />
+            break;
+        default:
+            break;
     }
 }
