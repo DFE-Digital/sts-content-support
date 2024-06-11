@@ -12,7 +12,7 @@ public class HttpContentfulClientTests
     {
         var sut = new HttpContentfulClient(new HttpClient(), new CsContentfulOptions());
 
-        await sut.Invoking(o => o.Query(It.IsAny<QueryBuilder<dynamic>>())).Should()
+        await sut.Invoking(o => o.Query(new QueryBuilder<dynamic>())).Should()
             .ThrowExactlyAsync<ContentfulException>()
             .WithMessage("The resource could not be found.");
     }
