@@ -11,11 +11,7 @@ public class HttpContentfulClient(HttpClient httpClient, CsContentfulOptions opt
     public Task<ContentfulCollection<T>> Query<T>(QueryBuilder<T> queryBuilder,
         CancellationToken cancellationToken = default)
     {
-        if (options.IncludeDepth != 0)
-        {
-            queryBuilder = queryBuilder.Include(options.IncludeDepth);
-        }
-
+        queryBuilder = queryBuilder.Include(options.IncludeDepth);
         return GetEntries(queryBuilder, cancellationToken);
     }
 }
