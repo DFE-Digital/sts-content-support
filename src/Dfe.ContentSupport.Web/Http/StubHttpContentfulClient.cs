@@ -1,12 +1,12 @@
 ﻿using Contentful.Core;
-using Contentful.Core.Configuration;
+using Dfe.ContentSupport.Web.Configuration;
 using Contentful.Core.Models;
 using Contentful.Core.Search;
 using Newtonsoft.Json;
 
 namespace Dfe.ContentSupport.Web.Http;
 
-public class StubHttpContentfulClient(HttpClient httpClient, ContentfulOptions options)
+public class StubHttpContentfulClient(HttpClient httpClient, CsContentfulOptions options)
     : ContentfulClient(httpClient, options), IHttpContentfulClient
 {
     public async Task<ContentfulCollection<T>> Query<T>(QueryBuilder<T> queryBuilder,

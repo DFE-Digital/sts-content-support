@@ -15,19 +15,24 @@ public class ContentService(IContentfulService contentfulService) : IContentServ
 
     public async Task<string> GenerateSitemap(string baseUrl)
     {
-        var resp =
-            await GetContentSupportPages(nameof(ContentSupportPage.IsSitemap), "true", false);
+        var resp = await GetContentSupportPages(
+            nameof(ContentSupportPage.IsSitemap),
+            "true",
+            false
+        );
 
         XNamespace xmlns = "http://www.sitemaps.org/schemas/sitemap/0.9";
         var sitemap = new XDocument(
             new XDeclaration("1.0", "UTF-8", null),
-            new XElement(xmlns + "urlset", new XAttribute("xmlns", xmlns),
+            new XElement(
+                xmlns + "urlset",
+                new XAttribute("xmlns", xmlns),
                 from url in resp
-                select
-                    new XElement(xmlns + "url",
-                        new XElement(xmlns + "loc", $"{baseUrl}{url.Slug}"),
-                        new XElement(xmlns + "changefreq", "yearly")
-                    )
+                select new XElement(
+                    xmlns + "url",
+                    new XElement(xmlns + "loc", $"{baseUrl}{url.Slug}"),
+                    new XElement(xmlns + "changefreq", "yearly")
+                )
             )
         );
 
@@ -35,11 +40,14 @@ public class ContentService(IContentfulService contentfulService) : IContentServ
     }
 
     private async Task<ContentfulCollection<ContentSupportPage>> GetContentSupportPages(
-        string field, string value, bool isPreview)
+        string field,
+        string value,
+        bool isPreview
+    )
     {
-        var builder = QueryBuilder<ContentSupportPage>.New.ContentTypeIs(nameof(ContentSupportPage))
-            .FieldEquals($"fields.{field}", value)
-            .Include(3);
+        var builder = QueryBuilder<ContentSupportPage>
+            .New.ContentTypeIs(nameof(ContentSupportPage))
+            .FieldEquals($"fields.{field}", value);
 
         return await contentfulService.ContentfulClient(isPreview).Query(builder);
     }

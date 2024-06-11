@@ -1,0 +1,24 @@
+@model ContentItemBase
+
+@{
+    var target = Model.Data.Target;
+
+    if (target.JumpIdentifier is not null)
+    {
+        <div id=@target.JumpIdentifier></div>
+    }
+    var contentTypeId = Model.Data.Target.Sys.ContentType?.Sys.Id;
+
+    if (!string.IsNullOrEmpty(contentTypeId))
+    {
+        switch (contentTypeId)
+        {
+            case "Attachment":
+                <partial name="RichText/Custom/_Attachment" model="Model" />
+                break;
+            default:
+                <partial name="RichText/_RichText" model="@target.RichText" />
+                break;
+        }
+    }
+}

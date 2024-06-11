@@ -1,11 +1,10 @@
 @model Entry;
-<div id="@Model.JumpIdentifier">
-    @{
-        var richText = Model.RichText;
 
-        if (richText is { NodeType: not null })
-        {
-            <partial name="RichText/_RichText" model="@richText" />
-        }
+@{
+    var richText = Model.RichText;
+
+    if (richText is { NodeType: not null })
+    {
+        <partial name="RichText/_RichText" model="@richText"/>
     }
-</div>
+}
