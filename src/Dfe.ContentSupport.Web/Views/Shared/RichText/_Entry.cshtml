@@ -8,9 +8,7 @@
         <div id=@target.JumpIdentifier></div>
     }
 
-    var contentTypeId = target.Sys.ContentType?.Sys.Id;
-
-    if (contentTypeId is not null)
+    else if (target.Sys.ContentType?.Sys.Id is not null)
     {
         <partial name="RichText/_GDSComponent" model="@Model"/>
     }
