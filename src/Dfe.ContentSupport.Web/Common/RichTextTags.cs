@@ -1,4 +1,5 @@
 namespace Dfe.ContentSupport.Web.Common;
+
 public static class RichTextTags
 {
     public const string Document = "document";
@@ -7,7 +8,6 @@ public static class RichTextTags
     public const string OrderedList = "ordered-list";
     public const string ListItem = "list-item";
     public const string Hyperlink = "hyperlink";
-    
     public const string Table = "table";
     public const string TableRow = "table-row";
     public const string TableHeaderCell = "table-header-cell";

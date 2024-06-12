@@ -8,6 +8,11 @@
         <div id=@target.JumpIdentifier></div>
     }
 
+    else if (target.Sys.ContentType?.Sys.Id is not null)
+    {
+        <partial name="RichText/_GDSComponent" model="@Model"/>
+    }
+
     if (target.RichText is { NodeType: not null })
     {
         <partial name="RichText/_RichText" model="@target.RichText"/>

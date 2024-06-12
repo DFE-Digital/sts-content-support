@@ -86,4 +86,19 @@ describe('Rich Text Rendering', () => {
     cy.get('hr').should('exist');
     cy.get('h2').prev('hr').should('exist');
   });
+
+  it('renders attachment', () => {
+    cy.get('.attachment').should('exist');
+    cy.get('.attachment-thumbnail').should('exist');
+    cy.get('.attachment-details').should('exist');
+    cy.get('.attachment-title').should('exist');
+    cy.get('.attachment-metadata').should('exist');
+    cy.get('.attachment-attribute').should('exist');
+    cy.get('.attachment-link').should('exist');
+    cy.get('.attachment-link').should('have.attr', 'download');
+    cy.get('.attachment-link').should('have.attr', 'href');
+    cy.get('.attachment-link').should('contain', 'Test csv');
+    cy.get('.attachment-attribute').should('contain', 'CSV');
+    cy.get('.attachment-attribute').should('contain', '18 KB');
+  });
 });
