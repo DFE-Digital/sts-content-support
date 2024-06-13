@@ -81,7 +81,7 @@ resource "azurerm_key_vault_secret" "vault_secret_contentful_spaceid" {
 resource "azurerm_key_vault_secret" "vault_secret_contentful_environment" {
   key_vault_id = azurerm_key_vault.vault.id
   name         = "contentful--environment"
-  value        = local.environment
+  value        = local.contentful_environment
 
   lifecycle {
     ignore_changes = [
