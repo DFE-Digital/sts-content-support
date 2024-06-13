@@ -1,17 +1,18 @@
-name: Terraform Plan
+name: Terraform PR Check
 
 on:
-  workflow_dispatch:
-    inputs:
-      environment:
-        type: string
-        description: "The environment to run terraform plan against:"
-        required: true
-  workflow_call:
-    inputs:
-      environment:
-        type: string
-        required: true
+  pull_request:
+    paths:
+      - "terraform/**"
+      - ".github/workflows/terraform-pr-check.yml"
+  push:
+    branches: ["main"]
+    paths:
+      - "terraform/**"
+
+concurrency:
+  group: "${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}"
+  cancel-in-progress: true
 
 env:
   DOTNET_VERSION: ${{ vars.DOTNET_VERSION }}
@@ -34,7 +35,6 @@ env:
   TF_VAR_az_app_kestrel_endpoint: ${{ vars.KESTRELENDPOINT }}
   TF_VAR_az_tag_environment: ${{ vars.AZ_TAG_ENVIRONMENT }}
   TF_VAR_az_tag_product: ${{ vars.AZ_TAG_PRODUCT }}
-  TF_VAR_cdn_frontdoor_origin_host_header_override: ${{secrets.AZ_CDN_FRONTDOOR_ORIGIN_HOST_HEADER_OVERRIDE}}
   TF_VAR_registry_server: "ghcr.io"
   TF_VAR_registry_username: ${{ github.repository_owner }}
   TF_VAR_registry_custom_image_url: "ghcr.io/dfe-digital/sts-content-and-support:latest"
@@ -43,16 +43,17 @@ env:
   TF_WORKING_DIRECTORY: terraform/container-app
 
 jobs:
-  terraform-plan:
-    name: Terraform plan
+  validate-terraform:
+    name: Validate Terraform
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ${{env.TF_WORKING_DIRECTORY}}
-    environment: ${{ inputs.environment }}
     steps:
       - name: Clone repo
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
@@ -92,9 +93,42 @@ jobs:
             -backend-config="container_name=${{ env.TF_BACKEND_CONTAINER_NAME }}"  \
             -backend-config="key=${{ env.TF_BACKEND_KEY }}"
 
-      - name: Plan Terraform changes
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color -compact-warnings
+
+      - name: Terraform plan
         id: plan
-        run: terraform plan
+        run: terraform plan -no-color
+
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt -check -diff
+
+      - name: Validate Terraform docs
+        uses: terraform-docs/gh-actions@v1.0.0
+        with:
+          working-dir: ${{ env.TF_WORKING_DIRECTORY }}
+          config-file: .terraform-docs.yml
+          output-file: terraform-configuration.md
+          output-method: inject
+          git-push: "true"
+
+      - name: Update PR with Terraform results
+        uses: ./.github/actions/post-terraform-results
+        if: github.event_name == 'pull_request'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          plan_stdout: ${{ steps.plan.outputs.stdout }}
+          plan_outcome: ${{ steps.plan.outcome }}
+          fmt_outcome: ${{ steps.fmt.outcome }}
+          init_outcome: ${{ steps.init.outcome }}
+          validate_outcome: ${{ steps.validate.outcome }}
+          validate_stdout: ${{ steps.validate.outputs.stdout }}
+          github_actor: ${{ github.actor }}
+          github_event_name: ${{ github.event_name }}
+          tf_working_directory: ${{ env.TF_WORKING_DIRECTORY }}
+          github_workflow: ${{ github.workflow }}
 
       - name: Remove Runner to KV whitelist
         uses: azure/CLI@v1
@@ -103,3 +137,33 @@ jobs:
           azcliversion: 2.45.0
           inlineScript: |
             az keyvault network-rule remove --name ${{ env.AZ_KEYVAULT_NAME }} --ip-address ${{ steps.whats-my-ip.outputs.ip }} &> /dev/null
+
+  terraform-lint:
+    name: Terraform Lint
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ env.TF_WORKING_DIRECTORY }}
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v4
+
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v4
+        with:
+          tflint_version: v0.44.1
+
+      - name: Run TFLint
+        run: tflint -f compact
+
+  tfsec-pr-commenter:
+    name: tfsec Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v4
+
+      - name: tfsec
+        uses: aquasecurity/tfsec-pr-commenter-action@v1.2.0
+        with:
+          github_token: ${{ github.token }}
