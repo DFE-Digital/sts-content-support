@@ -2,12 +2,14 @@
 
 @{
     var contentTypeId = Model.Data.Target.Sys.ContentType?.Sys.Id;
-
     switch (contentTypeId)
     {
         case "Attachment":
             <partial name="RichText/Custom/_Attachment" model="Model" />
             break;
+        case "csCard":
+            <partial name="RichText/Custom/_Card" model="Model" />
+            break; 
         default:
             break;
     }

@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Reflection.Metadata.Ecma335;
 using Contentful.Core.Configuration;
 using Contentful.Core.Models;
 using Newtonsoft.Json;
@@ -15,4 +16,9 @@ public class Target: Entry
     [JsonConverter(typeof(AssetJsonConverter))]
     public Asset Asset { get; set; } = null!;
     public ContentType ContentType { get; set; } = null!;
+    public string Description { get; set; } = null!;
+    public string Meta { get; set; } = null!;
+    public string ImageAlt { get; set; } = null!;
+    public string Uri { get; set; } = null!;
+    public Image Image { get; set; } = null!;
 }
