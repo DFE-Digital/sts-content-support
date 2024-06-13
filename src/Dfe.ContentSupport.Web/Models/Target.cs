@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 namespace Dfe.ContentSupport.Web.Models;
 
 [ExcludeFromCodeCoverage]
-public class Target: Entry
+public class Target : Entry
 {
     public Fields Fields { get; set; } = null!;
     public Sys Sys { get; set; } = null!;
@@ -15,4 +15,6 @@ public class Target: Entry
     [JsonConverter(typeof(AssetJsonConverter))]
     public Asset Asset { get; set; } = null!;
     public ContentType ContentType { get; set; } = null!;
+    public string SummaryLine { get; set; } = null!;
+    public string Body { get; set; } = null!;
 }
