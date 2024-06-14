@@ -1,23 +1,22 @@
-﻿@model ContentItemBase
+﻿@model Target
 
 @{
-    var target = Model.Data.Target;
 <div class="dfe-card">
-    @if (target.Image is not null)
+    @if (Model.Image is not null)
     {
-        <img src="@target.Image.Fields.File.Url" alt="@target.ImageAlt">
+        <img src="@Model.Image.Fields.File.Url" alt="@Model.ImageAlt">
     }
     <div class="dfe-card-container">
         <h3 class="govuk-heading-m">
-            <a href="@target.Uri" class="govuk-link govuk-link--no-visited-state dfe-card-link--header">@target.Title</a>
+            <a href="@Model.Uri" class="govuk-link govuk-link--no-visited-state dfe-card-link--header">@Model.Title</a>
         </h3>
-        @if (string.IsNullOrEmpty(target.Description) is false)
+        @if (string.IsNullOrEmpty(Model.Description) is false)
         {
-            <p>@target.Description</p>
+            <p>@Model.Description</p>
         }
-        @if (string.IsNullOrEmpty(target.Meta) is false)
+        @if (string.IsNullOrEmpty(Model.Meta) is false)
         {
-            <p class="govuk-body-s">@target.Meta</p>
+            <p class="govuk-body-s">@Model.Meta</p>
         }
     </div>
 </div>}

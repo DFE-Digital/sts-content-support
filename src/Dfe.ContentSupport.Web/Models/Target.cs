@@ -16,4 +16,5 @@ public class Target: Entry
     public string ImageAlt { get; set; } = null!;
     public string Uri { get; set; } = null!;
     public Image Image { get; set; } = null!;
+    public List<Target> Content { get; init; } = [];
 }

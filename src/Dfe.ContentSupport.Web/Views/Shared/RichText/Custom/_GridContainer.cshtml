@@ -1,0 +1,9 @@
+﻿@model ContentItemBase
+
+@{
+<div class="dfe-grid-container">
+    @foreach (var item in Model.Data.Target.Content)
+    {
+        <partial name="RichText/Custom/_Card" model="item"/>
+    }
+</div>}
