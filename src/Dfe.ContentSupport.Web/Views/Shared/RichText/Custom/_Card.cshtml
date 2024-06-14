@@ -11,11 +11,11 @@
         <h3 class="govuk-heading-m">
             <a href="@target.Uri" class="govuk-link govuk-link--no-visited-state dfe-card-link--header">@target.Title</a>
         </h3>
-        @if (string.IsNullOrEmpty(target.Description))
+        @if (string.IsNullOrEmpty(target.Description) is false)
         {
             <p>@target.Description</p>
         }
-        @if (string.IsNullOrEmpty(target.Meta))
+        @if (string.IsNullOrEmpty(target.Meta) is false)
         {
             <p class="govuk-body-s">@target.Meta</p>
         }
