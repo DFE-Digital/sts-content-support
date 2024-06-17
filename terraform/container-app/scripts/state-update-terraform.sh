@@ -11,14 +11,14 @@ RESOURCE_GROUP="$3"
 STATE_CONTAINER="$4"
 STATE_FILE="$5"
 STATE_ACCOUNT="$6"
-RESOURCE_GROUP_PREFIX="${RESOURCE_GROUP%%-conentsupport}"
+RESOURCE_GROUP_PREFIX="${RESOURCE_GROUP%%-cs}"
 
 
 terraform import -var-file="$VAR_FILE" module.main_hosting.azurerm_container_app_environment.container_app_env "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP/providers/Microsoft.App/managedEnvironments/${RESOURCE_GROUP}containerapp"
 
 terraform state rm module.main_hosting.azapi_resource.container_app_env
 
-terraform import -var-file="$VAR_FILE" 'module.main_hosting.azurerm_container_app.container_apps["main"]' "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP/providers/Microsoft.App/containerApps/${RESOURCE_GROUP}-plan-tech-app"
+terraform import -var-file="$VAR_FILE" 'module.main_hosting.azurerm_container_app.container_apps["main"]' "/subscriptions/$SUBSCRIPTION_ID/resourceGroups/$RESOURCE_GROUP/providers/Microsoft.App/containerApps/${RESOURCE_GROUP}-cs-app"
 
 terraform state rm module.main_hosting.azapi_resource.default
 
