@@ -11,8 +11,10 @@
 @section Header {
     <link rel="stylesheet" as="style" href="~/css/application.css">
     <link rel="stylesheet" as="style" href="~/css/site.css">
-    <partial name="_Header" />
-    <partial name="_Hero" model="@Model.Heading" />
+    <header role="banner">
+        <partial name="_Header" />
+        <partial name="_Hero" model="@Model.Heading" />
+    </header>
     @RenderSection("Header", false)
 }
 
