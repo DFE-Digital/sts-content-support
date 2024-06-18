@@ -76,6 +76,28 @@ variable "az_container_port" {
   default     = 8080
 }
 
+variable "image_tag" {
+  description = "Image tag"
+  type        = string
+}
+
+variable "container_app_min_replicas" {
+  description = "Minimum replicas for the container app"
+  type        = number
+  default     = 1
+}
+
+variable "container_app_max_replicas" {
+  description = "Maximum replicas for the container app"
+  type        = number
+  default     = 2
+}
+
+variable "container_app_http_concurrency" {
+  description = "Scale up at this number of HTTP requests"
+  type        = number
+  default     = 10
+}
 
 ##################
 # CDN/Front Door #
