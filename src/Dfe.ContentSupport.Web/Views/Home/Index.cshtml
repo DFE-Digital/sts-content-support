@@ -1,0 +1,8 @@
+﻿@model ContentSupportPage
+
+<partial name="_Hero" model="@Model.Heading"/>
+
+@foreach (var content in @Model.Content)
+{
+    <partial name="_Content" model="@content"/>
+}

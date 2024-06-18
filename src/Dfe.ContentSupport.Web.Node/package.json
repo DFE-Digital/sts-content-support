@@ -1,0 +1,22 @@
+{
+  "name": "dfe.contentsupport.web",
+  "version": "1.0.0",
+  "description": "DFE Content Support Web Application",
+  "type": "module",
+  "scripts": {
+    "gulp": "gulp",
+    "build": "node esbuild.config.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@govuk-prototype-kit/step-by-step": "^2.2.2",
+    "dfe-frontend-alpha": "^1.0.1",
+    "esbuild": "0.19.4",
+    "esbuild-sass-plugin": "^2.16.1",
+    "fs": "^0.0.1-security",
+    "govuk-frontend": "^5.1.0",
+    "sass": "^1.64.1"
+  }
+}

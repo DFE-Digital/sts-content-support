@@ -1,0 +1,14 @@
+@model ContentItemBase
+
+@{
+    var contentTypeId = Model.Data.Target.Sys.ContentType?.Sys.Id;
+
+    switch (contentTypeId)
+    {
+        case "Attachment":
+            <partial name="RichText/Custom/_Attachment" model="Model" />
+            break;
+        default:
+            break;
+    }
+}

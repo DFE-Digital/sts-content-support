@@ -1,0 +1,13 @@
+@model ContentItem
+
+@{
+    var isBold = Model.Marks.Any(mark => mark.Type == "bold");
+    if (isBold)
+    {
+        <strong>@Model.Value</strong>
+    }
+    else
+    {
+        @Model.Value
+    }
+}
