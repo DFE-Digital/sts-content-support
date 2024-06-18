@@ -1,13 +1,15 @@
 @model ContentItemBase
+@{
+    var target = Model.Data.Target;
+}
 <section class="attachment govuk-!-margin-top-8">
     <div class="attachment-thumbnail">
-        <a href="@Model.Data.Target.Asset.File.Url" download>
+        <a href="@target.Asset.File.Url" download>
             @{
-                var fileExtension = Model.Data.Target.Asset.File.ContentType.Split('/').Last().ToLower();
+                var fileExtension = target.Asset.File.ContentType.Split('/').Last().ToLower();
                 switch (fileExtension)
                 {
                     case "pdf":
-                        <partial name="Icons/_Pdf" />
                         <img src="/assets/images/pdf-file-icon.svg" alt="pdf file type">
                         break;
                     case "csv":
@@ -25,24 +27,22 @@
 
                 }
             }
-
-
         </a>
     </div>
 
     <div class="attachment-details">
         <h2 class="attachment-title">
-            <a href="@Model.Data.Target.Asset.File.Url" aria-describedby="file-details"
-                class="govuk-link attachment-link" download>
-                @Model.Data.Target.Title
+            <a href="@target.Asset.File.Url" aria-describedby="file-details" class="govuk-link attachment-link"
+                download>
+                @target.Title
             </a>
         </h2>
 
         <p class="attachment-metadata">
             <span class="attachment-attribute"
-                aria-label="file type">@Model.Data.Target.Asset.File.ContentType.Split('/').Last().ToUpper()</span>,
+                aria-label="file type">@target.Asset.File.ContentType.Split('/').Last().ToUpper()</span>,
             <span class="attachment-attribute" aria-label="file size">
-                @(Model.Data.Target.Asset.File.Details.Size / 1024) KB
+                @(target.Asset.File.Details.Size / 1024) KB
             </span>
         </p>
     </div>
