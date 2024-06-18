@@ -22,7 +22,6 @@ locals {
   container_app_image_name = "content-support-app"
   kestrel_endpoint               = var.az_app_kestrel_endpoint
   container_port                 = var.az_container_port
-  image_tag                      = var.image_tag
   container_app_min_replicas     = var.container_app_min_replicas
   container_app_max_replicas     = var.container_app_max_replicas
   container_app_http_concurrency = var.container_app_http_concurrency
