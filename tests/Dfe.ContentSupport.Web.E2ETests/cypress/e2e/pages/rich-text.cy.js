@@ -1,6 +1,6 @@
 describe('Rich Text Rendering', () => {
   beforeEach(() => {
-    cy.visit('Home/MockContent');
+    cy.visit('/hello-world');
   });
 
   it('renders main heading', () => {
