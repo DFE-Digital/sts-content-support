@@ -36,11 +36,4 @@ module "main_hosting" {
   ##############
   container_apps_infra_subnet_service_endpoints = ["Microsoft.KeyVault"]
 
-  #############################
-  # Github Container Registry #
-  #############################
-  registry_server           = local.registry_server
-  registry_username         = local.registry_username
-  registry_password         = local.registry_password
-
 }

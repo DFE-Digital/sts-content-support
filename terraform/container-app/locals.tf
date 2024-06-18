@@ -8,9 +8,6 @@ locals {
   azure_location      = var.azure_location
   resource_prefix     = "${local.environment}${local.project_name}"
   resource_group_name = module.main_hosting.azurerm_resource_group_default.name
-  registry_server     = var.registry_server
-  registry_username   = var.registry_username
-  registry_password   = var.registry_password
 
 
   tags = {
@@ -31,16 +28,11 @@ locals {
   ####################
   user_identity_name = "${local.resource_prefix}-mi"
 
-
-
   ##################
   # Azure KeyVault #
   ##################
   kv_name                   = "${local.environment}cands-kv"
-  contentful_deliveryapikey = var.contentful_deliveryapikey
-  contentful_previewapikey  = var.contentful_previewapikey
-  contentful_spaceid        = var.contentful_spaceid
-  contentful_environment    = var.contentful_environment
+
   ##################
   # CDN/Front Door #
   ##################

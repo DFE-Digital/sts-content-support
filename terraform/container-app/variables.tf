@@ -62,31 +62,6 @@ variable "key_size" {
   default     = 2048
 }
 
-
-variable "contentful_deliveryapikey" {
-  description = "Contentful delivery key"
-  type        = string
-}
-
-variable "contentful_previewapikey" {
-  description = "Contentful preview key"
-  type        = string
-}
-
-variable "contentful_environment" {
-  description = "Contentful environment"
-  type        = string
-}
-
-variable "contentful_spaceid" {
-  description = "Contentful space id"
-  type        = string
-}
-
-
-
-
-
 #######################
 # Azure App Container #
 #######################
@@ -110,28 +85,3 @@ variable "cdn_create_custom_domain" {
   type        = bool
   default     = false
 }
-
-
-###################
-# Github Registry #
-###################
-
-variable "registry_server" {
-  description = "Container registry server"
-  type        = string
-  default     = "ghcr.io"
-}
-
-variable "registry_username" {
-  description = "Container registry username"
-  type        = string
-  default     = ""
-}
-
-variable "registry_password" {
-  description = "Container registry password"
-  type        = string
-  default     = ""
-}
-
-
