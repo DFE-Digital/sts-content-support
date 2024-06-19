@@ -12,10 +12,10 @@ public class CsContentItem
     public string InternalName { get; set; }
 }
 
-public class RichTextContentItem(RichTextNodeType nodeType = RichTextNodeType.Unknown)
+public class RichTextContentItem(RichTextNodeType nodeType)
     : CsContentItem
 {
     public string Value { get; set; } = null!;
-    public RichTextNodeType NodeType { get; init; } = nodeType;
+    public RichTextNodeType NodeType { get; } = nodeType;
     public List<RichTextContentItem> Content { get; set; } = [];
 }
