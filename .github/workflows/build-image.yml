@@ -40,8 +40,8 @@ jobs:
       - name: Build Image & Publish To GCR
         uses: docker/build-push-action@v5
         with:
-          context: /
-          file: ./.Dockerfile
+          context: ./
+          file: ../../.Dockerfile
           build-args: COMMIT_SHA=${{ inputs.checked-out-sha }}
           tags: |
             ${{ env.GITHUB_CONTAINER_REGISTRY }}/${{ env.ORG_NAME }}/${{ env.DOCKER_IMAGE }}:${{ inputs.branch }}-${{ inputs.checked-out-sha }}
