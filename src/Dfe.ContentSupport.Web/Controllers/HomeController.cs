@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Dfe.ContentSupport.Web.Services;
 using Dfe.ContentSupport.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Dfe.ContentSupport.Web.Controllers;
 
@@ -13,8 +14,13 @@ public class HomeController(IContentService contentService)
         if (string.IsNullOrEmpty(slug)) return RedirectToAction("error");
 
         var resp = await contentService.GetContent(slug, isPreview);
-        if(resp is null) return RedirectToAction("error"); 
-        return View(resp);
+        var x = JsonConvert.SerializeObject(resp);
+
+var mapper = new ContentSupportMapperService();
+        var result = mapper.Map(resp);
+
+        if (result is null) return RedirectToAction("error");
+        return View(result);
     }
 
     public IActionResult Privacy()

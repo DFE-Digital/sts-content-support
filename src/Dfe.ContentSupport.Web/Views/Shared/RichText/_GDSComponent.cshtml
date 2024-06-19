@@ -1,19 +1,19 @@
-@model ContentItemBase
+@model CustomComponent
 
 @{
-    var contentTypeId = Model.Data.Target.Sys.ContentType?.Sys.Id;
-    switch (contentTypeId)
+    switch (Model.Type)
     {
-        case "Attachment":
+        case CustomComponentType.Attachment:
             <partial name="RichText/Custom/_Attachment" model="Model" />
             break;
-        case "csCard":
-            <partial name="RichText/Custom/_Card" model="Model.Data.Target" />
+        case CustomComponentType.Card:
+            <partial name="RichText/Custom/_Card" model="Model" />
             break; 
-        case "GridContainer":
+        case CustomComponentType.GridContainer:
             <partial name="RichText/Custom/_GridContainer" model="Model" />
             break;
+        case CustomComponentType.Undefined:
         default:
-            break;
+            throw new ArgumentOutOfRangeException();
     }
 }

@@ -16,7 +16,7 @@ public static class WebApplicationBuilderExtensions
         app.Services.AddTransient<IContentfulService, ContentfulService>();
         app.Services.AddTransient<IContentService, ContentService>();
 
-        if (app.Environment.EnvironmentName.Equals("e2e"))
+        if (false)
         {
             app.Services.AddTransient<IHttpContentfulClient, StubHttpContentfulClient>();
         }

@@ -1,7 +1,7 @@
-@model ContentItemBase
+@model Hyperlink
 
 @{
-    var vimeoId = Model.Data.Uri.ToString().Split('/').Last();
+    var vimeoId = Model.Uri.Split('/').Last();
 }
 
 <div class="column-full vimeo-player">
