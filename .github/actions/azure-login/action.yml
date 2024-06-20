@@ -23,5 +23,3 @@ runs:
       uses: azure/login@v1
       with:
         creds: '{"clientId":"${{ inputs.az_client_id }}","clientSecret":"${{ inputs.az_client_secret }}","subscriptionId":"${{ inputs.az_subscription_id }}","tenantId":"${{ inputs.az_tenant_id }}"}'
-
- #test       

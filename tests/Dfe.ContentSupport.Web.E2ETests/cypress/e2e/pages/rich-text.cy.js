@@ -115,4 +115,41 @@ describe('Rich Text Rendering', () => {
       cy.get('.attachment-attribute').should('contain', '18 KB');
     });
   });
+
+  describe('Accordion', () => {
+    beforeEach(() => {
+      cy.get('#accordion-test-accordion')
+        .should('exist')
+        .and('have.attr', 'data-module', 'govuk-accordion');
+    });
+
+    it('should have the accordion', () => {
+      cy.get('#accordion-test-accordion')
+        .should('exist')
+        .and('have.attr', 'data-module', 'govuk-accordion');
+    });
+
+    it('should toggle visibility of content when header is clicked', () => {
+      const sectionButton = '#TestAccordionSection-1-heading';
+      const sectionContent = '#TestAccordionSection-1-content';
+
+      cy.get(sectionContent).should('be.hidden');
+      cy.get(sectionButton).click();
+      cy.get(sectionContent).should('not.be.hidden');
+      cy.get(sectionButton).click();
+      cy.get(sectionContent).should('be.hidden');
+    });
+
+    it('should have a show all button', () => {
+      const showAllButton = '.govuk-accordion__show-all';
+      const section1Content = '#TestAccordionSection-1-content';
+      const section2Content = '#TestAccordionSection-2-content';
+
+      cy.get(section1Content).should('be.hidden');
+      cy.get(section2Content).should('be.hidden');
+      cy.get(showAllButton).click();
+      cy.get(section1Content).should('not.be.hidden');
+      cy.get(section2Content).should('not.be.hidden');
+    });
+  });
 });

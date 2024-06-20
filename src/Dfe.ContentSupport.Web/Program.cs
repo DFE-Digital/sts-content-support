@@ -28,15 +28,10 @@ internal static class Program
         app.UseRouting();
         app.UseAuthorization();
 
-        app.MapControllerRoute("sitemap",
+        app.MapControllerRoute(
+            "sitemap",
             "sitemap.xml",
             new { controller = "Sitemap", action = "Index" }
-        );
-
-        app.MapControllerRoute(
-            "mockContent",
-            "Home/MockContent",
-            new { controller = "Home", action = "MockContent" }
         );
 
         app.MapControllerRoute(
