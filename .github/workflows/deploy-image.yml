@@ -18,9 +18,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  AZ_FRONTDOOR_URL: ${{ inputs.environment == 'staging' && secrets.AZ_FRONTDOOR_URL_STAGING || secrets.AZ_FRONTDOOR_URL }}
   GCR_DOCKER_IMAGE: sts-content-and-support
-  ACR_DOCKER_IMAGE: cs-content-support-app
+  ACR_DOCKER_IMAGE: content-support-app
   GITHUB_CONTAINER_REGISTRY: ghcr.io
   ORG_NAME: dfe-digital
 
