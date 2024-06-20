@@ -1,6 +1,4 @@
-﻿using Dfe.ContentSupport.Web.Common;
-using Dfe.ContentSupport.Web.Models.Mapped;
-using Dfe.ContentSupport.Web.Models.Mapped.Types;
+﻿using Dfe.ContentSupport.Web.Models.Mapped.Types;
 
 namespace Dfe.ContentSupport.Web.Common;
 
