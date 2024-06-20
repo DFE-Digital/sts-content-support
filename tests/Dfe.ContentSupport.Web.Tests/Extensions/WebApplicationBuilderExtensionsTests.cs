@@ -16,8 +16,7 @@ public class WebApplicationBuilderExtensionsTests
         {
             typeof(IContentService),
             typeof(IContentfulService),
-            typeof(IHttpContentfulClient),
-            typeof(IContentSupportMapperService)
+            typeof(IHttpContentfulClient)
         };
         foreach (var type in types)
             builder.Services.Where(o => o.ServiceType == type).Should().ContainSingle();

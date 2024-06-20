@@ -1,21 +1,13 @@
-﻿namespace Dfe.ContentSupport.Web.Models.Mapped;
+﻿using Dfe.ContentSupport.Web.Services;
+using Dfe.ContentSupport.Web.ViewModels;
 
-public class CsPage
-{
-    public bool IsSitemap { get; init; }
-    public Heading Heading { get; init; }
-    public List<CsContentItem> Content { get; init; }
-}
+namespace Dfe.ContentSupport.Web.Models.Mapped;
 
-public class CsContentItem
+public class CsPage(ContentSupportPage contentfulPage)
 {
-    public string InternalName { get; set; }
-}
+    public bool IsSitemap { get; init; } = contentfulPage.IsSitemap;
+    public Heading Heading { get; init; } = contentfulPage.Heading;
 
-public class RichTextContentItem(RichTextNodeType nodeType)
-    : CsContentItem
-{
-    public string Value { get; set; } = null!;
-    public RichTextNodeType NodeType { get; } = nodeType;
-    public List<RichTextContentItem> Content { get; set; } = [];
+    public List<CsContentItem> Content { get; init; } =
+        ContentSupportMapperService.MapContent(contentfulPage.Content);
 }

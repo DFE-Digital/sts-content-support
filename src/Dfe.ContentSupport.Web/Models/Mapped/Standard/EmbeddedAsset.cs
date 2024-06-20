@@ -1,6 +1,10 @@
-﻿namespace Dfe.ContentSupport.Web.Models.Mapped;
+﻿using System.Diagnostics.CodeAnalysis;
+using Dfe.ContentSupport.Web.Models.Mapped.Types;
 
-public class EmbeddedAsset(Fields asset) : RichTextContentItem(RichTextNodeType.EmbeddedAsset)
+namespace Dfe.ContentSupport.Web.Models.Mapped.Standard;
+
+public class EmbeddedAsset(Fields asset, string internalName)
+    : RichTextContentItem(RichTextNodeType.EmbeddedAsset, internalName)
 {
     public string Uri { get; } = asset.File.Url;
     public string Title { get; } = asset.Title;

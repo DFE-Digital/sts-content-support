@@ -6,14 +6,13 @@ using Dfe.ContentSupport.Web.ViewModels;
 
 namespace Dfe.ContentSupport.Web.Services;
 
-public class ContentService(IContentfulService contentfulService, IContentSupportMapperService mapperService) : IContentService
+public class ContentService(IContentfulService contentfulService) : IContentService
 {
     public async Task<CsPage?> GetContent(string slug, bool isPreview = false)
     {
         var resp = await GetContentSupportPages(nameof(ContentSupportPage.Slug), slug, isPreview);
         var page = resp is not null && resp.Any() ? resp.First() : null;
-        var result = mapperService.Map(page);
-        return result;
+        return page is null ? null : new CsPage(page);
     }
 
     public async Task<string> GenerateSitemap(string baseUrl)

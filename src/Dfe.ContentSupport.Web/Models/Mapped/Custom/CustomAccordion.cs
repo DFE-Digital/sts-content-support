@@ -1,8 +1,12 @@
-﻿namespace Dfe.ContentSupport.Web.Models.Mapped;
+﻿using System.Diagnostics.CodeAnalysis;
+using Dfe.ContentSupport.Web.Models.Mapped.Types;
 
-public class CustomAccordion(Target target) : CustomComponent(CustomComponentType.Accordion)
+namespace Dfe.ContentSupport.Web.Models.Mapped.Custom;
+
+public class CustomAccordion(Target target)
+    : CustomComponent(CustomComponentType.Accordion, target.InternalName)
 {
-    public string InternalName { get; } = target.InternalName;
+    public new string InternalName { get; } = target.InternalName;
     public string Title { get; } = target.Title;
     public string SummaryLine { get; } = target.SummaryLine;
     public string Body { get; } = target.Body;

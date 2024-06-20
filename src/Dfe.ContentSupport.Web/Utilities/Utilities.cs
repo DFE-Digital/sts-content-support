@@ -1,5 +1,6 @@
 ﻿using Dfe.ContentSupport.Web.Common;
 using Dfe.ContentSupport.Web.Models.Mapped;
+using Dfe.ContentSupport.Web.Models.Mapped.Types;
 
 namespace Dfe.ContentSupport.Web.Common;
 
@@ -29,7 +30,8 @@ public static class Utilities
             RichTextTags.Text => RichTextNodeType.Text,
             RichTextTags.EmbeddedEntry => RichTextNodeType.EmbeddedEntry,
             RichTextTags.EmbeddedEntryInline => RichTextNodeType.EmbeddedEntry,
-            _ => throw new ArgumentOutOfRangeException(nameof(str))
+            _ => throw new NotSupportedException(
+                $"Failed to map content for node of type '{str}'")
         };
     }
 }

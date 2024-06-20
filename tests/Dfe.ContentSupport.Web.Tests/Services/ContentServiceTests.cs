@@ -23,7 +23,7 @@ public class ContentServiceTests
 
     private ContentService GetService()
     {
-        return new ContentService(GetClient(), GetMapper());
+        return new ContentService(GetClient());
     }
 
     private IContentfulService GetClient()
@@ -31,7 +31,6 @@ public class ContentServiceTests
         return new ContentfulService(new CsContentfulOptions(), _httpContentClientMock.Object);
     }
 
-    private IContentSupportMapperService GetMapper() => new ContentSupportMapperService();
 
     private void SetupResponse(ContentfulCollection<ContentSupportPage>? response = null)
     {

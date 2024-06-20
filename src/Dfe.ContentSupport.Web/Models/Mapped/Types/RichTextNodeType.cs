@@ -1,4 +1,4 @@
-﻿namespace Dfe.ContentSupport.Web.Models.Mapped;
+﻿namespace Dfe.ContentSupport.Web.Models.Mapped.Types;
 
 public enum RichTextNodeType
 {

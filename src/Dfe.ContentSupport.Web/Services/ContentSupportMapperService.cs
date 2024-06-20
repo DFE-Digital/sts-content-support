@@ -1,61 +1,43 @@
 ﻿using Dfe.ContentSupport.Web.Common;
 using Dfe.ContentSupport.Web.Models;
 using Dfe.ContentSupport.Web.Models.Mapped;
-using Dfe.ContentSupport.Web.ViewModels;
+using Dfe.ContentSupport.Web.Models.Mapped.Custom;
+using Dfe.ContentSupport.Web.Models.Mapped.Standard;
+using Dfe.ContentSupport.Web.Models.Mapped.Types;
 
 namespace Dfe.ContentSupport.Web.Services;
 
-public interface IContentSupportMapperService
+public static class ContentSupportMapperService
 {
-    public CsPage? Map(ContentSupportPage? contentfulPage);
-}
-
-public class ContentSupportMapperService:IContentSupportMapperService
-{
-    public CsPage? Map(ContentSupportPage? contentfulPage)
+    public static List<CsContentItem> MapContent(List<Entry> entries)
     {
-        if (contentfulPage is null) return null;
-        var csPage = new CsPage
-        {
-            IsSitemap = contentfulPage.IsSitemap,
-            Heading = contentfulPage.Heading,
-            Content = MapContent(contentfulPage.Content)
-        };
-
-        return csPage;
+        return entries.Select(ConvertEntryToContentItem).ToList();
     }
-
-    public List<CsContentItem> MapContent(List<Entry> entries)
-    {
-        var items = new List<CsContentItem>();
-
-
-        foreach (var entry in entries) items.Add(MapContentItem(entry));
-
-        return items;
-    }
-
-    private CsContentItem MapContentItem(Entry entry)
-    {
-        CsContentItem item;
-        if (entry.RichText is not null)
-            item = MapRichTextContent(entry.RichText)!;
-        else
-            item = new CsContentItem();
-
-        item.InternalName = entry.InternalName;
-        return item;
-    }
-
 
     public static RichTextContentItem? MapRichTextContent(ContentItemBase? richText)
     {
         if (richText is null) return null;
-        var content = MapRichTextNodes(richText.Content);
+        Console.WriteLine("{0} - {1}", richText.InternalName, richText.NodeType);
+        return new RichTextContentItem(Utilities.ConvertToRichTextNodeType(richText.NodeType),
+            richText.InternalName) { Content = MapRichTextNodes(richText.Content) };
+    }
 
-        return new RichTextContentItem(Utilities.ConvertToRichTextNodeType(richText.NodeType))
+    private static CsContentItem ConvertEntryToContentItem(Entry entry) =>
+        entry.RichText is not null
+            ? MapRichTextContent(entry.RichText)!
+            : new CsContentItem(entry.InternalName);
+
+    public static CustomComponent? GenerateCustomComponent(Target target)
+    {
+        var contentType = target.Sys.ContentType?.Sys.Id;
+        if (contentType is null) return null;
+        return contentType switch
         {
-            Content = content
+            "CSAccordion" => new CustomAccordion(target),
+            "Attachment" => new CustomAttachment(target),
+            "csCard" => new CustomCard(target),
+            "GridContainer" => new CustomGridContainer(target),
+            _ => null
         };
     }
 
@@ -69,7 +51,8 @@ public class ContentSupportMapperService:IContentSupportMapperService
             if (item is not null)
                 items.Add(item);
             else
-                Console.WriteLine(node.NodeType);
+                throw new NotSupportedException(
+                    $"Failed to map content for node of type '{node.NodeType}'");
         }
 
         return items;
@@ -95,7 +78,7 @@ public class ContentSupportMapperService:IContentSupportMapperService
                 item = new Hyperlink(contentItem.Data.Uri.ToString());
                 break;
             case RichTextNodeType.EmbeddedAsset:
-                item = new EmbeddedAsset(contentItem.Data.Target.Fields);
+                item = new EmbeddedAsset(contentItem.Data.Target.Fields, contentItem.InternalName);
                 break;
             case RichTextNodeType.EmbeddedEntry:
                 item = new EmbeddedEntry(contentItem.Data.Target);
@@ -109,11 +92,12 @@ public class ContentSupportMapperService:IContentSupportMapperService
             case RichTextNodeType.TableHeaderCell:
             case RichTextNodeType.TableCell:
             case RichTextNodeType.Hr:
-                item = new RichTextContentItem(nodeType);
+                item = new RichTextContentItem(nodeType, contentItem.InternalName);
                 break;
             case RichTextNodeType.Document or RichTextNodeType.Unknown:
             default:
-                throw new ArgumentOutOfRangeException(contentItem.NodeType);
+                throw new NotSupportedException(
+                    $"Failed to map content for node of type '{nodeType}'");
         }
 
         if (item is not null)
@@ -123,19 +107,5 @@ public class ContentSupportMapperService:IContentSupportMapperService
         }
 
         return item;
-    }
-
-    public static CustomComponent? GenerateCustomComponent(Target target)
-    {
-        var contentType = target.Sys.ContentType?.Sys.Id;
-        if (contentType is null) return null;
-        return contentType switch
-        {
-            "CSAccordion" => new CustomAccordion(target),
-            "Attachment" => new CustomAttachment(target),
-            "csCard" => new CustomCard(target),
-            "GridContainer" => new CustomGridContainer(target),
-            _ => null
-        };
     }
 }

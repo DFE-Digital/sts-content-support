@@ -13,7 +13,6 @@ public static class WebApplicationBuilderExtensions
         app.Services.AddSingleton(contentfulOptions);
 
 
-        app.Services.AddTransient<IContentSupportMapperService, ContentSupportMapperService>();
         app.Services.AddTransient<IContentfulService, ContentfulService>();
         app.Services.AddTransient<IContentService, ContentService>();
 
