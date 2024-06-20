@@ -1,7 +1,7 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Dfe.ContentSupport.Web.Common;
+﻿using Dfe.ContentSupport.Web.Common;
 
 namespace Dfe.ContentSupport.Web.Models.Mapped.Standard;
 
 public class CsHeading(ContentItem contentItem)
-    : RichTextContentItem(Utilities.ConvertToRichTextNodeType(contentItem.NodeType),contentItem.InternalName);
+    : RichTextContentItem(Utilities.ConvertToRichTextNodeType(contentItem.NodeType),
+        contentItem.InternalName);

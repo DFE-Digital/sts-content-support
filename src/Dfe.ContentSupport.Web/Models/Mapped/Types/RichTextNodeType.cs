@@ -21,5 +21,5 @@ public enum RichTextNodeType
     TableCell,
     Hr,
     EmbeddedAsset,
-    EmbeddedEntry,
+    EmbeddedEntry
 }
