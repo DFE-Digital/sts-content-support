@@ -5,7 +5,12 @@ using Dfe.ContentSupport.Web.ViewModels;
 
 namespace Dfe.ContentSupport.Web.Services;
 
-public class ContentSupportMapperService
+public interface IContentSupportMapperService
+{
+    public CsPage? Map(ContentSupportPage? contentfulPage);
+}
+
+public class ContentSupportMapperService:IContentSupportMapperService
 {
     public CsPage? Map(ContentSupportPage? contentfulPage)
     {

@@ -1,9 +1,9 @@
-using Dfe.ContentSupport.Web.ViewModels;
+using Dfe.ContentSupport.Web.Models.Mapped;
 
 namespace Dfe.ContentSupport.Web.Services;
 
 public interface IContentService
 {
-    Task<ContentSupportPage?> GetContent(string slug, bool isPreview);
+    Task<CsPage?> GetContent(string slug, bool isPreview);
     Task<string> GenerateSitemap(string baseUrl);
 }

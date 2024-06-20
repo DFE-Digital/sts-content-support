@@ -1,16 +1,19 @@
 using System.Xml.Linq;
 using Contentful.Core.Models;
 using Contentful.Core.Search;
+using Dfe.ContentSupport.Web.Models.Mapped;
 using Dfe.ContentSupport.Web.ViewModels;
 
 namespace Dfe.ContentSupport.Web.Services;
 
-public class ContentService(IContentfulService contentfulService) : IContentService
+public class ContentService(IContentfulService contentfulService, IContentSupportMapperService mapperService) : IContentService
 {
-    public async Task<ContentSupportPage?> GetContent(string slug, bool isPreview = false)
+    public async Task<CsPage?> GetContent(string slug, bool isPreview = false)
     {
         var resp = await GetContentSupportPages(nameof(ContentSupportPage.Slug), slug, isPreview);
-        return resp is not null && resp.Any() ? resp.First() : null;
+        var page = resp is not null && resp.Any() ? resp.First() : null;
+        var result = mapperService.Map(page);
+        return result;
     }
 
     public async Task<string> GenerateSitemap(string baseUrl)

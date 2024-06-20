@@ -1,4 +1,5 @@
 ﻿using Dfe.ContentSupport.Web.Controllers;
+using Dfe.ContentSupport.Web.Models.Mapped;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,7 +42,7 @@ public class HomeControllerTests
     public async void Index_NullResponse_ReturnsErrorAction()
     {
         _contentServiceMock.Setup(o => o.GetContent(It.IsAny<string>(), It.IsAny<bool>()))
-            .ReturnsAsync((ContentSupportPage?)null);
+            .ReturnsAsync((CsPage?)null);
 
         var sut = GetController();
 
@@ -55,13 +56,13 @@ public class HomeControllerTests
     public async void Index_WithSlug_Returns_View()
     {
         _contentServiceMock.Setup(o => o.GetContent(It.IsAny<string>(), It.IsAny<bool>()))
-            .ReturnsAsync(new ContentSupportPage());
+            .ReturnsAsync(new CsPage());
 
         var sut = GetController();
         var result = await sut.Index("slug1");
 
         result.Should().BeOfType<ViewResult>();
-        (result as ViewResult)!.Model.Should().BeOfType<ContentSupportPage>();
+        (result as ViewResult)!.Model.Should().BeOfType<CsPage>();
     }
 
     [Fact]
