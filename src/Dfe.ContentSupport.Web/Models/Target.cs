@@ -14,7 +14,7 @@ public class Target : Entry
 
     [JsonConverter(typeof(AssetJsonConverter))]
     public Asset Asset { get; set; } = null!;
-    public ContentType ContentType { get; set; } = null!;
+
     public string SummaryLine { get; set; } = null!;
     public string Body { get; set; } = null!;
     public string Description { get; set; } = null!;
