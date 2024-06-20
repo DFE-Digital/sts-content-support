@@ -1,8 +1,6 @@
 ﻿@model Dfe.ContentSupport.Web.Models.Mapped.CsPage
 
-<partial name="_Hero" model="@Model.Heading"/>
-
 @foreach (var content in @Model.Content)
 {
-    <partial name="_Content" model="@content"/>
+    <partial name="_Content" model="@content" />
 }

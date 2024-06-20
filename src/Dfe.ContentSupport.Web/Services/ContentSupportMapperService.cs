@@ -131,7 +131,7 @@ public class ContentSupportMapperService:IContentSupportMapperService
         if (contentType is null) return null;
         return contentType switch
         {
-            "CSAccordion" => null, //TODO add accordion support
+            "CSAccordion" => new CustomAccordion(target),
             "Attachment" => new CustomAttachment(target),
             "csCard" => new CustomCard(target),
             "GridContainer" => new CustomGridContainer(target),
