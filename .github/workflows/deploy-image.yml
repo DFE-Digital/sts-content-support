@@ -20,16 +20,15 @@ concurrency:
 env:
   AZ_FRONTDOOR_URL: ${{ inputs.environment == 'staging' && secrets.AZ_FRONTDOOR_URL_STAGING || secrets.AZ_FRONTDOOR_URL }}
   GCR_DOCKER_IMAGE: sts-content-and-support
-  ACR_DOCKER_IMAGE: sts-content-and-support
+  ACR_DOCKER_IMAGE: cs-content-support-app
   GITHUB_CONTAINER_REGISTRY: ghcr.io
   ORG_NAME: dfe-digital
 
 jobs:
   pull-image-from-gcr-and-publish-to-acr:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     name: Pull Image From GitHub Container Registry and Publish to Azure Container Registry
     environment: ${{ inputs.environment }}
-    needs: upgrade-database
 
     steps:
       - name: GitHub Container Registry Login
@@ -55,10 +54,10 @@ jobs:
           docker push ${{ secrets.AZ_ACR_URL }}/${{ env.ACR_DOCKER_IMAGE }}:${{ inputs.branch }}-${{ inputs.checked-out-sha }}-${{ inputs.environment }}
 
   deploy-image:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     name: Deploy Image To ${{ inputs.environment }}
     environment: ${{ inputs.environment }}
-    needs: [upgrade-database, pull-image-from-gcr-and-publish-to-acr]
+    needs: [pull-image-from-gcr-and-publish-to-acr]
 
     steps:
       - uses: actions/checkout@v4
@@ -86,3 +85,4 @@ jobs:
               --image ${{ secrets.AZ_ACR_URL }}/${{ env.ACR_DOCKER_IMAGE }}:${{ inputs.branch }}-${{ inputs.checked-out-sha }}-${{ inputs.environment }} \
               --output none
               &> /dev/null
+
