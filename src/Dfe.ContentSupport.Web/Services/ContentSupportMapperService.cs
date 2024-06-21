@@ -17,7 +17,6 @@ public static class ContentSupportMapperService
     public static RichTextContentItem? MapRichTextContent(ContentItemBase? richText)
     {
         if (richText is null) return null;
-        Console.WriteLine("{0} - {1}", richText.InternalName, richText.NodeType);
         return new RichTextContentItem(Utilities.ConvertToRichTextNodeType(richText.NodeType),
             richText.InternalName) { Content = MapRichTextNodes(richText.Content) };
     }

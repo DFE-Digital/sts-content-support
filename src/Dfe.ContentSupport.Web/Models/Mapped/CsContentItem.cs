@@ -2,5 +2,5 @@
 
 public class CsContentItem(string internalName)
 {
-    public string InternalName = internalName;
+    public readonly string InternalName = internalName;
 }

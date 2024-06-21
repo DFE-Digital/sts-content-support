@@ -1,5 +1,4 @@
-﻿@using Dfe.ContentSupport.Web.Models.Mapped.Types
-@model Dfe.ContentSupport.Web.Models.Mapped.Standard.CsHeading
+﻿@model CsHeading
 
 @{
     switch (Model.NodeType)
@@ -29,6 +28,21 @@
                 <partial name="RichText/_Items" model="@Model"/>
             </h6>
             break;
+        case RichTextNodeType.Unknown:
+        case RichTextNodeType.Document:
+        case RichTextNodeType.Paragraph:
+        case RichTextNodeType.Text:
+        case RichTextNodeType.UnorderedList:
+        case RichTextNodeType.OrderedList:
+        case RichTextNodeType.ListItem:
+        case RichTextNodeType.Hyperlink:
+        case RichTextNodeType.Table:
+        case RichTextNodeType.TableRow:
+        case RichTextNodeType.TableHeaderCell:
+        case RichTextNodeType.TableCell:
+        case RichTextNodeType.Hr:
+        case RichTextNodeType.EmbeddedAsset:
+        case RichTextNodeType.EmbeddedEntry:
         default:
             throw new ArgumentOutOfRangeException();
     }

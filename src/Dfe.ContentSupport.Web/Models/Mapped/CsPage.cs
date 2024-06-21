@@ -5,9 +5,9 @@ namespace Dfe.ContentSupport.Web.Models.Mapped;
 
 public class CsPage(ContentSupportPage contentfulPage)
 {
-    public List<CsContentItem> Content =
+    public readonly List<CsContentItem> Content =
         ContentSupportMapperService.MapContent(contentfulPage.Content);
 
-    public Heading Heading = contentfulPage.Heading;
-    public bool IsSitemap = contentfulPage.IsSitemap;
+    public readonly Heading Heading = contentfulPage.Heading;
+    public readonly bool IsSitemap = contentfulPage.IsSitemap;
 }

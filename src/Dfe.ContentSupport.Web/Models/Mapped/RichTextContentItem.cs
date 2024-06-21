@@ -6,6 +6,6 @@ public class RichTextContentItem(RichTextNodeType nodeType, string internalName)
     : CsContentItem(internalName)
 {
     public List<RichTextContentItem> Content = [];
-    public RichTextNodeType NodeType = nodeType;
+    public readonly RichTextNodeType NodeType = nodeType;
     public string Value = null!;
 }
