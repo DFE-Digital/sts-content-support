@@ -79,6 +79,5 @@ jobs:
           inlineScript: |
             az containerapp update \
               --name ${{ secrets.AZ_ACA_NAME }} \
-              --environment main \
               --resource-group ${{ secrets.AZ_ACA_RESOURCE_GROUP }} \
               --image ${{ secrets.AZ_ACR_URL }}/${{ env.ACR_DOCKER_IMAGE }}:${{ inputs.branch }}-${{ inputs.checked-out-sha }}-${{ inputs.environment }} \
