@@ -78,7 +78,7 @@ jobs:
           azcliversion: 2.45.0
           inlineScript: |
             az config set extension.use_dynamic_install=yes_without_prompt
-            az containerapp update \
+            az containerapp create \
               --name ${{ secrets.AZ_ACA_NAME }} \
               --resource-group ${{ secrets.AZ_ACA_RESOURCE_GROUP }} \
               --image ${{ secrets.AZ_ACR_URL }}/${{ env.ACR_DOCKER_IMAGE }}:${{ inputs.branch }}-${{ inputs.checked-out-sha }}-${{ inputs.environment }} \
