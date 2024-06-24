@@ -3,6 +3,7 @@ using Contentful.AspNetCore;
 using Dfe.ContentSupport.Web.Extensions;
 using GovUk.Frontend.AspNetCore;
 
+
 namespace Dfe.ContentSupport.Web;
 
 [ExcludeFromCodeCoverage]
@@ -13,8 +14,11 @@ internal static class Program
         var builder = WebApplication.CreateBuilder(args);
         builder.Services.AddControllersWithViews();
         builder.Services.AddContentful(builder.Configuration);
+
+        builder.Services.AddApplicationInsightsTelemetry();
         builder.Services.AddGovUkFrontend();
         builder.InitDependencyInjection();
+
 
         var app = builder.Build();
         if (!app.Environment.IsDevelopment())
