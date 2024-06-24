@@ -764,15 +764,49 @@
                         }
                       }
                     },
-                    "Title": "Test Accordion",
                     "Asset": null,
                     "ContentType": null,
-                    "SummaryLine": "Some summary text",
-                    "Body": "This is the body of the accordion",
-                    "JumpIdentifier": null,
-                    "RichText": null,
-                    "Id": null,
-                    "InternalName": "TestAccordion"
+                    "Content": [
+                      {
+                        "Sys": {
+                          "Id": "1LKa5sxDm1ASoVn4C3GYUn",
+                          "Type": "Entry",
+                          "ContentType": {
+                            "Sys": {
+                              "Id": "AccordionSection",
+                              "Type": "Link",
+                              "LinkType": "ContentType"
+                            }
+                          }
+                        },
+                        "Title": "Test Section 1",
+                        "SummaryLine": "Some summary text...",
+                        "Body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fermentum nec lorem a efficitur. Ut eget erat at turpis varius maximus sed quis magna. Nullam et lacinia ipsum, in bibendum est. Morbi vehicula mi ac sagittis porta. Fusce semper, dui varius malesuada varius, enim massa gravida ligula, a placerat elit justo vel sem. Quisque ultrices consequat faucibus. Quisque ac mauris eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse cursus risus vel neque rutrum tincidunt. Ut eget porttitor eros, quis varius sapien. Nullam sed sodales sapien.",
+                        "InternalName": "TestAccordionSection-1"
+                      },
+                      {
+                        "Fields": null,
+                        "Sys": {
+                          "Id": "62Tul39YzYQyVoDY3LrhzE",
+                          "Type": "Entry",
+                          "LinkType": null,
+                          "ContentType": {
+                            "Id": null,
+                            "Sys": {
+                              "Id": "AccordionSection",
+                              "Type": "Link",
+                              "LinkType": "ContentType",
+                              "ContentType": null
+                            }
+                          }
+                        },
+                        "Title": "Test Section 2",
+                        "SummaryLine": "Some summary text...",
+                        "Body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fermentum nec lorem a efficitur. Ut eget erat at turpis varius maximus sed quis magna. Nullam et lacinia ipsum, in bibendum est. Morbi vehicula mi ac sagittis porta. Fusce semper, dui varius malesuada varius, enim massa gravida ligula, a placerat elit justo vel sem. Quisque ultrices consequat faucibus. Quisque ac mauris eros. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse cursus risus vel neque rutrum tincidunt. Ut eget porttitor eros, quis varius sapien. Nullam sed sodales sapien.",
+                        "InternalName": "TestAccordionSection-2"
+                      }
+                    ],
+                    "InternalName": "test-accordion"
                   },
                   "Uri": null
                 },
