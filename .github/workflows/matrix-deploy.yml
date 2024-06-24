@@ -1,10 +1,10 @@
 name: Multi stage build & deploy
 
 on:
-  pull_request:
+  workflow_dispatch:
   push:
-    branches: ["main", "Development"]
-    paths:
+   branches: ["main", "development"]
+   paths:
       - "src/**"
       - ".github/workflows/matrix-deploy.yml"
 
