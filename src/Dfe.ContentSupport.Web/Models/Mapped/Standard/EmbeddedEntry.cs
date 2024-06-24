@@ -1,17 +1,17 @@
-﻿using Dfe.ContentSupport.Web.Models.Mapped.Custom;
+﻿using Dfe.ContentSupport.Web.Common;
+using Dfe.ContentSupport.Web.Models.Mapped.Custom;
 using Dfe.ContentSupport.Web.Models.Mapped.Types;
-using Dfe.ContentSupport.Web.Services;
 
 namespace Dfe.ContentSupport.Web.Models.Mapped.Standard;
 
 public class EmbeddedEntry(Target target)
-    : RichTextContentItem(RichTextNodeType.EmbeddedEntry, target.InternalName)
+    : RichTextContentItem(RichTextNodeType.Unknown, target.InternalName)
 {
     public readonly CustomComponent? CustomComponent =
-        ContentSupportMapperService.GenerateCustomComponent(target);
+        Utilities.GenerateCustomComponent(target);
 
     public readonly string JumpIdentifier = target.JumpIdentifier;
 
     public readonly RichTextContentItem? RichText =
-        ContentSupportMapperService.MapRichTextContent(target.RichText);
+        Utilities.MapRichTextContent(target.RichText);
 }

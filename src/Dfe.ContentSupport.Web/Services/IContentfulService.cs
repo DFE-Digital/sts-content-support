@@ -1,4 +1,3 @@
-using Contentful.Core;
 using Dfe.ContentSupport.Web.Http;
 
 namespace Dfe.ContentSupport.Web.Services

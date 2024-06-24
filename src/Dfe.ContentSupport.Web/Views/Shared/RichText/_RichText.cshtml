@@ -56,6 +56,7 @@
             break;
         case RichTextNodeType.Unknown:
         default:
-            throw new ArgumentOutOfRangeException(nameof(nodeType));
+            <partial name="_UnsupportedElement" model="@Model"/>
+            break;
     }
 }

@@ -10,13 +10,14 @@
             <partial name="RichText/Custom/_Accordion" model="Model"/>
             break;
         case CustomComponentType.Card:
-            <partial name="RichText/Custom/_Card" model="Model" />
-            break; 
+            <partial name="RichText/Custom/_Card" model="Model"/>
+            break;
         case CustomComponentType.GridContainer:
             <partial name="RichText/Custom/_GridContainer" model="Model"/>
             break;
         case CustomComponentType.Undefined:
         default:
-            throw new ArgumentOutOfRangeException();
+            <partial name="_UnsupportedElement" model="Model"/>
+            break;
     }
 }

@@ -31,7 +31,6 @@ public class ContentServiceTests
         return new ContentfulService(new CsContentfulOptions(), _httpContentClientMock.Object);
     }
 
-
     private void SetupResponse(ContentfulCollection<ContentSupportPage>? response = null)
     {
         _httpContentClientMock.Setup(o => o.Query(It.IsAny<QueryBuilder<ContentSupportPage>>(),
