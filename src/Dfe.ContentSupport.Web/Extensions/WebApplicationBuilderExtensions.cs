@@ -9,7 +9,7 @@ public static class WebApplicationBuilderExtensions
     public static void InitDependencyInjection(this WebApplicationBuilder app)
     {
         var contentfulOptions = new CsContentfulOptions();
-        app.Configuration.GetSection("ContentfulOptions").Bind(contentfulOptions);
+        app.Configuration.GetSection("Contentful").Bind(contentfulOptions);
         app.Services.AddSingleton(contentfulOptions);
 
 

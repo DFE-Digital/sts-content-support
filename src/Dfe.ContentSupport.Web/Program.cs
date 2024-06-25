@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using Azure.Identity;
 using Contentful.AspNetCore;
 using Dfe.ContentSupport.Web.Extensions;
 using GovUk.Frontend.AspNetCore;
@@ -12,11 +13,17 @@ internal static class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-        builder.Services.AddControllersWithViews();
-        builder.Services.AddContentful(builder.Configuration);
 
+        var keyVaultUri = $"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/";
+        var azureCredentials = new DefaultAzureCredential();
+        builder.Configuration.AddAzureKeyVault(new Uri(keyVaultUri), azureCredentials);
+
+
+        builder.Services.AddControllersWithViews();
         builder.Services.AddApplicationInsightsTelemetry();
+
         builder.Services.AddGovUkFrontend();
+        builder.Services.AddContentful(builder.Configuration);
         builder.InitDependencyInjection();
 
 
@@ -26,6 +33,7 @@ internal static class Program
             app.UseExceptionHandler("/Home/Error");
             app.UseHsts();
         }
+
 
         app.UseHttpsRedirection();
         app.UseStaticFiles();
