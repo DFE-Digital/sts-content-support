@@ -1,9 +1,9 @@
 name: Multi stage build & deploy
 
 on:
+  workflow_dispatch:
   push:
-    branches:
-      - development
+    branches: ["main", "development"]
     paths:
       - "src/**"
       - ".github/workflows/matrix-deploy.yml"
