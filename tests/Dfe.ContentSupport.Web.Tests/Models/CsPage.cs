@@ -23,8 +23,6 @@ public class CsPageTests
         var pageContent = result.Content.First();
 
         pageContent.Should().BeOfType<RichTextContentItem>();
-
-        //RichTextCorrect(pageContent, contentSupportPage.Content.First());
     }
 
 
