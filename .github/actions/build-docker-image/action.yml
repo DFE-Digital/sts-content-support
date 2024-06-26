@@ -1,0 +1,10 @@
+name: Build Docker Image
+description: Builds the docker image
+
+runs:
+  using: composite
+
+  steps:
+    - name: Build Docker image
+      shell: bash
+      run: docker build ./src/ --file  ./.dockerfile --tag dfe-digital_sts-content-and-support:$(date +%s)
