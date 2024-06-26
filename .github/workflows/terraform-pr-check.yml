@@ -46,6 +46,7 @@ jobs:
   validate-terraform:
     name: Validate Terraform
     runs-on: ubuntu-22.04
+    environment: Dev
     defaults:
       run:
         working-directory: ${{env.TF_WORKING_DIRECTORY}}
