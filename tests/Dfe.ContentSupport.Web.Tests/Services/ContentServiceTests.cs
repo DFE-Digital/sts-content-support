@@ -3,6 +3,7 @@ using Dfe.ContentSupport.Web.Configuration;
 using Contentful.Core.Models;
 using Contentful.Core.Search;
 using Dfe.ContentSupport.Web.Http;
+using Dfe.ContentSupport.Web.Models.Mapped;
 
 namespace Dfe.ContentSupport.Web.Tests.Services;
 
@@ -79,7 +80,7 @@ public class ContentServiceTests
         var sut = GetService();
         var result = await sut.GetContent(It.IsAny<string>());
 
-        result.Should().BeEquivalentTo(_response.Items.First());
+        result.Should().BeEquivalentTo(new CsPage(_response.Items.First()));
     }
 
     [Fact]
