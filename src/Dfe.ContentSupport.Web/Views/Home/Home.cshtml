@@ -1,0 +1,24 @@
+﻿@model ContentSupportPage
+
+<h1>@ViewData["Title"]</h1>
+
+
+
+@{
+    if (ViewBag?.Pages?.Items != null)
+    {
+        <div class="dfe-grid-container">
+            @for (var i = 0; i < ViewBag.Pages.Items.Count; i++)
+            {
+                <div class="dfe-card">
+                    <div class="dfe-card-container">
+                        <h3 class="govuk-heading-m">
+                            <a href="@ViewBag.Pages.Items[i].Slug" class="govuk-link govuk-link--no-visited-state dfe-card-link--header">@ViewBag.Pages.Items[i].Heading.Title</a>
+                        </h3>
+                        <p>@ViewBag.Pages.Items[i].Heading.Subtitle</p>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+}
