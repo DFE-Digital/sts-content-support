@@ -34,7 +34,7 @@ public class ContentService(IContentfulService contentfulService) : IContentServ
         return sitemap.ToString();
     }
 
-    private async Task<ContentfulCollection<ContentSupportPage>> GetContentSupportPages(
+    public async Task<ContentfulCollection<ContentSupportPage>> GetContentSupportPages(
         string field, string value, bool isPreview)
     {
         var builder = QueryBuilder<ContentSupportPage>.New.ContentTypeIs(nameof(ContentSupportPage))
@@ -42,4 +42,5 @@ public class ContentService(IContentfulService contentfulService) : IContentServ
 
         return await contentfulService.ContentfulClient(isPreview).Query(builder);
     }
+
 }
