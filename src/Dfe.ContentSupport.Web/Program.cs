@@ -52,10 +52,14 @@ internal static class Program
         );
 
         app.MapControllerRoute(
-            "default/{slug}",
-            "{slug?}",
-            new { controller = "Home", action = "Index" }
-        );
+            name: "home",
+            pattern: "{controller=Home}/{action=Home}");
+
+        app.MapControllerRoute(
+             name: "slug",
+            pattern: "{slug}",
+            defaults: new { controller = "Home", action = "Index" });
+
 
         app.Run();
     }

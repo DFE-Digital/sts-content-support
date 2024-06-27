@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Dfe.ContentSupport.Web.Models.Mapped;
 using Dfe.ContentSupport.Web.Services;
 using Dfe.ContentSupport.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,23 @@ namespace Dfe.ContentSupport.Web.Controllers;
 public class HomeController(IContentService contentService)
     : Controller
 {
+    public async Task<IActionResult> Home()
+    {
+        var defaultModel = new CsPage( new ContentSupportPage
+        {
+            Heading = new Models.Heading
+            {
+                Title = "Department for Education",
+                Subtitle = "Content and Support",
+            }
+        });
+
+        ViewBag.pages = await contentService.GetCsPages();
+
+        return View(defaultModel);
+    }
+
+    [HttpGet("{slug}")]
     public async Task<IActionResult> Index(string slug, bool isPreview = false)
     {
         if (string.IsNullOrEmpty(slug)) return RedirectToAction("error");

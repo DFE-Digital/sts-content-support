@@ -8,10 +8,10 @@ namespace Dfe.ContentSupport.Web.Http;
 public class HttpContentfulClient(HttpClient httpClient, CsContentfulOptions options)
     : ContentfulClient(httpClient, options), IHttpContentfulClient
 {
-    public Task<ContentfulCollection<T>> Query<T>(QueryBuilder<T> queryBuilder,
+    public async Task<ContentfulCollection<T>> Query<T>(QueryBuilder<T> queryBuilder,
         CancellationToken cancellationToken = default)
     {
         queryBuilder = queryBuilder.Include(options.IncludeDepth);
-        return GetEntries(queryBuilder, cancellationToken);
+        return await GetEntries(queryBuilder, cancellationToken);
     }
 }

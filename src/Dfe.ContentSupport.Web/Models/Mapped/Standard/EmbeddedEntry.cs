@@ -5,7 +5,7 @@ using Dfe.ContentSupport.Web.Models.Mapped.Types;
 namespace Dfe.ContentSupport.Web.Models.Mapped.Standard;
 
 public class EmbeddedEntry(Target target)
-    : RichTextContentItem(RichTextNodeType.Unknown, target.InternalName)
+    : RichTextContentItem(RichTextNodeType.EmbeddedEntry, target.InternalName)
 {
     public readonly CustomComponent? CustomComponent =
         Utilities.GenerateCustomComponent(target);

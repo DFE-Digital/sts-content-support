@@ -1,5 +1,4 @@
 using System.Xml.Linq;
-using Contentful.Core.Models;
 using Contentful.Core.Search;
 using Dfe.ContentSupport.Web.Models.Mapped;
 using Dfe.ContentSupport.Web.ViewModels;
@@ -11,8 +10,7 @@ public class ContentService(IContentfulService contentfulService) : IContentServ
     public async Task<CsPage?> GetContent(string slug, bool isPreview = false)
     {
         var resp = await GetContentSupportPages(nameof(ContentSupportPage.Slug), slug, isPreview);
-        var page = resp is not null && resp.Any() ? resp.First() : null;
-        return page is null ? null : new CsPage(page);
+        return resp is not null && resp.Count != 0 ? resp.First() : null;
     }
 
     public async Task<string> GenerateSitemap(string baseUrl)
@@ -36,12 +34,19 @@ public class ContentService(IContentfulService contentfulService) : IContentServ
         return sitemap.ToString();
     }
 
-    private async Task<ContentfulCollection<ContentSupportPage>> GetContentSupportPages(
+    public async Task<List<CsPage>> GetCsPages()
+    {
+        var pages =
+            await GetContentSupportPages(nameof(ContentSupportPage.IsSitemap), "true", true);
+        return pages.ToList();
+    }
+
+    private async Task<List<CsPage>> GetContentSupportPages(
         string field, string value, bool isPreview)
     {
         var builder = QueryBuilder<ContentSupportPage>.New.ContentTypeIs(nameof(ContentSupportPage))
             .FieldEquals($"fields.{field}", value);
-
-        return await contentfulService.ContentfulClient(isPreview).Query(builder);
+        var result = await contentfulService.ContentfulClient(isPreview).Query(builder);
+        return result.Select(page => new CsPage(page)).ToList();
     }
 }

@@ -9,5 +9,6 @@ public class CsPage(ContentSupportPage contentfulPage)
         Utilities.MapEntriesToContent(contentfulPage.Content);
 
     public readonly Heading Heading = contentfulPage.Heading;
+    public readonly string Slug = contentfulPage.Slug;
     public readonly bool IsSitemap = contentfulPage.IsSitemap;
 }
