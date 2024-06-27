@@ -19,7 +19,7 @@ public class HomeController(IContentService contentService)
                 Subtitle = "Content and Support",
             }
         };
-        var resp = await contentService.GetContentSupportPages(nameof(ContentSupportPage.IsSitemap), "true", false);
+        var resp = await contentService.GetContentSupportPages(nameof(ContentSupportPage.IsSitemap), "true", true);
         ViewBag.pages = resp;
 
         return View(defaultModel);
