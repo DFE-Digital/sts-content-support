@@ -47,7 +47,6 @@ public class HomeController(IContentService contentService)
         {
             Heading = new Models.Heading
             {
-                Title = "",
                 Subtitle = "",
             }
         };
