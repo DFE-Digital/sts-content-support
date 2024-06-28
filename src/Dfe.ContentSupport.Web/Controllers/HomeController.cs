@@ -25,7 +25,6 @@ public class HomeController(IContentService contentService)
         return View(defaultModel);
     }
 
-    [HttpGet("{slug}")]
     public async Task<IActionResult> Index(string slug, bool isPreview = false)
     {
         if (string.IsNullOrEmpty(slug)) return RedirectToAction("error");
@@ -43,7 +42,14 @@ public class HomeController(IContentService contentService)
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
-        return View(new ErrorViewModel
-        { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        var defaultModel = new ContentSupportPage
+        {
+            Heading = new Models.Heading
+            {
+                Title = "",
+                Subtitle = "",
+            }
+        };
+        return View(defaultModel);
     }
 }
