@@ -4,7 +4,7 @@
 
 @{
     Layout = "_GovUkPageTemplate";
-    ViewData["Title"] = Model.Heading.Title;
+    ViewData["Title"] = Model.Heading.Title ?? "Department for Education";
     ViewData["containerClasses"] = "dfe-width-container";
 }
 
