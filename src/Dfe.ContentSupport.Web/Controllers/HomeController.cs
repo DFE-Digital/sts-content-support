@@ -25,6 +25,7 @@ public class HomeController(IContentService contentService)
         return View(defaultModel);
     }
 
+    [HttpGet("{slug}")]
     public async Task<IActionResult> Index(string slug, bool isPreview = false)
     {
         if (string.IsNullOrEmpty(slug)) return RedirectToAction("error");
