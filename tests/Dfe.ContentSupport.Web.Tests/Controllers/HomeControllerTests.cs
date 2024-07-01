@@ -16,6 +16,18 @@ public class HomeControllerTests
 
 
     [Fact]
+    public async void Home_Returns_View()
+    {
+        _contentServiceMock.Setup(o => o.GetCsPages()).ReturnsAsync([]);
+
+        var sut = GetController();
+        var result = await sut.Home();
+
+        result.Should().BeOfType<ViewResult>();
+        (result as ViewResult)!.Model.Should().BeOfType<CsPage>();
+    }
+
+    [Fact]
     public async void Index_NoSlug_Returns_ErrorAction()
     {
         var sut = GetController();

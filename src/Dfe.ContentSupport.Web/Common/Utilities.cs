@@ -83,7 +83,7 @@ public static class Utilities
             .ToList();
     }
 
-    private static RichTextContentItem? MapContent(ContentItem contentItem)
+    public static RichTextContentItem? MapContent(ContentItem contentItem)
     {
         RichTextContentItem? item;
         var nodeType = ConvertToRichTextNodeType(contentItem.NodeType);

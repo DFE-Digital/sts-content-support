@@ -1,4 +1,5 @@
-﻿using Dfe.ContentSupport.Web.Models;
+﻿using Dfe.ContentSupport.Web.Common;
+using Dfe.ContentSupport.Web.Models;
 using Dfe.ContentSupport.Web.Models.Mapped;
 using Dfe.ContentSupport.Web.Models.Mapped.Custom;
 using Dfe.ContentSupport.Web.Models.Mapped.Standard;
@@ -29,6 +30,16 @@ public class CsPageTests
     [Fact]
     public void EmbeddedAssetCorrectContentType()
     {
+        Utilities.ImageSupportedTypes =
+        [
+            "image/jpeg",
+            "image/png"
+        ];
+        Utilities.VideoSupportedTypes =
+        [
+            "video/mp4",
+            "video/quicktime"
+        ];
         var asset = new Fields
         {
             File = new FileDetails
@@ -131,5 +142,50 @@ public class CsPageTests
         card.Meta.Should().Be("meta");
         card.Title.Should().Be("title");
         card.Uri.Should().Be("uri");
+    }
+
+    [Fact]
+    public void MapContent_NullNodeType_Returns_Null()
+    {
+        var result = Utilities.MapContent(new ContentItem { NodeType = null! });
+        result.Should().BeNull();
+    }
+
+
+    [Fact]
+    public void GenerateCustomComponent_NullContentType_Returns_Null()
+    {
+        var result = Utilities.GenerateCustomComponent(new Target
+        {
+            Sys = new Sys { ContentType = new ContentType { Sys = new Sys { Id = null! } } }
+        });
+
+        result.Should().BeNull();
+    }
+
+
+    [Fact]
+    public void GenerateCustomComponent_CardContentType_Returns_Card()
+    {
+        var result = Utilities.GenerateCustomComponent(new Target
+        {
+            Sys = new Sys { ContentType = new ContentType { Sys = new Sys { Id = "csCard" } } },
+            Image = new Image { Fields = new Fields { File = new FileDetails { Url = "url" } } }
+        });
+
+        result.Should().BeOfType<CustomCard>();
+    }
+
+
+    [Fact]
+    public void GenerateCustomComponent_GridContentType_Returns_GridContainer()
+    {
+        var result = Utilities.GenerateCustomComponent(new Target
+        {
+            Sys = new Sys
+                { ContentType = new ContentType { Sys = new Sys { Id = "GridContainer" } } },
+        });
+
+        result.Should().BeOfType<CustomGridContainer>();
     }
 }
