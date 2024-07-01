@@ -1,20 +1,18 @@
-@model ContentItemBase
+@model EmbeddedEntry
 
 @{
-    var target = Model.Data.Target;
-
-    if (target.JumpIdentifier is not null)
+    if (Model.JumpIdentifier is not null)
     {
-        <div id=@target.JumpIdentifier></div>
+        <div id=@Model.JumpIdentifier></div>
     }
 
-    else if (target.Sys.ContentType?.Sys.Id is not null)
+    else if (Model.CustomComponent is not null)
     {
-        <partial name="RichText/_GDSComponent" model="@Model"/>
+        <partial name="RichText/_GDSComponent" model="@Model.CustomComponent"/>
     }
 
-    if (target.RichText is { NodeType: not null })
+    if (Model.RichText is not null)
     {
-        <partial name="RichText/_RichText" model="@target.RichText"/>
+        <partial name="RichText/_RichText" model="@Model.RichText"/>
     }
 }

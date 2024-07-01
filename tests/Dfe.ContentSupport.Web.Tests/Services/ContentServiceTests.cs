@@ -3,6 +3,7 @@ using Dfe.ContentSupport.Web.Configuration;
 using Contentful.Core.Models;
 using Contentful.Core.Search;
 using Dfe.ContentSupport.Web.Http;
+using Dfe.ContentSupport.Web.Models.Mapped;
 
 namespace Dfe.ContentSupport.Web.Tests.Services;
 
@@ -41,6 +42,7 @@ public class ContentServiceTests
     public async void GetContent_Calls_Client_Once()
     {
         var sut = GetService();
+        SetupResponse();
         await sut.GetContent(It.IsAny<string>());
 
         _httpContentClientMock.Verify(o =>
@@ -49,15 +51,6 @@ public class ContentServiceTests
                     It.IsAny<CancellationToken>()),
             Times.Once
         );
-    }
-
-    [Fact]
-    public async void GetContent_NullResponse_Returns_Null()
-    {
-        var sut = GetService();
-        var result = await sut.GetContent(It.IsAny<string>());
-
-        result.Should().BeNull();
     }
 
     [Fact]
@@ -79,7 +72,7 @@ public class ContentServiceTests
         var sut = GetService();
         var result = await sut.GetContent(It.IsAny<string>());
 
-        result.Should().BeEquivalentTo(_response.Items.First());
+        result.Should().BeEquivalentTo(new CsPage(_response.Items.First()));
     }
 
     [Fact]
@@ -95,5 +88,20 @@ public class ContentServiceTests
         var result = XDocument.Parse(resultStr);
 
         result.Should().BeEquivalentTo(expected);
+    }
+
+    [Fact]
+    public async void GetCsPages_Calls_Client_Once()
+    {
+        SetupResponse();
+        var sut = GetService();
+        await sut.GetCsPages();
+
+        _httpContentClientMock.Verify(o =>
+                o.Query(
+                    It.IsAny<QueryBuilder<ContentSupportPage>>(),
+                    It.IsAny<CancellationToken>()),
+            Times.Once
+        );
     }
 }

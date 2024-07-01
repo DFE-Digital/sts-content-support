@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Dfe.ContentSupport.Web.Models.Mapped;
 using Dfe.ContentSupport.Web.Services;
 using Dfe.ContentSupport.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -8,19 +9,18 @@ namespace Dfe.ContentSupport.Web.Controllers;
 public class HomeController(IContentService contentService)
     : Controller
 {
-
     public async Task<IActionResult> Home()
     {
-        var defaultModel = new ContentSupportPage
+        var defaultModel = new CsPage( new ContentSupportPage
         {
             Heading = new Models.Heading
             {
                 Title = "Department for Education",
                 Subtitle = "Content and Support",
             }
-        };
-        var resp = await contentService.GetContentSupportPages(nameof(ContentSupportPage.IsSitemap), "true", true);
-        ViewBag.pages = resp;
+        });
+
+        ViewBag.pages = await contentService.GetCsPages();
 
         return View(defaultModel);
     }
@@ -44,6 +44,6 @@ public class HomeController(IContentService contentService)
     public IActionResult Error()
     {
         return View(new ErrorViewModel
-        { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }

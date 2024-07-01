@@ -1,68 +1,62 @@
-@using Dfe.ContentSupport.Web.Common
-@model ContentItemBase
+@model RichTextContentItem
 
 @{
     var nodeType = Model.NodeType;
 
     switch (nodeType)
     {
-        case RichTextTags.Document:
-            <partial name="RichText/_Document" model="@Model" />
+        case RichTextNodeType.Document:
+            <partial name="RichText/_Document" model="@Model"/>
             break;
-        case RichTextTags.Paragraph:
-            <partial name="RichText/_Paragraph" model="@Model" />
+        case RichTextNodeType.Paragraph:
+            <partial name="RichText/_Paragraph" model="@Model"/>
             break;
-        case RichTextTags.Heading2:
-            <partial name="RichText/_H2" model="@Model" />
+        case RichTextNodeType.Heading2:
+        case RichTextNodeType.Heading3:
+        case RichTextNodeType.Heading4:
+        case RichTextNodeType.Heading5:
+        case RichTextNodeType.Heading6:
+            <partial name="RichText/_H" model="@Model"/>
             break;
-        case RichTextTags.Heading3:
-            <partial name="RichText/_H3" model="@Model" />
+        case RichTextNodeType.UnorderedList:
+            <partial name="RichText/_UnorderedList" model="@Model"/>
             break;
-        case RichTextTags.Heading4:
-            <partial name="RichText/_H4" model="@Model" />
+        case RichTextNodeType.OrderedList:
+            <partial name="RichText/_OrderedList" model="@Model"/>
             break;
-        case RichTextTags.Heading5:
-            <partial name="RichText/_H5" model="@Model" />
+        case RichTextNodeType.ListItem:
+            <partial name="RichText/_ListItem" model="@Model"/>
             break;
-        case RichTextTags.Heading6:
-            <partial name="RichText/_H6" model="@Model" />
+        case RichTextNodeType.Hyperlink:
+            <partial name="RichText/_Hyperlink" model="@Model"/>
             break;
-        case RichTextTags.UnorderedList:
-            <partial name="RichText/_UnorderedList" model="@Model" />
+        case RichTextNodeType.Table:
+            <partial name="RichText/_Table" model="@Model"/>
             break;
-        case RichTextTags.OrderedList:
-            <partial name="RichText/_OrderedList" model="@Model" />
+        case RichTextNodeType.TableRow:
+            <partial name="RichText/_TableRow" model="@Model"/>
             break;
-        case RichTextTags.ListItem:
-            <partial name="RichText/_ListItem" model="@Model" />
+        case RichTextNodeType.TableHeaderCell:
+            <partial name="RichText/_TableHeaderCell" model="@Model"/>
             break;
-        case RichTextTags.Hyperlink:
-            <partial name="RichText/_Hyperlink" model="@Model" />
+        case RichTextNodeType.TableCell:
+            <partial name="RichText/_TableCell" model="@Model"/>
             break;
-        case RichTextTags.Table:
-            <partial name="RichText/_Table" model="@Model" />
+        case RichTextNodeType.Hr:
+            <hr/>
             break;
-        case RichTextTags.TableRow:
-            <partial name="RichText/_TableRow" model="@Model" />
+        case RichTextNodeType.EmbeddedAsset:
+            <partial name="RichText/_Asset" model="@Model"/>
             break;
-        case RichTextTags.TableHeaderCell:
-            <partial name="RichText/_TableHeaderCell" model="@Model" />
+        case RichTextNodeType.Text:
+            <partial name="RichText/_Text" model="@Model"/>
             break;
-        case RichTextTags.TableCell:
-            <partial name="RichText/_TableCell" model="@Model" />
+        case RichTextNodeType.EmbeddedEntry:
+            <partial name="RichText/_Entry" model="@Model"/>
             break;
-        case RichTextTags.Hr:
-            <hr />
-            break;
-        case RichTextTags.EmbeddedAsset:
-            <partial name="RichText/_Asset" model="@Model" />
-            break;
-        case RichTextTags.Text:
-            <partial name="RichText/_Text" model="@Model" />
-            break;
-        case RichTextTags.EmbeddedEntry:
-        case RichTextTags.EmbeddedEntryInline:
-            <partial name="RichText/_Entry" model="@Model" />
+        case RichTextNodeType.Unknown:
+        default:
+            <partial name="_UnsupportedElement" model="@Model"/>
             break;
     }
 }
