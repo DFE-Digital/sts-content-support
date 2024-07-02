@@ -1,8 +1,11 @@
-﻿using Contentful.Core;
-using Contentful.Core.Configuration;
+﻿using Contentful.Core.Configuration;
+using Dfe.ContentSupport.Data.Context;
+using Dfe.ContentSupport.Web.Configuration;
 using Dfe.ContentSupport.Web.Http;
 using Dfe.ContentSupport.Web.Services;
-using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
+
+using ContentfulOptions = Dfe.ContentSupport.Web.Configuration.ContentfulOptions;
 
 namespace Dfe.ContentSupport.Web.Extensions;
 
@@ -10,9 +13,13 @@ public static class WebApplicationBuilderExtensions
 {
     public static void InitDependencyInjection(this WebApplicationBuilder app)
     {
-        var contentfulOptions = new ContentfulOptions();
-        app.Configuration.GetSection("ContentfulOptions").Bind(contentfulOptions);
-        app.Services.AddSingleton(contentfulOptions);
+        app.Services.Configure<ContentfulOptions>(app.Configuration.GetSection("ContentfulOptions"));
+
+        app.Services.AddDbContext<SubscriberDbContext>(options =>
+        {
+            var connectionString = app.Configuration.GetConnectionString("DefaultConnection");
+            options.UseSqlServer(connectionString);
+        });
 
 
         app.Services.AddTransient<IContentfulService, ContentfulService>();
