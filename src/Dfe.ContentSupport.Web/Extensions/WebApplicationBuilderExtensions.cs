@@ -1,5 +1,6 @@
 ﻿using Dfe.ContentSupport.Web.Configuration;
 using Dfe.ContentSupport.Web.Http;
+using Dfe.ContentSupport.Web.Models.Mapped;
 using Dfe.ContentSupport.Web.Services;
 
 namespace Dfe.ContentSupport.Web.Extensions;
@@ -12,7 +13,8 @@ public static class WebApplicationBuilderExtensions
         app.Configuration.GetSection("Contentful").Bind(contentfulOptions);
         app.Services.AddSingleton(contentfulOptions);
 
-
+        app.Services
+            .AddTransient<ICacheService<List<CsPage>>, CsPagesCacheService>();
         app.Services.AddTransient<IContentfulService, ContentfulService>();
         app.Services.AddTransient<IContentService, ContentService>();
 

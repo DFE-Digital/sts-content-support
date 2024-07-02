@@ -5,7 +5,8 @@ using Dfe.ContentSupport.Web.ViewModels;
 
 namespace Dfe.ContentSupport.Web.Services;
 
-public class ContentService(IContentfulService contentfulService) : IContentService
+public class ContentService(IContentfulService contentfulService, ICacheService<List<CsPage>> cache)
+    : IContentService
 {
     public async Task<CsPage?> GetContent(string slug, bool isPreview = false)
     {
@@ -41,12 +42,22 @@ public class ContentService(IContentfulService contentfulService) : IContentServ
         return pages.ToList();
     }
 
-    private async Task<List<CsPage>> GetContentSupportPages(
+    public async Task<List<CsPage>> GetContentSupportPages(
         string field, string value, bool isPreview)
     {
+        var key = $"{field}_{value}";
+        var fromCache = cache.GetFromCache(key);
+        if (fromCache is not null)
+        {
+            return fromCache;
+        }
+
         var builder = QueryBuilder<ContentSupportPage>.New.ContentTypeIs(nameof(ContentSupportPage))
             .FieldEquals($"fields.{field}", value);
         var result = await contentfulService.ContentfulClient(isPreview).Query(builder);
-        return result.Select(page => new CsPage(page)).ToList();
+        var pages = result.Select(page => new CsPage(page)).ToList();
+
+        cache.AddToCache(key, pages);
+        return pages;
     }
 }
