@@ -10,6 +10,7 @@ namespace Dfe.ContentSupport.Web.Tests.Services;
 public class ContentServiceTests
 {
     private readonly Mock<IHttpContentfulClient> _httpContentClientMock = new();
+    private readonly Mock<ICacheService<List<CsPage>>> _cacheMock = new();
 
 
     private readonly ContentfulCollection<ContentSupportPage> _response = new()
@@ -24,7 +25,7 @@ public class ContentServiceTests
 
     private ContentService GetService()
     {
-        return new ContentService(GetClient());
+        return new ContentService(GetClient(), _cacheMock.Object);
     }
 
     private IContentfulService GetClient()
@@ -103,5 +104,113 @@ public class ContentServiceTests
                     It.IsAny<CancellationToken>()),
             Times.Once
         );
+    }
+
+    [Fact]
+    public async void GetCsPages_Calls_Cache_Correct_Key()
+    {
+        const string expectedKey = "IsSitemap_true";
+        SetupResponse();
+        var sut = GetService();
+        await sut.GetCsPages();
+
+        _cacheMock.Verify(o => o.GetFromCache(expectedKey));
+    }
+
+
+    [Fact]
+    public async void GetContent_Calls_Cache_Correct_Key()
+    {
+        const string slug = "dummy-slug";
+        const string expectedKey = $"Slug_{slug}";
+        SetupResponse();
+        var sut = GetService();
+        await sut.GetContent(slug, It.IsAny<bool>());
+
+        _cacheMock.Verify(o => o.GetFromCache(expectedKey));
+    }
+
+    [Fact]
+    public async void GetCsPage_Calls_Cache_Correct_Key()
+    {
+        const string slug = "dummy-slug";
+        const string expectedKey = $"Slug_{slug}";
+        SetupResponse();
+        var sut = GetService();
+        await sut.GetContent(slug, It.IsAny<bool>());
+
+        _cacheMock.Verify(o => o.GetFromCache(expectedKey));
+    }
+
+    [Fact]
+    public async void GetContentSupportPages_Calls_Cache_Correct_Key()
+    {
+        const string field = "field";
+        const string value = "value";
+        SetupResponse();
+        var isPreview = It.IsAny<bool>();
+        const string expectedKey = $"{field}_{value}";
+        var sut = GetService();
+        await sut.GetContentSupportPages(field, value, isPreview);
+
+        _cacheMock.Verify(o => o.GetFromCache(expectedKey));
+    }
+
+    [Fact]
+    public async void GetContentSupportPages_GotCache_Returns_Cache()
+    {
+        var cacheValue = new List<CsPage> { It.IsAny<CsPage>() };
+
+        const string field = "field";
+        const string value = "value";
+        const string expectedKey = $"{field}_{value}";
+        var isPreview = It.IsAny<bool>();
+        _cacheMock.Setup(o => o.GetFromCache(expectedKey)).Returns(cacheValue);
+
+        var sut = GetService();
+        var result = await sut.GetContentSupportPages(field, value, isPreview);
+
+        result.Should().BeEquivalentTo(cacheValue);
+    }
+
+    [Fact]
+    public async void GetContentSupportPages_NotGotCache_Calls_Client()
+    {
+        List<CsPage>? cacheValue = null;
+
+        const string field = "field";
+        const string value = "value";
+        const string expectedKey = $"{field}_{value}";
+        SetupResponse();
+        var isPreview = It.IsAny<bool>();
+        _cacheMock.Setup(o => o.GetFromCache(expectedKey)).Returns(cacheValue);
+
+        var sut = GetService();
+        await sut.GetContentSupportPages(field, value, isPreview);
+
+        _httpContentClientMock.Verify(o =>
+                o.Query(
+                    It.IsAny<QueryBuilder<ContentSupportPage>>(),
+                    It.IsAny<CancellationToken>()),
+            Times.Once
+        );
+    }
+
+    [Fact]
+    public async void GetContentSupportPages_NotGotCache_AddsToCache()
+    {
+        List<CsPage>? cacheValue = null;
+
+        const string field = "field";
+        const string value = "value";
+        const string expectedKey = $"{field}_{value}";
+        SetupResponse();
+        var isPreview = It.IsAny<bool>();
+        _cacheMock.Setup(o => o.GetFromCache(expectedKey)).Returns(cacheValue);
+
+        var sut = GetService();
+        await sut.GetContentSupportPages(field, value, isPreview);
+
+        _cacheMock.Verify(o => o.AddToCache(expectedKey, It.IsAny<List<CsPage>>()), Times.Once);
     }
 }

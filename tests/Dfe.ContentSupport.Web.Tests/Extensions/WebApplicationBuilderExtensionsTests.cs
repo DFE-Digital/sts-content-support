@@ -1,5 +1,6 @@
 ﻿using Dfe.ContentSupport.Web.Extensions;
 using Dfe.ContentSupport.Web.Http;
+using Dfe.ContentSupport.Web.Models.Mapped;
 using Microsoft.AspNetCore.Builder;
 
 namespace Dfe.ContentSupport.Web.Tests.Extensions;
@@ -16,7 +17,8 @@ public class WebApplicationBuilderExtensionsTests
         {
             typeof(IContentService),
             typeof(IContentfulService),
-            typeof(IHttpContentfulClient)
+            typeof(IHttpContentfulClient),
+            typeof(ICacheService<List<CsPage>>)
         };
         foreach (var type in types)
             builder.Services.Where(o => o.ServiceType == type).Should().ContainSingle();
