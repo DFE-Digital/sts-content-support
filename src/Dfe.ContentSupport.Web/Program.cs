@@ -51,12 +51,18 @@ internal static class Program
             new { controller = "Sitemap", action = "Index" }
         );
 
+
+        app.MapControllerRoute(
+            "clearCache",
+            pattern: "{controller=Cache}/{action=Clear}"
+        );
+
         app.MapControllerRoute(
             name: "home",
             pattern: "{controller=Home}/{action=Home}");
 
         app.MapControllerRoute(
-             name: "slug",
+            name: "slug",
             pattern: "{slug}",
             defaults: new { controller = "Home", action = "Index" });
 
