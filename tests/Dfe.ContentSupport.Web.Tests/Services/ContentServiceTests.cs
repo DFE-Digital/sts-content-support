@@ -107,16 +107,48 @@ public class ContentServiceTests
     }
 
     [Fact]
-    public async void GetCsPages_Calls_Cache_Correct_Key()
+    public async void GetCsPages_NotPreview_Calls_Cache_Correct_Key()
+    {
+        const string expectedKey = "IsSitemap_true";
+        SetupResponse();
+        var sut = GetService();
+        await sut.GetCsPages(false);
+
+        _cacheMock.Verify(o => o.GetFromCache(expectedKey), Times.Once);
+    }
+
+    [Fact]
+    public async void GetCsPages_Preview_Calls_Cache_Correct_Key()
     {
         const string expectedKey = "IsSitemap_true";
         SetupResponse();
         var sut = GetService();
         await sut.GetCsPages();
 
-        _cacheMock.Verify(o => o.GetFromCache(expectedKey));
+        _cacheMock.Verify(o => o.GetFromCache(expectedKey), Times.Never);
     }
 
+    [Fact]
+    public async void GetCsPages_NotPreview_Calls_AddCache_Correct_Key()
+    {
+        const string expectedKey = "IsSitemap_true";
+        SetupResponse();
+        var sut = GetService();
+        await sut.GetCsPages(false);
+
+        _cacheMock.Verify(o => o.AddToCache(expectedKey, It.IsAny<List<CsPage>>()), Times.Once);
+    }
+
+    [Fact]
+    public async void GetCsPages_Preview_Calls_AddCache_Correct_Key()
+    {
+        const string expectedKey = "IsSitemap_true";
+        SetupResponse();
+        var sut = GetService();
+        await sut.GetCsPages();
+
+        _cacheMock.Verify(o => o.AddToCache(expectedKey, It.IsAny<List<CsPage>>()), Times.Never);
+    }
 
     [Fact]
     public async void GetContent_Calls_Cache_Correct_Key()

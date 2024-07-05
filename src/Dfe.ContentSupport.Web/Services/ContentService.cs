@@ -35,10 +35,10 @@ public class ContentService(IContentfulService contentfulService, ICacheService<
         return sitemap.ToString();
     }
 
-    public async Task<List<CsPage>> GetCsPages()
+    public async Task<List<CsPage>> GetCsPages(bool isPreview = true)
     {
         var pages =
-            await GetContentSupportPages(nameof(ContentSupportPage.IsSitemap), "true", true);
+            await GetContentSupportPages(nameof(ContentSupportPage.IsSitemap), "true", isPreview);
         return pages.ToList();
     }
 
