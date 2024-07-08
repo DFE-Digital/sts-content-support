@@ -19,7 +19,7 @@ internal static class Program
         var azureCredentials = new DefaultAzureCredential();
         builder.Configuration.AddAzureKeyVault(new Uri(keyVaultUri), azureCredentials);
 
-
+        builder.Services.AddControllers();
         builder.Services.AddControllersWithViews();
         builder.Services.AddApplicationInsightsTelemetry();
 

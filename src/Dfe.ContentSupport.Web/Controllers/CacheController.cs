@@ -4,10 +4,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Dfe.ContentSupport.Web.Controllers;
 
+[Route("api/[controller]")]
+[ApiController]
 public class CacheController(ICacheService<List<CsPage>> cache) : Controller
 {
-    public void Clear()
+    [HttpGet]
+    [Route("clear")]
+    public IActionResult Clear()
     {
         cache.ClearCache();
+
+        return Ok();
     }
 }
