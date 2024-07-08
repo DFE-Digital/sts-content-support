@@ -18,7 +18,7 @@ public class HomeControllerTests
     [Fact]
     public async void Home_Returns_View()
     {
-        _contentServiceMock.Setup(o => o.GetCsPages()).ReturnsAsync([]);
+        _contentServiceMock.Setup(o => o.GetCsPages(It.IsAny<bool>())).ReturnsAsync([]);
 
         var sut = GetController();
         var result = await sut.Home();

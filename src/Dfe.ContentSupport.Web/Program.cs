@@ -19,7 +19,7 @@ internal static class Program
         var azureCredentials = new DefaultAzureCredential();
         builder.Configuration.AddAzureKeyVault(new Uri(keyVaultUri), azureCredentials);
 
-
+        builder.Services.AddControllers();
         builder.Services.AddControllersWithViews();
         builder.Services.AddApplicationInsightsTelemetry();
 
@@ -51,12 +51,18 @@ internal static class Program
             new { controller = "Sitemap", action = "Index" }
         );
 
+
+        app.MapControllerRoute(
+            "clearCache",
+            pattern: "{controller=Cache}/{action=Clear}"
+        );
+
         app.MapControllerRoute(
             name: "home",
             pattern: "{controller=Home}/{action=Home}");
 
         app.MapControllerRoute(
-             name: "slug",
+            name: "slug",
             pattern: "{slug}",
             defaults: new { controller = "Home", action = "Index" });
 

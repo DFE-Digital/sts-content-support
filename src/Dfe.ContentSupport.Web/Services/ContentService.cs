@@ -35,10 +35,10 @@ public class ContentService(IContentfulService contentfulService, ICacheService<
         return sitemap.ToString();
     }
 
-    public async Task<List<CsPage>> GetCsPages()
+    public async Task<List<CsPage>> GetCsPages(bool isPreview = true)
     {
         var pages =
-            await GetContentSupportPages(nameof(ContentSupportPage.IsSitemap), "true", true);
+            await GetContentSupportPages(nameof(ContentSupportPage.IsSitemap), "true", isPreview);
         return pages.ToList();
     }
 
@@ -46,18 +46,26 @@ public class ContentService(IContentfulService contentfulService, ICacheService<
         string field, string value, bool isPreview)
     {
         var key = $"{field}_{value}";
-        var fromCache = cache.GetFromCache(key);
-        if (fromCache is not null)
+        if (isPreview is false)
         {
-            return fromCache;
+            var fromCache = cache.GetFromCache(key);
+            if (fromCache is not null)
+            {
+                return fromCache;
+            }
         }
+
 
         var builder = QueryBuilder<ContentSupportPage>.New.ContentTypeIs(nameof(ContentSupportPage))
             .FieldEquals($"fields.{field}", value);
         var result = await contentfulService.ContentfulClient(isPreview).Query(builder);
         var pages = result.Select(page => new CsPage(page)).ToList();
 
-        cache.AddToCache(key, pages);
+        if (isPreview is false)
+        {
+            cache.AddToCache(key, pages);
+        }
+
         return pages;
     }
 }

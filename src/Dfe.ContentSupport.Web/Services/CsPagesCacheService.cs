@@ -23,4 +23,9 @@ public class CsPagesCacheService(IMemoryCache cache, IConfiguration configuratio
     {
         return cache.Get<List<CsPage>>(key);
     }
+
+    public void ClearCache()
+    {       
+        (cache as MemoryCache)?.Clear();
+    }
 }
