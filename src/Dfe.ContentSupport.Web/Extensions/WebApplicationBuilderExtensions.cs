@@ -13,6 +13,9 @@ public static class WebApplicationBuilderExtensions
         app.Configuration.GetSection("Contentful").Bind(contentfulOptions);
         app.Services.AddSingleton(contentfulOptions);
 
+
+
+
         app.Services
             .AddTransient<ICacheService<List<CsPage>>, CsPagesCacheService>();
         app.Services.AddTransient<IContentfulService, ContentfulService>();
