@@ -25,7 +25,7 @@ public static class WebApplicationBuilderExtensions
         {
             options.CheckConsentNeeded = context => true;
             options.MinimumSameSitePolicy = SameSiteMode.Strict;
-            options.ConsentCookieValue = "no";
+            options.ConsentCookieValue = "false";
         });
 
         if (app.Environment.EnvironmentName.Equals("e2e"))

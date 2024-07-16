@@ -23,12 +23,12 @@
             </div>
         </div>
         <div class="govuk-button-group">
-            <button value="yes" type="submit" name="cookies[additional]" class="govuk-button" data-module="govuk-button"
-                data-cookie-string="@cookieString">
+            <button value="true" type="submit" name="cookies[additional]" class="govuk-button"
+                data-module="govuk-button" data-cookie-string="@cookieString">
                 Accept additional cookies
             </button>
-            <button value="no" type="submit" name="cookies[additional]" class="govuk-button" data-module="govuk-button"
-                data-cookie-string="@cookieString">
+            <button value="false" type="submit" name="cookies[additional]" class="govuk-button"
+                data-module="govuk-button" data-cookie-string="@cookieString">
                 Reject additional cookies
             </button>
             <a class="govuk-link" href="#">View cookies</a>
@@ -40,7 +40,7 @@
         var buttons = document.querySelectorAll("#cookieConsent button[data-cookie-string]");
         buttons.forEach(function (button) {
             button.addEventListener("click", function (event) {
-                var updatedCookieString = button.dataset.cookieString.replace(/yes|no/, button.value);
+                var updatedCookieString = button.dataset.cookieString.replace(/true|false/, button.value);
                 document.cookie = updatedCookieString;
                 var cookieContainer = document.querySelector("#cookieConsent");
                 cookieContainer.remove();

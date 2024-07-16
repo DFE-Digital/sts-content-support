@@ -9,7 +9,7 @@
     ViewData["Title"] = Model.Heading.Title;
     ViewData["containerClasses"] = "dfe-width-container";
     var consentCookie = Context.Request.Cookies[".AspNet.Consent"];
-    var track = consentCookie == "yes";
+    var track = consentCookie == "true";
 }
 
 @section Head {
