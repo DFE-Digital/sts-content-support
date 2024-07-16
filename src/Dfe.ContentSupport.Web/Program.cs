@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Azure.Identity;
 using Contentful.AspNetCore;
+using Dfe.ContentSupport.Web.Common;
 using Dfe.ContentSupport.Web.Extensions;
 using GovUk.Frontend.AspNetCore;
 
@@ -18,7 +19,7 @@ internal static class Program
         var azureCredentials = new DefaultAzureCredential();
         builder.Configuration.AddAzureKeyVault(new Uri(keyVaultUri), azureCredentials);
 
-
+        builder.Services.AddControllers();
         builder.Services.AddControllersWithViews();
         builder.Services.AddApplicationInsightsTelemetry();
 
@@ -26,6 +27,10 @@ internal static class Program
         builder.Services.AddContentful(builder.Configuration);
         builder.InitDependencyInjection();
 
+        Utilities.ImageSupportedTypes =
+            builder.Configuration.GetSection("ImageSupportedTypes").Get<string[]>() ?? [];
+        Utilities.VideoSupportedTypes =
+            builder.Configuration.GetSection("VideoSupportedTypes").Get<string[]>() ?? [];
 
         var app = builder.Build();
         if (!app.Environment.IsDevelopment())
@@ -46,12 +51,18 @@ internal static class Program
             new { controller = "Sitemap", action = "Index" }
         );
 
+
+        app.MapControllerRoute(
+            "clearCache",
+            pattern: "{controller=Cache}/{action=Clear}"
+        );
+
         app.MapControllerRoute(
             name: "home",
             pattern: "{controller=Home}/{action=Home}");
 
         app.MapControllerRoute(
-             name: "slug",
+            name: "slug",
             pattern: "{slug}",
             defaults: new { controller = "Home", action = "Index" });
 

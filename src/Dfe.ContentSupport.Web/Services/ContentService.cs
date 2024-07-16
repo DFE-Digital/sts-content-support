@@ -1,16 +1,17 @@
 using System.Xml.Linq;
-using Contentful.Core.Models;
 using Contentful.Core.Search;
+using Dfe.ContentSupport.Web.Models.Mapped;
 using Dfe.ContentSupport.Web.ViewModels;
 
 namespace Dfe.ContentSupport.Web.Services;
 
-public class ContentService(IContentfulService contentfulService) : IContentService
+public class ContentService(IContentfulService contentfulService, ICacheService<List<CsPage>> cache)
+    : IContentService
 {
-    public async Task<ContentSupportPage?> GetContent(string slug, bool isPreview = false)
+    public async Task<CsPage?> GetContent(string slug, bool isPreview = false)
     {
         var resp = await GetContentSupportPages(nameof(ContentSupportPage.Slug), slug, isPreview);
-        return resp is not null && resp.Any() ? resp.First() : null;
+        return resp is not null && resp.Count != 0 ? resp.First() : null;
     }
 
     public async Task<string> GenerateSitemap(string baseUrl)
@@ -34,13 +35,37 @@ public class ContentService(IContentfulService contentfulService) : IContentServ
         return sitemap.ToString();
     }
 
-    public async Task<ContentfulCollection<ContentSupportPage>> GetContentSupportPages(
-        string field, string value, bool isPreview)
+    public async Task<List<CsPage>> GetCsPages(bool isPreview = true)
     {
-        var builder = QueryBuilder<ContentSupportPage>.New.ContentTypeIs(nameof(ContentSupportPage))
-            .FieldEquals($"fields.{field}", value);
-
-        return await contentfulService.ContentfulClient(isPreview).Query(builder);
+        var pages =
+            await GetContentSupportPages(nameof(ContentSupportPage.IsSitemap), "true", isPreview);
+        return pages.ToList();
     }
 
+    public async Task<List<CsPage>> GetContentSupportPages(
+        string field, string value, bool isPreview)
+    {
+        var key = $"{field}_{value}";
+        if (isPreview is false)
+        {
+            var fromCache = cache.GetFromCache(key);
+            if (fromCache is not null)
+            {
+                return fromCache;
+            }
+        }
+
+
+        var builder = QueryBuilder<ContentSupportPage>.New.ContentTypeIs(nameof(ContentSupportPage))
+            .FieldEquals($"fields.{field}", value);
+        var result = await contentfulService.ContentfulClient(isPreview).Query(builder);
+        var pages = result.Select(page => new CsPage(page)).ToList();
+
+        if (isPreview is false)
+        {
+            cache.AddToCache(key, pages);
+        }
+
+        return pages;
+    }
 }

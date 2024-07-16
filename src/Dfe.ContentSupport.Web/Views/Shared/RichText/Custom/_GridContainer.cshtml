@@ -1,9 +1,9 @@
-﻿@model ContentItemBase
+﻿@model CustomGridContainer
 
 @{
 <div class="dfe-grid-container">
-    @foreach (var item in Model.Data.Target.Content)
+    @foreach (var card in Model.Cards)
     {
-        <partial name="RichText/Custom/_Card" model="item"/>
+        <partial name="RichText/Custom/_Card" model="card"/>
     }
 </div>}

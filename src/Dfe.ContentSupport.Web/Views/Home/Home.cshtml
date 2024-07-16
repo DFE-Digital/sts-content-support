@@ -1,21 +1,22 @@
-﻿@model ContentSupportPage
+﻿@model CsPage
 
 <h1>@ViewData["Title"]</h1>
 
-
 @{
-    if (ViewBag?.Pages?.Items != null)
+    if (ViewBag.Pages != null)
     {
         <div class="dfe-grid-container">
-            @for (var i = 0; i < ViewBag.Pages.Items.Count; i++)
+            @for (var i = 0; i < ViewBag.Pages.Count; i++)
             {
-                var url = ViewBag.Pages.Items[i].Slug + "?isPreview=true";
+                var csPage = ViewBag.Pages[i];
+                var url = csPage.Slug + "?isPreview=true";
                 <div class="dfe-card">
                     <div class="dfe-card-container">
                         <h3 class="govuk-heading-m">
-                            <a href="@url" class="govuk-link govuk-link--no-visited-state dfe-card-link--header">@ViewBag.Pages.Items[i].Heading.Title</a>
+                            <a href="@url" class="govuk-link govuk-link--no-visited-state dfe-card-link--header">@csPage.Heading.Title</a>
                         </h3>
-                        <p>@ViewBag.Pages.Items[i].Heading.Subtitle</p>
+                        <p>@csPage.Heading.Subtitle</p>
+                        <p>Slug: @csPage.Slug</p>
                     </div>
                 </div>
             }

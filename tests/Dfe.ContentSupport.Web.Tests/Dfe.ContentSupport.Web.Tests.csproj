@@ -27,4 +27,10 @@
         <ProjectReference Include="..\..\src\Dfe.ContentSupport.Web\Dfe.ContentSupport.Web.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="DummyContentSupportPage.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>

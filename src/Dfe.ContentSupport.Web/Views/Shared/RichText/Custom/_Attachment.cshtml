@@ -1,12 +1,10 @@
-@model ContentItemBase
-@{
-    var target = Model.Data.Target;
-}
+@model CustomAttachment
+
 <section class="attachment govuk-!-margin-top-8">
     <div class="attachment-thumbnail">
-        <a href="@target.Asset.File.Url" download>
+        <a href="@Model.Uri" download>
             @{
-                var fileExtension = target.Asset.File.ContentType.Split('/').Last().ToLower();
+                var fileExtension = Model.ContentType.Split('/').Last().ToLower();
                 switch (fileExtension)
                 {
                     case "pdf":
@@ -27,22 +25,24 @@
 
                 }
             }
+
+
         </a>
     </div>
 
     <div class="attachment-details">
         <h2 class="attachment-title">
-            <a href="@target.Asset.File.Url" aria-describedby="file-details" class="govuk-link attachment-link"
-                download>
-                @target.Title
+            <a href="@Model.Uri" aria-describedby="file-details"
+                class="govuk-link attachment-link" download>
+                @Model.Title
             </a>
         </h2>
 
         <p class="attachment-metadata">
             <span class="attachment-attribute"
-                aria-label="file type">@target.Asset.File.ContentType.Split('/').Last().ToUpper()</span>,
+                aria-label="file type">@Model.ContentType.Split('/').Last().ToUpper()</span>,
             <span class="attachment-attribute" aria-label="file size">
-                @(target.Asset.File.Details.Size / 1024) KB
+                @(Model.Size / 1024) KB
             </span>
         </p>
     </div>

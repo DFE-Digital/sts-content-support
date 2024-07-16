@@ -1,22 +1,22 @@
-@model Target
+@model CustomAccordion
 
 <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-@Model.InternalName">
     @{
-        foreach (var element in Model.Content)
+        foreach (var accordion in Model.Accordions)
         {
             <div class="govuk-accordion__section">
                 <div class="govuk-accordion__section-header">
                     <h2 class="govuk-accordion__section-heading">
-                        <span class="govuk-accordion__section-button" id="@element.InternalName-heading">
-                            @element.Title
+                        <span class="govuk-accordion__section-button" id="@accordion.InternalName-heading">
+                            @accordion.Title
                         </span>
                     </h2>
-                    <div class="govuk-accordion__section-summary govuk-body" id="@element.InternalName-summary">
-                        @element.SummaryLine
+                    <div class="govuk-accordion__section-summary govuk-body" id="@accordion.InternalName-summary">
+                        @accordion.SummaryLine
                     </div>
                 </div>
-                <div id="@element.InternalName-content" class="govuk-accordion__section-content">
-                    <p class="govuk-body">@element.Body</p>
+                <div id="@accordion.InternalName-content" class="govuk-accordion__section-content">
+                    <p class="govuk-body">@accordion.Body</p>
                 </div>
             </div>
         }

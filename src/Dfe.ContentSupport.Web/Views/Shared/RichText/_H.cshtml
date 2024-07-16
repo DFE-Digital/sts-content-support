@@ -1,0 +1,34 @@
+﻿@model CsHeading
+
+@{
+    switch (Model.NodeType)
+    {
+        case RichTextNodeType.Heading2:
+            <h2 class="govuk-!-margin-top-4">
+                <partial name="RichText/_Items" model="@Model"/>
+            </h2>
+            break;
+        case RichTextNodeType.Heading3:
+            <h3>
+                <partial name="RichText/_Items" model="@Model"/>
+            </h3>
+            break;
+        case RichTextNodeType.Heading4:
+            <h4>
+                <partial name="RichText/_Items" model="@Model"/>
+            </h4>
+            break;
+        case RichTextNodeType.Heading5:
+            <h5>
+                <partial name="RichText/_Items" model="@Model"/>
+            </h5>
+            break;
+        case RichTextNodeType.Heading6:
+            <h6>
+                <partial name="RichText/_Items" model="@Model"/>
+            </h6>
+            break;
+        default:
+            throw new ArgumentOutOfRangeException();
+    }
+}

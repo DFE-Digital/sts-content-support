@@ -1,8 +1,7 @@
-@model ContentItem
+@model CsText
 
 @{
-    var isBold = Model.Marks.Any(mark => mark.Type == "bold");
-    if (isBold)
+    if (Model.IsBold)
     {
         <strong>@Model.Value</strong>
     }
