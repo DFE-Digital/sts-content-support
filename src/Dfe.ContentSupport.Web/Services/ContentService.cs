@@ -5,7 +5,7 @@ using Dfe.ContentSupport.Web.ViewModels;
 
 namespace Dfe.ContentSupport.Web.Services;
 
-public class ContentService(IContentfulService contentfulService, ICacheService<List<CsPage>> cache)
+public class ContentService(IContentfulService contentfulService, ICacheService<List<CsPage>> cache, IModelMapper modelMapper)
     : IContentService
 {
     public async Task<CsPage?> GetContent(string slug, bool isPreview = false)
@@ -59,7 +59,7 @@ public class ContentService(IContentfulService contentfulService, ICacheService<
         var builder = QueryBuilder<ContentSupportPage>.New.ContentTypeIs(nameof(ContentSupportPage))
             .FieldEquals($"fields.{field}", value);
         var result = await contentfulService.ContentfulClient(isPreview).Query(builder);
-        var pages = result.Select(page => new CsPage(page)).ToList();
+        var pages = modelMapper.MapToCsPages(result);
 
         if (isPreview is false)
         {

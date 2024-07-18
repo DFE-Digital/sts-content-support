@@ -1,9 +1,15 @@
 ﻿using Dfe.ContentSupport.Web.Models.Mapped.Types;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Dfe.ContentSupport.Web.Models.Mapped.Custom;
 
-public class CustomGridContainer(Target target) : CustomComponent(CustomComponentType.GridContainer)
+[ExcludeFromCodeCoverage]
+public class CustomGridContainer : CustomComponent
 {
-    public readonly List<CustomCard> Cards =
-        target.Content.Select(card => new CustomCard(card)).ToList();
+    public CustomGridContainer()
+    {
+        Type = CustomComponentType.GridContainer;
+    }
+
+    public List<CustomCard> Cards { get; set; } = null!;
 }

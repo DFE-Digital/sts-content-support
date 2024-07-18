@@ -1,13 +1,20 @@
 ﻿using Dfe.ContentSupport.Web.Models.Mapped.Types;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Dfe.ContentSupport.Web.Models.Mapped.Custom;
 
-public class CustomCard(Target target) : CustomComponent(CustomComponentType.Card)
+[ExcludeFromCodeCoverage]
+public class CustomCard : CustomComponent
 {
-    public readonly string Description = target.Description;
-    public readonly string ImageAlt = target.ImageAlt;
-    public readonly string ImageUri = target.Image.Fields.File.Url;
-    public readonly string Meta = target.Meta;
-    public readonly string Title = target.Title;
-    public readonly string Uri = target.Uri;
+    public CustomCard()
+    {
+        Type = CustomComponentType.Card;
+    }
+
+    public string Description { get; set; } = null!;
+    public string ImageAlt { get; set; } = null!;
+    public string ImageUri { get; set; } = null!;
+    public string Meta { get; set; } = null!;
+    public string Title { get; set; } = null!;
+    public string Uri { get; set; } = null!;
 }

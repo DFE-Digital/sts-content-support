@@ -1,6 +1,9 @@
-﻿namespace Dfe.ContentSupport.Web.Models.Mapped;
+﻿using System.Diagnostics.CodeAnalysis;
 
-public class CsContentItem(string internalName)
+namespace Dfe.ContentSupport.Web.Models.Mapped;
+
+[ExcludeFromCodeCoverage]
+public class CsContentItem
 {
-    public readonly string InternalName = internalName;
+    public string InternalName { get; set; } = null!;
 }

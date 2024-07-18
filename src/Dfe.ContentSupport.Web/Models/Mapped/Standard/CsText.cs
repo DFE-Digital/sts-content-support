@@ -1,9 +1,15 @@
 ﻿using Dfe.ContentSupport.Web.Models.Mapped.Types;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Dfe.ContentSupport.Web.Models.Mapped.Standard;
 
-public class CsText(ContentItem contentItem)
-    : RichTextContentItem(RichTextNodeType.Text, contentItem.InternalName)
+[ExcludeFromCodeCoverage]
+public class CsText : RichTextContentItem
 {
-    public readonly bool IsBold = contentItem.Marks.Any(mark => mark.Type == "bold");
+    public CsText()
+    {
+        NodeType = RichTextNodeType.Text;
+    }
+
+    public bool IsBold { get; set; }
 }

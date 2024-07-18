@@ -1,14 +1,12 @@
-﻿using Dfe.ContentSupport.Web.Common;
-using Dfe.ContentSupport.Web.ViewModels;
+﻿using System.Diagnostics.CodeAnalysis;
 
 namespace Dfe.ContentSupport.Web.Models.Mapped;
 
-public class CsPage(ContentSupportPage contentfulPage)
+[ExcludeFromCodeCoverage]
+public class CsPage
 {
-    public readonly List<CsContentItem> Content =
-        Utilities.MapEntriesToContent(contentfulPage.Content);
-
-    public readonly Heading Heading = contentfulPage.Heading;
-    public readonly string Slug = contentfulPage.Slug;
-    public readonly bool IsSitemap = contentfulPage.IsSitemap;
+    public Heading Heading { get; set; } = null!;
+    public string Slug { get; set; } = null!;
+    public bool IsSitemap { get; set; }
+    public List<CsContentItem> Content { get; set; } = null!;
 }
