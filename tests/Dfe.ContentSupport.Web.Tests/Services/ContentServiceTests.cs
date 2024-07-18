@@ -11,6 +11,7 @@ public class ContentServiceTests
 {
     private readonly Mock<IHttpContentfulClient> _httpContentClientMock = new();
     private readonly Mock<ICacheService<List<CsPage>>> _cacheMock = new();
+    private readonly Mock<IModelMapper> _mapperMock = new();
 
 
     private readonly ContentfulCollection<ContentSupportPage> _response = new()
@@ -25,7 +26,7 @@ public class ContentServiceTests
 
     private ContentService GetService()
     {
-        return new ContentService(GetClient(), _cacheMock.Object);
+        return new ContentService(GetClient(), _cacheMock.Object, _mapperMock.Object);
     }
 
     private IContentfulService GetClient()
@@ -35,8 +36,13 @@ public class ContentServiceTests
 
     private void SetupResponse(ContentfulCollection<ContentSupportPage>? response = null)
     {
+        var res = response ?? _response;
         _httpContentClientMock.Setup(o => o.Query(It.IsAny<QueryBuilder<ContentSupportPage>>(),
-            It.IsAny<CancellationToken>())).ReturnsAsync(response ?? _response);
+            It.IsAny<CancellationToken>())).ReturnsAsync(res);
+        
+        
+        _mapperMock.Setup(o => o.MapToCsPages(res))
+            .Returns(res.Items.Select(page => new ModelMapper().MapToCsPage(page)).ToList());
     }
 
     [Fact]
@@ -73,7 +79,8 @@ public class ContentServiceTests
         var sut = GetService();
         var result = await sut.GetContent(It.IsAny<string>());
 
-        result.Should().BeEquivalentTo(new CsPage(_response.Items.First()));
+        var expected = new ModelMapper().MapToCsPage(_response.Items.First());
+        result.Should().BeEquivalentTo(expected);
     }
 
     [Fact]

@@ -68,7 +68,7 @@ public class HomeControllerTests
     public async void Index_WithSlug_Returns_View()
     {
         _contentServiceMock.Setup(o => o.GetContent(It.IsAny<string>(), It.IsAny<bool>()))
-            .ReturnsAsync(new CsPage(new ContentSupportPage()));
+            .ReturnsAsync(new CsPage());
 
         var sut = GetController();
         var result = await sut.Index("slug1");

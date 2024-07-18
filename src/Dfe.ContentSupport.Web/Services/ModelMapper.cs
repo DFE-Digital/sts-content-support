@@ -53,25 +53,10 @@ public class ModelMapper : IModelMapper
         return item;
     }
 
-    private List<RichTextContentItem> MapRichTextNodes(List<ContentItem> nodes)
+    public List<RichTextContentItem> MapRichTextNodes(List<ContentItem> nodes)
     {
-        var list = new List<RichTextContentItem>();
-        foreach (var node in nodes)
-        {
-            RichTextContentItem? item = MapContent(node);
-            if (item == null)
-            {
-                item = new RichTextContentItem
-                {
-                    NodeType = RichTextNodeType.Unknown,
-                    InternalName = node.InternalName
-                };
-            }
-
-            list.Add(item);
-        }
-
-        return list;
+        return nodes.Select(node => MapContent(node) ?? new RichTextContentItem
+            { NodeType = RichTextNodeType.Unknown, InternalName = node.InternalName }).ToList();
     }
 
     public RichTextContentItem? MapContent(ContentItem contentItem)
