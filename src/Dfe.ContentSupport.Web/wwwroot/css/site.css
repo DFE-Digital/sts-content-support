@@ -20,7 +20,6 @@ video {
   font-weight: 400;
   font-size: 1.6875rem;
   line-height: 1.1111111111;
-  margin: 0 0 15px;
 }
 
 .attachment .attachment-title .attachment-link {
@@ -36,14 +35,13 @@ video {
   float: left;
   width: auto;
   margin-right: 25px;
-  margin-bottom: 15px;
   padding: 5px;
 }
 
 .attachment .attachment-thumbnail {
   display: block;
   max-width: 280px;
-  width: 140px;
+  width: 110px;
   height: auto;
   border: #e6e6e6;
   outline: 5px solid #e6e6e6;
@@ -54,11 +52,8 @@ video {
 }
 
 .attachment .attachment-metadata {
-  font-weight: 400;
-  font-size: 1.1875rem;
   line-height: 1.25;
-  margin: 0 0 15px;
-  color: #505a5f;
+  margin-bottom: 0;
 }
 
 .attachment .attachment-metadata:last-of-type {
@@ -90,4 +85,9 @@ video {
 
 .dfe-page-header {
   background-color: #ebf2f6;
+}
+
+.guidance-container {
+  border: 1px solid #b1b4b6;
+  padding: 50px;
 }
