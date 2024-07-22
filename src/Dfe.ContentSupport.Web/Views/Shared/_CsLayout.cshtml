@@ -1,0 +1,59 @@
+﻿@using Dfe.ContentSupport.Web.Configuration
+@using Microsoft.Extensions.Configuration
+@inject TrackingOptions trackingOptions
+@model CsPage;
+
+@{
+    Layout = "_GovUkPageTemplate";
+    ViewData["Title"] = Model.Heading.Title;
+    ViewData["containerClasses"] = "dfe-width-container";
+}
+
+@section Head {
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', '@(trackingOptions.Gtm)');</script>
+    <!-- End Google Tag Manager -->
+}
+
+@section Header {
+    <link rel="stylesheet" as="style" href="~/css/application.css">
+    <link rel="stylesheet" as="style" href="~/css/cands-site.css">
+    <header role="banner">
+        <partial name="_CsHeader" />
+        <partial name="_Hero" model="@Model.Heading" />
+    </header>
+    @RenderSection("Header", false)
+}
+
+@section BeforeContent {
+    <script defer>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src=@($"https://www.googletagmanager.com/ns.html?id={trackingOptions.Gtm}") height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    @RenderSection("BeforeContent", false)
+}
+
+@RenderBody()
+
+@section Footer {
+    <partial name="_Footer" />
+}
+
+@section BodyEnd {
+    <script defer type="module" nonce="@Context.Items["nonce"]">
+        import * as govuk from '/js/govuk-frontend.min.js';
+        govuk.initAll();
+    </script>
+    
+    @RenderSection("BodyEnd", false)
+}

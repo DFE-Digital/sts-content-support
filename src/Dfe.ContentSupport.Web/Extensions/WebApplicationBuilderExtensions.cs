@@ -1,4 +1,5 @@
-﻿using Dfe.ContentSupport.Web.Configuration;
+﻿using Dfe.ContentSupport.Web.Common;
+using Dfe.ContentSupport.Web.Configuration;
 using Dfe.ContentSupport.Web.Http;
 using Dfe.ContentSupport.Web.Models.Mapped;
 using Dfe.ContentSupport.Web.Services;
@@ -8,7 +9,7 @@ namespace Dfe.ContentSupport.Web.Extensions;
 
 public static class WebApplicationBuilderExtensions
 {
-    public static void InitDependencyInjection(this WebApplicationBuilder app)
+    public static void InitCsDependencyInjection(this WebApplicationBuilder app)
     {
         app.Services.Configure<CsContentfulOptions>(app.Configuration.GetSection("Contentful"))
             .AddSingleton(sp => sp.GetRequiredService<IOptions<CsContentfulOptions>>().Value);
@@ -30,5 +31,10 @@ public static class WebApplicationBuilderExtensions
         {
             app.Services.AddTransient<IHttpContentfulClient, HttpContentfulClient>();
         }
+        
+        Utilities.ImageSupportedTypes =
+            app.Configuration.GetSection("ImageSupportedTypes").Get<string[]>() ?? [];
+        Utilities.VideoSupportedTypes =
+            app.Configuration.GetSection("VideoSupportedTypes").Get<string[]>() ?? [];
     }
 }

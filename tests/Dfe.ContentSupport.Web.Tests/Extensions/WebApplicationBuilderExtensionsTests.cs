@@ -11,7 +11,7 @@ public class WebApplicationBuilderExtensionsTests
     public void Builder_Contains_Correct_Services()
     {
         var builder = WebApplication.CreateBuilder();
-        builder.InitDependencyInjection();
+        builder.InitCsDependencyInjection();
 
         var types = new[]
         {
@@ -29,7 +29,7 @@ public class WebApplicationBuilderExtensionsTests
     public void Builder_Default_Uses_DefaultClient()
     {
         var builder = WebApplication.CreateBuilder();
-        builder.InitDependencyInjection();
+        builder.InitCsDependencyInjection();
 
 
         var service = builder.Services.First(o => o.ServiceType == typeof(IHttpContentfulClient));
@@ -44,7 +44,7 @@ public class WebApplicationBuilderExtensionsTests
             EnvironmentName = "e2e"
         });
 
-        builder.InitDependencyInjection();
+        builder.InitCsDependencyInjection();
 
         var service = builder.Services.First(o => o.ServiceType == typeof(IHttpContentfulClient));
         service.ImplementationType?.Name.Should().BeEquivalentTo(nameof(StubHttpContentfulClient));
