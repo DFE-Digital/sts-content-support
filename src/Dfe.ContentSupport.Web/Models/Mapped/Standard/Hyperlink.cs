@@ -1,9 +1,16 @@
 ﻿using Dfe.ContentSupport.Web.Models.Mapped.Types;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Dfe.ContentSupport.Web.Models.Mapped.Standard;
 
-public class Hyperlink(string uri) : RichTextContentItem(RichTextNodeType.Hyperlink, string.Empty)
+[ExcludeFromCodeCoverage]
+public class Hyperlink : RichTextContentItem
 {
-    public readonly bool IsVimeo = uri.Contains("vimeo.com");
-    public readonly string Uri = uri;
+    public Hyperlink()
+    {
+        NodeType = RichTextNodeType.Hyperlink;
+    }
+
+    public bool IsVimeo { get; set; }
+    public string Uri { get; set; } = null!;
 }

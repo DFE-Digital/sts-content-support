@@ -11,14 +11,14 @@ public class HomeController(IContentService contentService)
 {
     public async Task<IActionResult> Home()
     {
-        var defaultModel = new CsPage( new ContentSupportPage
+        var defaultModel = new CsPage
         {
             Heading = new Models.Heading
             {
                 Title = "Department for Education",
-                Subtitle = "Content and Support",
+                Subtitle = "Content and Support"
             }
-        });
+        };
 
         ViewBag.pages = await contentService.GetCsPages();
 

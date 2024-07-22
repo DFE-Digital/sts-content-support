@@ -18,7 +18,8 @@ public class WebApplicationBuilderExtensionsTests
             typeof(IContentService),
             typeof(IContentfulService),
             typeof(IHttpContentfulClient),
-            typeof(ICacheService<List<CsPage>>)
+            typeof(ICacheService<List<CsPage>>),
+            typeof(IModelMapper)
         };
         foreach (var type in types)
             builder.Services.Where(o => o.ServiceType == type).Should().ContainSingle();

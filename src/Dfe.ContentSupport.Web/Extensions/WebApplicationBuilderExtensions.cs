@@ -18,6 +18,7 @@ public static class WebApplicationBuilderExtensions
 
         app.Services
             .AddTransient<ICacheService<List<CsPage>>, CsPagesCacheService>();
+        app.Services.AddTransient<IModelMapper, ModelMapper>();
         app.Services.AddTransient<IContentfulService, ContentfulService>();
         app.Services.AddTransient<IContentService, ContentService>();
 
