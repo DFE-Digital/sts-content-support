@@ -5,13 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Dfe.ContentSupport.Web.Tests.Controllers;
 
-public class HomeControllerTests
+public class ContentControllerTests
 {
     private readonly Mock<IContentService> _contentServiceMock = new();
 
-    private HomeController GetController()
+    private ContentController GetController()
     {
-        return new HomeController(_contentServiceMock.Object);
+        return new ContentController(_contentServiceMock.Object);
     }
 
 

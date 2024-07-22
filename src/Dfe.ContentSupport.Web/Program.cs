@@ -1,7 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using Azure.Identity;
 using Contentful.AspNetCore;
-using Dfe.ContentSupport.Web.Common;
 using Dfe.ContentSupport.Web.Extensions;
 using GovUk.Frontend.AspNetCore;
 
@@ -25,12 +24,7 @@ internal static class Program
 
         builder.Services.AddGovUkFrontend();
         builder.Services.AddContentful(builder.Configuration);
-        builder.InitDependencyInjection();
-
-        Utilities.ImageSupportedTypes =
-            builder.Configuration.GetSection("ImageSupportedTypes").Get<string[]>() ?? [];
-        Utilities.VideoSupportedTypes =
-            builder.Configuration.GetSection("VideoSupportedTypes").Get<string[]>() ?? [];
+        builder.InitCsDependencyInjection();
 
         var app = builder.Build();
         if (!app.Environment.IsDevelopment())
@@ -65,7 +59,7 @@ internal static class Program
         app.MapControllerRoute(
             name: "slug",
             pattern: "{slug}",
-            defaults: new { controller = "Home", action = "Index" });
+            defaults: new { controller = "Content", action = "Index" });
 
 
         app.Run();

@@ -1,0 +1,10 @@
+﻿@model CsPage
+
+@{
+    Layout = "_CsLayout";
+}
+
+@foreach (var content in Model.Content)
+{
+    <partial name="_Content" model="@content"/>
+}
