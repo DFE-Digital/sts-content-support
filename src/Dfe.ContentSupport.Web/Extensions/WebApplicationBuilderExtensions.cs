@@ -23,6 +23,13 @@ public static class WebApplicationBuilderExtensions
         app.Services.AddTransient<IContentfulService, ContentfulService>();
         app.Services.AddTransient<IContentService, ContentService>();
 
+        app.Services.Configure<CookiePolicyOptions>(options =>
+        {
+            options.CheckConsentNeeded = context => true;
+            options.MinimumSameSitePolicy = SameSiteMode.Strict;
+            options.ConsentCookieValue = "false";
+        });
+
         if (app.Environment.EnvironmentName.Equals("e2e"))
         {
             app.Services.AddTransient<IHttpContentfulClient, StubHttpContentfulClient>();

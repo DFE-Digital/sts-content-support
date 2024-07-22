@@ -38,6 +38,7 @@ internal static class Program
         app.UseStaticFiles();
         app.UseRouting();
         app.UseAuthorization();
+        app.UseCookiePolicy();
 
         app.MapControllerRoute(
             "sitemap",
