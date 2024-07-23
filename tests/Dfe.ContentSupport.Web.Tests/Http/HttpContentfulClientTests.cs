@@ -8,7 +8,7 @@ namespace Dfe.ContentSupport.Web.Tests.Http;
 public class HttpContentfulClientTests
 {
     [Fact]
-    public async void Client_Calls_Contentful_And_Bounce()
+    public async Task Client_Calls_Contentful_And_Bounce()
     {
         var sut = new HttpContentfulClient(new HttpClient(), new CsContentfulOptions());
 

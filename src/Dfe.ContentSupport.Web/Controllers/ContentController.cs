@@ -31,6 +31,7 @@ public class ContentController(IContentService contentService)
     [HttpGet("{slug}")]
     public async Task<IActionResult> Index(string slug, bool isPreview = false)
     {
+        if (!ModelState.IsValid) return RedirectToAction("error");
         if (string.IsNullOrEmpty(slug)) return RedirectToAction("error");
 
         var resp = await contentService.GetContent(slug, isPreview);

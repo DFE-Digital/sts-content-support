@@ -9,7 +9,7 @@ public class HttpContentfulClient(HttpClient httpClient, CsContentfulOptions opt
     : ContentfulClient(httpClient, options), IHttpContentfulClient
 {
     public async Task<ContentfulCollection<T>> Query<T>(QueryBuilder<T> queryBuilder,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default) where T : class
     {
         queryBuilder = queryBuilder.Include(options.IncludeDepth);
         return await GetEntries(queryBuilder, cancellationToken);

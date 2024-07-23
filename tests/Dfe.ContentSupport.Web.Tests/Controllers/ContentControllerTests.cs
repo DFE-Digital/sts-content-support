@@ -16,7 +16,7 @@ public class ContentControllerTests
 
 
     [Fact]
-    public async void Home_Returns_View()
+    public async Task Home_Returns_View()
     {
         _contentServiceMock.Setup(o => o.GetCsPages(It.IsAny<bool>())).ReturnsAsync([]);
 
@@ -28,7 +28,7 @@ public class ContentControllerTests
     }
 
     [Fact]
-    public async void Index_NoSlug_Returns_ErrorAction()
+    public async Task Index_NoSlug_Returns_ErrorAction()
     {
         var sut = GetController();
 
@@ -39,7 +39,7 @@ public class ContentControllerTests
     }
 
     [Fact]
-    public async void Index_Calls_Service_GetContent()
+    public async Task Index_Calls_Service_GetContent()
     {
         const string dummySlug = "dummySlug";
         const bool isPreview = true;
@@ -51,7 +51,7 @@ public class ContentControllerTests
     }
 
     [Fact]
-    public async void Index_NullResponse_ReturnsErrorAction()
+    public async Task Index_NullResponse_ReturnsErrorAction()
     {
         _contentServiceMock.Setup(o => o.GetContent(It.IsAny<string>(), It.IsAny<bool>()))
             .ReturnsAsync((CsPage?)null);
@@ -65,7 +65,7 @@ public class ContentControllerTests
     }
 
     [Fact]
-    public async void Index_WithSlug_Returns_View()
+    public async Task Index_WithSlug_Returns_View()
     {
         _contentServiceMock.Setup(o => o.GetContent(It.IsAny<string>(), It.IsAny<bool>()))
             .ReturnsAsync(new CsPage());

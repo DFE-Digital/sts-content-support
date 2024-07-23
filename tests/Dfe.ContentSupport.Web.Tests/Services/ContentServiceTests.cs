@@ -46,7 +46,7 @@ public class ContentServiceTests
     }
 
     [Fact]
-    public async void GetContent_Calls_Client_Once()
+    public async Task GetContent_Calls_Client_Once()
     {
         var sut = GetService();
         SetupResponse();
@@ -61,7 +61,7 @@ public class ContentServiceTests
     }
 
     [Fact]
-    public async void GetContent_EmptyResponse_Returns_Null()
+    public async Task GetContent_EmptyResponse_Returns_Null()
     {
         SetupResponse(new ContentfulCollection<ContentSupportPage> { Items = [] });
 
@@ -72,7 +72,7 @@ public class ContentServiceTests
     }
 
     [Fact]
-    public async void GetContent_Returns_First_Result()
+    public async Task GetContent_Returns_First_Result()
     {
         SetupResponse();
 
@@ -84,7 +84,7 @@ public class ContentServiceTests
     }
 
     [Fact]
-    public async void GenerateSitemap_Should_Generate_Expected()
+    public async Task GenerateSitemap_Should_Generate_Expected()
     {
         const string expectedStr =
             """<?xml version="1.0" encoding="UTF-8" standalone="no"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>DUMMY_slug1</loc><changefreq>yearly</changefreq></url><url><loc>DUMMY_slug2</loc><changefreq>yearly</changefreq></url><url><loc>DUMMY_slug3</loc><changefreq>yearly</changefreq></url></urlset>""";
@@ -99,7 +99,7 @@ public class ContentServiceTests
     }
 
     [Fact]
-    public async void GetCsPages_Calls_Client_Once()
+    public async Task GetCsPages_Calls_Client_Once()
     {
         SetupResponse();
         var sut = GetService();
@@ -114,7 +114,7 @@ public class ContentServiceTests
     }
 
     [Fact]
-    public async void GetCsPages_NotPreview_Calls_Cache_Correct_Key()
+    public async Task GetCsPages_NotPreview_Calls_Cache_Correct_Key()
     {
         const string expectedKey = "IsSitemap_true";
         SetupResponse();
@@ -125,7 +125,7 @@ public class ContentServiceTests
     }
 
     [Fact]
-    public async void GetCsPages_Preview_Calls_Cache_Correct_Key()
+    public async Task GetCsPages_Preview_Calls_Cache_Correct_Key()
     {
         const string expectedKey = "IsSitemap_true";
         SetupResponse();
@@ -136,7 +136,7 @@ public class ContentServiceTests
     }
 
     [Fact]
-    public async void GetCsPages_NotPreview_Calls_AddCache_Correct_Key()
+    public async Task GetCsPages_NotPreview_Calls_AddCache_Correct_Key()
     {
         const string expectedKey = "IsSitemap_true";
         SetupResponse();
@@ -147,7 +147,7 @@ public class ContentServiceTests
     }
 
     [Fact]
-    public async void GetCsPages_Preview_Calls_AddCache_Correct_Key()
+    public async Task GetCsPages_Preview_Calls_AddCache_Correct_Key()
     {
         const string expectedKey = "IsSitemap_true";
         SetupResponse();
@@ -158,7 +158,7 @@ public class ContentServiceTests
     }
 
     [Fact]
-    public async void GetContent_Calls_Cache_Correct_Key()
+    public async Task GetContent_Calls_Cache_Correct_Key()
     {
         const string slug = "dummy-slug";
         const string expectedKey = $"Slug_{slug}";
@@ -170,19 +170,18 @@ public class ContentServiceTests
     }
 
     [Fact]
-    public async void GetCsPage_Calls_Cache_Correct_Key()
+    public async Task GetCsPage_Calls_Cache_Correct_Key()
     {
-        const string slug = "dummy-slug";
-        const string expectedKey = $"Slug_{slug}";
+        const string expectedKey = $"IsSitemap_true";
         SetupResponse();
         var sut = GetService();
-        await sut.GetContent(slug, It.IsAny<bool>());
+        await sut.GetCsPages(It.IsAny<bool>());
 
         _cacheMock.Verify(o => o.GetFromCache(expectedKey));
     }
 
     [Fact]
-    public async void GetContentSupportPages_Calls_Cache_Correct_Key()
+    public async Task GetContentSupportPages_Calls_Cache_Correct_Key()
     {
         const string field = "field";
         const string value = "value";
@@ -196,7 +195,7 @@ public class ContentServiceTests
     }
 
     [Fact]
-    public async void GetContentSupportPages_GotCache_Returns_Cache()
+    public async Task GetContentSupportPages_GotCache_Returns_Cache()
     {
         var cacheValue = new List<CsPage> { It.IsAny<CsPage>() };
 
@@ -213,7 +212,7 @@ public class ContentServiceTests
     }
 
     [Fact]
-    public async void GetContentSupportPages_NotGotCache_Calls_Client()
+    public async Task GetContentSupportPages_NotGotCache_Calls_Client()
     {
         List<CsPage>? cacheValue = null;
 
@@ -236,7 +235,7 @@ public class ContentServiceTests
     }
 
     [Fact]
-    public async void GetContentSupportPages_NotGotCache_AddsToCache()
+    public async Task GetContentSupportPages_NotGotCache_AddsToCache()
     {
         List<CsPage>? cacheValue = null;
 

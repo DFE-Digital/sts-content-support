@@ -14,7 +14,7 @@ public class SitemapControllerTests
     }
 
     [Fact]
-    public async void Index_Calls_Service_GenerateSitemap()
+    public async Task Index_Calls_Service_GenerateSitemap()
     {
         var sut = GetController();
         sut.ControllerContext.HttpContext = new DefaultHttpContext();
@@ -26,7 +26,7 @@ public class SitemapControllerTests
     }
 
     [Fact]
-    public async void Index_Calls_Returns_ContentResult_XmlModel()
+    public async Task Index_Calls_Returns_ContentResult_XmlModel()
     {
         const string sitemap = "dummy";
         _contentServiceMock.Setup(o => o.GenerateSitemap(It.IsAny<string>()))

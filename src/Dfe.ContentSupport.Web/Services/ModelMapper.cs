@@ -69,7 +69,7 @@ public class ModelMapper : IModelMapper
             case RichTextNodeType.Text:
                 item = new CsText
                 {
-                    IsBold = contentItem.Marks.Any(mark => mark.Type == "bold")
+                    IsBold = contentItem.Marks.Exists(mark => mark.Type == "bold")
                 };
                 break;
             case RichTextNodeType.Hyperlink:
@@ -123,14 +123,10 @@ public class ModelMapper : IModelMapper
             default:
                 return null;
         }
-
-        if (item is not null)
-        {
-            item.Content = MapRichTextNodes(contentItem.Content);
-            item.Value = contentItem.Value;
-            item.InternalName = internalName;
-        }
-
+        
+        item.Content = MapRichTextNodes(contentItem.Content);
+        item.Value = contentItem.Value;
+        item.InternalName = internalName;
         return item;
     }
 
