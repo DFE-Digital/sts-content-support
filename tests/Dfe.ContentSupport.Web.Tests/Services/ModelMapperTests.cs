@@ -158,7 +158,7 @@ public class ModelMapperTests
 
         var result = sut.MapRichTextNodes(nodes);
         result.Count.Should().Be(1);
-        var richText = result.First();
+        var richText = result[0];
 
         richText.NodeType.Should().Be(RichTextNodeType.Unknown);
         richText.InternalName.Should().Be(internalName);
