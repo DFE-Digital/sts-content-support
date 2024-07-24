@@ -1,5 +1,6 @@
 ﻿using Contentful.Core.Models;
 using Dfe.ContentSupport.Web.Common;
+using Dfe.ContentSupport.Web.Configuration;
 using Dfe.ContentSupport.Web.Models;
 using Dfe.ContentSupport.Web.Models.Mapped.Standard;
 using Dfe.ContentSupport.Web.Models.Mapped.Types;
@@ -8,7 +9,7 @@ namespace Dfe.ContentSupport.Web.Tests.Models.Mapped.Standard;
 
 public class CsTextTests
 {
-    private static ModelMapper GetService() => new();
+    private static IModelMapper GetService() => new ModelMapper(new SupportedAssetTypes());
 
     private const string InternalName = "Internal Name";
 

@@ -1,4 +1,5 @@
 ﻿using Dfe.ContentSupport.Web.Common;
+using Dfe.ContentSupport.Web.Configuration;
 using Dfe.ContentSupport.Web.Models;
 using Dfe.ContentSupport.Web.Models.Mapped.Custom;
 using Dfe.ContentSupport.Web.Models.Mapped.Standard;
@@ -8,7 +9,7 @@ namespace Dfe.ContentSupport.Web.Tests.Models.Mapped.Custom;
 
 public class CustomAccordionTests
 {
-    private static ModelMapper GetService() => new();
+    private static IModelMapper GetService() => new ModelMapper(new SupportedAssetTypes());
 
     private const string ContentId = "CSAccordion";
     private const string InternalName = "Internal Name";
@@ -19,7 +20,7 @@ public class CustomAccordionTests
     private static ContentItem DummyContentItem() => new()
     {
         NodeType = RichTextTags.EmbeddedEntry,
-        Data = new Web.Models.Data
+        Data = new Data
         {
             Target = new Target
             {

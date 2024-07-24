@@ -1,5 +1,6 @@
 ﻿using Contentful.Core.Models;
 using Dfe.ContentSupport.Web.Common;
+using Dfe.ContentSupport.Web.Configuration;
 using Dfe.ContentSupport.Web.Models;
 using Dfe.ContentSupport.Web.Models.Mapped.Custom;
 using Dfe.ContentSupport.Web.Models.Mapped.Standard;
@@ -12,7 +13,7 @@ namespace Dfe.ContentSupport.Web.Tests.Models.Mapped.Custom;
 
 public class CustomAttachmentTests
 {
-    private static ModelMapper GetService() => new();
+    private static IModelMapper GetService() => new ModelMapper(new SupportedAssetTypes());
 
     private const string ContentId = "Attachment";
     private const string InternalName = "Internal Name";
@@ -24,7 +25,7 @@ public class CustomAttachmentTests
     private static ContentItem DummyContentItem() => new()
     {
         NodeType = RichTextTags.EmbeddedEntry,
-        Data = new Web.Models.Data
+        Data = new Data
         {
             Target = new Target
             {

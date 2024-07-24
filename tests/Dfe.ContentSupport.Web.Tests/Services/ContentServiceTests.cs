@@ -37,7 +37,7 @@ public class ContentServiceTests
 
 
         _mapperMock.Setup(o => o.MapToCsPages(res))
-            .Returns(res.Items.Select(page => new ModelMapper().MapToCsPage(page)).ToList());
+            .Returns(res.Items.Select(page => new ModelMapper(new SupportedAssetTypes()).MapToCsPage(page)).ToList());
     }
 
     [Fact]
@@ -74,7 +74,7 @@ public class ContentServiceTests
         var sut = GetService();
         var result = await sut.GetContent(It.IsAny<string>());
 
-        var expected = new ModelMapper().MapToCsPage(_response.Items.First());
+        var expected = new ModelMapper(new SupportedAssetTypes()).MapToCsPage(_response.Items.First());
         result.Should().BeEquivalentTo(expected);
     }
 

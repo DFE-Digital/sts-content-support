@@ -1,4 +1,5 @@
 ﻿using Dfe.ContentSupport.Web.Common;
+using Dfe.ContentSupport.Web.Configuration;
 using Dfe.ContentSupport.Web.Models;
 using Dfe.ContentSupport.Web.Models.Mapped.Standard;
 using Dfe.ContentSupport.Web.Models.Mapped.Types;
@@ -8,7 +9,7 @@ namespace Dfe.ContentSupport.Web.Tests.Models.Mapped.Standard;
 
 public class EmbeddedAssetTests
 {
-    private static ModelMapper GetService() => new();
+    private static IModelMapper GetService(SupportedAssetTypes types) => new ModelMapper(types);
 
     private const string InternalName = "Internal Name";
     private const string ContentType = "Content Type";
@@ -20,7 +21,7 @@ public class EmbeddedAssetTests
     {
         NodeType = RichTextTags.EmbeddedAsset,
         InternalName = InternalName,
-        Data = new Web.Models.Data
+        Data = new Data
         {
             Target = new Target
             {
@@ -43,10 +44,13 @@ public class EmbeddedAssetTests
     public void ImageMapsCorrectly()
     {
         var testValue = DummyContentItem();
-        Utilities.ImageSupportedTypes = [ContentType];
-        Utilities.VideoSupportedTypes = [];
+        var supportedTypes = new SupportedAssetTypes
+        {
+            ImageTypes = [ContentType],
+            VideoTypes = []
+        };
 
-        var sut = GetService();
+        var sut = GetService(supportedTypes);
 
         var result = sut.MapContent(testValue)!;
         result.Should().BeAssignableTo<EmbeddedAsset>();
@@ -64,10 +68,13 @@ public class EmbeddedAssetTests
     public void VideoMapsCorrectly()
     {
         var testValue = DummyContentItem();
-        Utilities.ImageSupportedTypes = [];
-        Utilities.VideoSupportedTypes = [ContentType];
+        var supportedTypes = new SupportedAssetTypes
+        {
+            ImageTypes = [],
+            VideoTypes = [ContentType]
+        };
 
-        var sut = GetService();
+        var sut = GetService(supportedTypes);
 
         var result = sut.MapContent(testValue)!;
         result.Should().BeAssignableTo<EmbeddedAsset>();
@@ -85,10 +92,13 @@ public class EmbeddedAssetTests
     public void UnknownMapsCorrectly()
     {
         var testValue = DummyContentItem();
-        Utilities.ImageSupportedTypes = [];
-        Utilities.VideoSupportedTypes = [];
+        var supportedTypes = new SupportedAssetTypes
+        {
+            ImageTypes = [],
+            VideoTypes = []
+        };
 
-        var sut = GetService();
+        var sut = GetService(supportedTypes);
 
         var result = sut.MapContent(testValue)!;
         result.Should().BeAssignableTo<EmbeddedAsset>();
