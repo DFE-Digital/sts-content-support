@@ -11,7 +11,9 @@ public static class WebApplicationBuilderExtensions
 {
     public static void InitCsDependencyInjection(this WebApplicationBuilder app)
     {
-        app.Services.Configure<CsContentfulOptions>(app.Configuration.GetSection("Contentful"))
+        var settings = app.Configuration.GetSection("cs:contentful");
+
+        app.Services.Configure<CsContentfulOptions>(app.Configuration.GetSection("cs:contentful"))
             .AddSingleton(sp => sp.GetRequiredService<IOptions<CsContentfulOptions>>().Value);
 
         app.Services.Configure<TrackingOptions>(app.Configuration.GetSection("tracking"))
