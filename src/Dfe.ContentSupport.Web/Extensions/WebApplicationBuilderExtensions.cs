@@ -1,5 +1,4 @@
-﻿using Dfe.ContentSupport.Web.Common;
-using Dfe.ContentSupport.Web.Configuration;
+﻿using Dfe.ContentSupport.Web.Configuration;
 using Dfe.ContentSupport.Web.Http;
 using Dfe.ContentSupport.Web.Models.Mapped;
 using Dfe.ContentSupport.Web.Services;
@@ -17,6 +16,9 @@ public static class WebApplicationBuilderExtensions
         app.Services.Configure<TrackingOptions>(app.Configuration.GetSection("tracking"))
             .AddSingleton(sp => sp.GetRequiredService<IOptions<TrackingOptions>>().Value);
 
+        app.Services.Configure<SupportedAssetTypes>(app.Configuration.GetSection("cs:supportedAssetTypes"))
+            .AddSingleton(sp => sp.GetRequiredService<IOptions<SupportedAssetTypes>>().Value);
+        
         app.Services
             .AddTransient<ICacheService<List<CsPage>>, CsPagesCacheService>();
         app.Services.AddTransient<IModelMapper, ModelMapper>();
@@ -38,10 +40,5 @@ public static class WebApplicationBuilderExtensions
         {
             app.Services.AddTransient<IHttpContentfulClient, HttpContentfulClient>();
         }
-        
-        Utilities.ImageSupportedTypes =
-            app.Configuration.GetSection("ImageSupportedTypes").Get<string[]>() ?? [];
-        Utilities.VideoSupportedTypes =
-            app.Configuration.GetSection("VideoSupportedTypes").Get<string[]>() ?? [];
     }
 }

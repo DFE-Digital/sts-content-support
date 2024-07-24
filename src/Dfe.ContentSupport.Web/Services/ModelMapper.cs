@@ -1,4 +1,5 @@
 ﻿using Dfe.ContentSupport.Web.Common;
+using Dfe.ContentSupport.Web.Configuration;
 using Dfe.ContentSupport.Web.Models;
 using Dfe.ContentSupport.Web.Models.Mapped;
 using Dfe.ContentSupport.Web.Models.Mapped.Custom;
@@ -8,7 +9,7 @@ using Dfe.ContentSupport.Web.ViewModels;
 
 namespace Dfe.ContentSupport.Web.Services;
 
-public class ModelMapper : IModelMapper
+public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
 {
     public List<CsPage> MapToCsPages(IEnumerable<ContentSupportPage> incoming)
     {
@@ -84,7 +85,7 @@ public class ModelMapper : IModelMapper
                 var asset = contentItem.Data.Target.Fields;
                 item = new EmbeddedAsset
                 {
-                    AssetContentType = Utilities.ConvertToAssetContentType(asset.File.ContentType),
+                    AssetContentType = ConvertToAssetContentType(asset.File.ContentType),
                     Description = asset.Description,
                     Title = asset.Title,
                     Uri = asset.File.Url
@@ -218,5 +219,13 @@ public class ModelMapper : IModelMapper
                 .EmbeddedEntry,
             _ => RichTextNodeType.Unknown
         };
+    }
+    
+        
+    public AssetContentType ConvertToAssetContentType(string str)
+    {
+        if (supportedAssetTypes.ImageTypes.Contains(str)) return AssetContentType.Image;
+        if (supportedAssetTypes.VideoTypes.Contains(str)) return AssetContentType.Video;
+        return AssetContentType.Unknown;
     }
 }

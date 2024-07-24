@@ -1,4 +1,5 @@
 ﻿using Dfe.ContentSupport.Web.Common;
+using Dfe.ContentSupport.Web.Configuration;
 using Dfe.ContentSupport.Web.Models;
 using Dfe.ContentSupport.Web.Models.Mapped.Custom;
 using Dfe.ContentSupport.Web.Models.Mapped.Standard;
@@ -9,7 +10,7 @@ namespace Dfe.ContentSupport.Web.Tests.Models.Mapped.Custom;
 
 public class CustomGridContainerTests
 {
-    private static ModelMapper GetService() => new();
+    private static IModelMapper GetService() => new ModelMapper(new SupportedAssetTypes());
 
     private const string ContainerContentId = "GridContainer";
     private const string CardContentId = "csCard";

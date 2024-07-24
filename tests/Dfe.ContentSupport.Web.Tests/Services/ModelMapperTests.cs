@@ -1,4 +1,5 @@
 ﻿using Dfe.ContentSupport.Web.Common;
+using Dfe.ContentSupport.Web.Configuration;
 using Dfe.ContentSupport.Web.Models;
 using Dfe.ContentSupport.Web.Models.Mapped;
 using Dfe.ContentSupport.Web.Models.Mapped.Types;
@@ -7,7 +8,7 @@ namespace Dfe.ContentSupport.Web.Tests.Services;
 
 public class ModelMapperTests
 {
-    private static ModelMapper GetService() => new();
+    private static IModelMapper GetService() => new ModelMapper(new SupportedAssetTypes());
 
     private static ContentItem DummyContentItem() => new()
     {
