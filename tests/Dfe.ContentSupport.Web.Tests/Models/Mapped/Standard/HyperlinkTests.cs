@@ -7,7 +7,7 @@ namespace Dfe.ContentSupport.Web.Tests.Models.Mapped.Standard;
 
 public class HyperlinkTests
 {
-    private static IModelMapper GetService() => new ModelMapper();
+    private static ModelMapper GetService() => new();
 
     private static ContentItem DummyContentItem(string uri) => new()
     {

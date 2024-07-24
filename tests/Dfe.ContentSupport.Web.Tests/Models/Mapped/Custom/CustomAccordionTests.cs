@@ -8,7 +8,7 @@ namespace Dfe.ContentSupport.Web.Tests.Models.Mapped.Custom;
 
 public class CustomAccordionTests
 {
-    private static IModelMapper GetService() => new ModelMapper();
+    private static ModelMapper GetService() => new();
 
     private const string ContentId = "CSAccordion";
     private const string InternalName = "Internal Name";

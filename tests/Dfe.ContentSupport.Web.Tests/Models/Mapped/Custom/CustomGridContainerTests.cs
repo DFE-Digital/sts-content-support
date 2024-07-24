@@ -9,7 +9,7 @@ namespace Dfe.ContentSupport.Web.Tests.Models.Mapped.Custom;
 
 public class CustomGridContainerTests
 {
-    private static IModelMapper GetService() => new ModelMapper();
+    private static ModelMapper GetService() => new();
 
     private const string ContainerContentId = "GridContainer";
     private const string CardContentId = "csCard";
