@@ -24,23 +24,18 @@ public class ContentServiceTests
         }
     };
 
-    private ContentService GetService()
-    {
-        return new ContentService(GetClient(), _cacheMock.Object, _mapperMock.Object);
-    }
+    private ContentService GetService() => new(GetClient(), _cacheMock.Object, _mapperMock.Object);
 
-    private IContentfulService GetClient()
-    {
-        return new ContentfulService(new CsContentfulOptions(), _httpContentClientMock.Object);
-    }
+    private ContentfulService GetClient() =>
+        new(new CsContentfulOptions(), _httpContentClientMock.Object);
 
     private void SetupResponse(ContentfulCollection<ContentSupportPage>? response = null)
     {
         var res = response ?? _response;
         _httpContentClientMock.Setup(o => o.Query(It.IsAny<QueryBuilder<ContentSupportPage>>(),
             It.IsAny<CancellationToken>())).ReturnsAsync(res);
-        
-        
+
+
         _mapperMock.Setup(o => o.MapToCsPages(res))
             .Returns(res.Items.Select(page => new ModelMapper().MapToCsPage(page)).ToList());
     }

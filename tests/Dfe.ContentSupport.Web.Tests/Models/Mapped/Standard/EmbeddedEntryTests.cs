@@ -7,10 +7,11 @@ namespace Dfe.ContentSupport.Web.Tests.Models.Mapped.Standard;
 
 public class EmbeddedEntryTests
 {
-    private static IModelMapper GetService() => new ModelMapper();
+    private static ModelMapper GetService() => new();
 
-   private const string InternalName = "Internal Name";
-   private  const string JumpIdentifier = "JumpIdentifier";
+    private const string InternalName = "Internal Name";
+    private const string JumpIdentifier = "JumpIdentifier";
+
     private static ContentItem DummyContentItem() => new()
     {
         NodeType = RichTextTags.EmbeddedEntry,
@@ -24,6 +25,7 @@ public class EmbeddedEntryTests
             }
         }
     };
+
     [Fact]
     public void MapsCorrectly()
     {

@@ -12,7 +12,7 @@ namespace Dfe.ContentSupport.Web.Tests.Models.Mapped.Custom;
 
 public class CustomAttachmentTests
 {
-    private static IModelMapper GetService() => new ModelMapper();
+    private static ModelMapper GetService() => new();
 
     private const string ContentId = "Attachment";
     private const string InternalName = "Internal Name";

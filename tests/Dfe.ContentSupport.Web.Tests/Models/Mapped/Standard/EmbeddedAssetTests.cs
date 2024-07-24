@@ -8,7 +8,7 @@ namespace Dfe.ContentSupport.Web.Tests.Models.Mapped.Standard;
 
 public class EmbeddedAssetTests
 {
-    private static IModelMapper GetService() => new ModelMapper();
+    private static ModelMapper GetService() => new();
 
     private const string InternalName = "Internal Name";
     private const string ContentType = "Content Type";
