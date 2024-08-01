@@ -23,6 +23,7 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
             Heading = incoming.Heading,
             Slug = incoming.Slug,
             IsSitemap = incoming.IsSitemap,
+            HasBackToTop = incoming.HasBackToTop,
             Content = MapEntriesToContent(incoming.Content)
         };
         return result;
