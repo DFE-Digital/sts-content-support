@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <div id="@accordion.InternalName-content" class="govuk-accordion__section-content">
-                    <p class="govuk-body">@accordion.Body</p>
+                    <partial name="RichText/_RichText" model="@accordion.Body"/>
                 </div>
             </div>
         }
