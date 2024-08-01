@@ -1,10 +1,17 @@
 @model CustomAttachment
 
 <section class="attachment govuk-!-margin-top-8">
+    @{
+        var fileExtension = Model.ContentType.Split('/').Last().ToLower();
+        if (fileExtension == "vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+        {
+            fileExtension = "xlsx";
+        }
+    }
+
     <div class="attachment-thumbnail">
         <a href="@Model.Uri" download>
             @{
-                var fileExtension = Model.ContentType.Split('/').Last().ToLower();
                 switch (fileExtension)
                 {
                     case "pdf":
@@ -40,7 +47,7 @@
 
         <p class="attachment-metadata">
             <span class="attachment-attribute"
-                aria-label="file type">@Model.ContentType.Split('/').Last().ToUpper()</span>,
+                aria-label="file type">@fileExtension.ToUpper()</span>,
             <span class="attachment-attribute" aria-label="file size">
                 @(Model.Size / 1024) KB
             </span>
