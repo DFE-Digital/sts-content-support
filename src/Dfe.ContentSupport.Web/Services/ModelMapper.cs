@@ -150,7 +150,7 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
         return new CustomAccordion
         {
             InternalName = target.InternalName,
-            Body = target.Body,
+            Body = MapRichTextContent(target.RichText),
             SummaryLine = target.SummaryLine,
             Title = target.Title,
             Accordions = target.Content.Select(GenerateCustomAccordion).ToList()

@@ -12,7 +12,7 @@ public class CustomAccordion : CustomComponent
     }
 
     public List<CustomAccordion> Accordions { get; set; } = null!;
-    public string Body { get; set; } = null!;
+    public RichTextContentItem? Body { get; set; }
     public string SummaryLine { get; set; } = null!;
     public string Title { get; set; } = null!;
 }
