@@ -15,6 +15,5 @@ public class CustomAttachment : CustomComponent
     public long Size { get; set; }
     public string Title { get; set; } = null!;
     public string Uri { get; set; } = null!;
-    // public readonly DateTime? UpdatedAt = target.Asset.SystemProperties.UpdatedAt;
-    public DateTime? UpdatedAt = null!;
+    public DateTime? UpdatedAt { get; set; } = null!;
 }
