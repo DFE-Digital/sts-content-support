@@ -1,4 +1,4 @@
-﻿using Dfe.ContentSupport.Web.Models.Mapped.Types;
+﻿﻿using Dfe.ContentSupport.Web.Models.Mapped.Types;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Dfe.ContentSupport.Web.Models.Mapped.Custom;
@@ -15,4 +15,5 @@ public class CustomAttachment : CustomComponent
     public long Size { get; set; }
     public string Title { get; set; } = null!;
     public string Uri { get; set; } = null!;
+    public DateTime? UpdatedAt { get; set; } = null!;
 }
