@@ -1,15 +1,19 @@
-﻿using Dfe.ContentSupport.Web.Common;
-using Dfe.ContentSupport.Web.Models.Mapped.Types;
+﻿using Dfe.ContentSupport.Web.Models.Mapped.Types;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Dfe.ContentSupport.Web.Models.Mapped.Standard;
 
-public class EmbeddedAsset(Fields asset, string internalName)
-    : RichTextContentItem(RichTextNodeType.EmbeddedAsset, internalName)
+[ExcludeFromCodeCoverage]
+public class EmbeddedAsset : RichTextContentItem
 {
-    public readonly AssetContentType AssetContentType =
-        Utilities.ConvertToAssetContentType(asset.File.ContentType);
+    public EmbeddedAsset()
+    {
+        NodeType = RichTextNodeType.EmbeddedAsset;
+    }
 
-    public readonly string Description = asset.Description;
-    public readonly string Title = asset.Title;
-    public readonly string Uri = asset.File.Url;
+    public AssetContentType AssetContentType { get; set; } = AssetContentType.Unknown;
+
+    public string Description { get; set; } = null!;
+    public string Title { get; set; } = null!;
+    public string Uri { get; set; } = null!;
 }

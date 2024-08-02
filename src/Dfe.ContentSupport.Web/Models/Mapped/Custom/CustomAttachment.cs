@@ -1,13 +1,20 @@
-﻿using System;
-using Dfe.ContentSupport.Web.Models.Mapped.Types;
+﻿﻿using Dfe.ContentSupport.Web.Models.Mapped.Types;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Dfe.ContentSupport.Web.Models.Mapped.Custom;
 
-public class CustomAttachment(Target target) : CustomComponent(CustomComponentType.Attachment)
+[ExcludeFromCodeCoverage]
+public class CustomAttachment : CustomComponent
 {
-    public readonly string ContentType = target.Asset.File.ContentType;
-    public readonly long Size = target.Asset.File.Details.Size;
-    public readonly string Title = target.Title;
-    public readonly string Uri = target.Asset.File.Url;
-    public readonly DateTime? UpdatedAt = target.Asset.SystemProperties.UpdatedAt;
+    public CustomAttachment()
+    {
+        Type = CustomComponentType.Attachment;
+    }
+
+    public string ContentType { get; set; } = null!;
+    public long Size { get; set; }
+    public string Title { get; set; } = null!;
+    public string Uri { get; set; } = null!;
+    // public readonly DateTime? UpdatedAt = target.Asset.SystemProperties.UpdatedAt;
+    public DateTime? UpdatedAt = null!;
 }

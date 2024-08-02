@@ -1,9 +1,10 @@
 ﻿using Dfe.ContentSupport.Web.Models.Mapped.Types;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Dfe.ContentSupport.Web.Models.Mapped.Custom;
 
-public class CustomComponent(CustomComponentType type, string internalName = "")
-    : CsContentItem(internalName)
+[ExcludeFromCodeCoverage]
+public class CustomComponent : CsContentItem
 {
-    public readonly CustomComponentType Type = type;
+    public CustomComponentType Type { get; set; }
 }

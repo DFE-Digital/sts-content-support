@@ -6,7 +6,7 @@ namespace Dfe.ContentSupport.Web.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class CacheController(ICacheService<List<CsPage>> cache) : Controller
+public class CacheController(ICacheService<List<CsPage>> cache) : ControllerBase
 {
     [HttpGet]
     [Route("clear")]

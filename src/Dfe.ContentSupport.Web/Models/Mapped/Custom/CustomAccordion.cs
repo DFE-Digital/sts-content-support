@@ -1,14 +1,18 @@
 ﻿using Dfe.ContentSupport.Web.Models.Mapped.Types;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Dfe.ContentSupport.Web.Models.Mapped.Custom;
 
-public class CustomAccordion(Target target)
-    : CustomComponent(CustomComponentType.Accordion, target.InternalName)
+[ExcludeFromCodeCoverage]
+public class CustomAccordion : CustomComponent
 {
-    public readonly List<CustomAccordion> Accordions =
-        target.Content.Select(accordion => new CustomAccordion(accordion)).ToList();
+    public CustomAccordion()
+    {
+        Type = CustomComponentType.Accordion;
+    }
 
-    public readonly string Body = target.Body;
-    public readonly string SummaryLine = target.SummaryLine;
-    public readonly string Title = target.Title;
+    public List<CustomAccordion> Accordions { get; set; } = null!;
+    public string Body { get; set; } = null!;
+    public string SummaryLine { get; set; } = null!;
+    public string Title { get; set; } = null!;
 }

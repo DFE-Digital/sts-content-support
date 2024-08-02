@@ -5,13 +5,16 @@ using Dfe.ContentSupport.Web.ViewModels;
 
 namespace Dfe.ContentSupport.Web.Services;
 
-public class ContentService(IContentfulService contentfulService, ICacheService<List<CsPage>> cache)
+public class ContentService(
+    IContentfulService contentfulService,
+    ICacheService<List<CsPage>> cache,
+    IModelMapper modelMapper)
     : IContentService
 {
     public async Task<CsPage?> GetContent(string slug, bool isPreview = false)
     {
         var resp = await GetContentSupportPages(nameof(ContentSupportPage.Slug), slug, isPreview);
-        return resp is not null && resp.Count != 0 ? resp.First() : null;
+        return resp is not null && resp.Count != 0 ? resp[0] : null;
     }
 
     public async Task<string> GenerateSitemap(string baseUrl)
@@ -46,7 +49,7 @@ public class ContentService(IContentfulService contentfulService, ICacheService<
         string field, string value, bool isPreview)
     {
         var key = $"{field}_{value}";
-        if (isPreview is false)
+        if (!isPreview)
         {
             var fromCache = cache.GetFromCache(key);
             if (fromCache is not null)
@@ -59,9 +62,9 @@ public class ContentService(IContentfulService contentfulService, ICacheService<
         var builder = QueryBuilder<ContentSupportPage>.New.ContentTypeIs(nameof(ContentSupportPage))
             .FieldEquals($"fields.{field}", value);
         var result = await contentfulService.ContentfulClient(isPreview).Query(builder);
-        var pages = result.Select(page => new CsPage(page)).ToList();
+        var pages = modelMapper.MapToCsPages(result);
 
-        if (isPreview is false)
+        if (!isPreview)
         {
             cache.AddToCache(key, pages);
         }
