@@ -23,6 +23,7 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
             Heading = incoming.Heading,
             Slug = incoming.Slug,
             IsSitemap = incoming.IsSitemap,
+            HasBackToTop = incoming.HasBackToTop,
             Content = MapEntriesToContent(incoming.Content)
         };
         return result;
@@ -150,7 +151,7 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
         return new CustomAccordion
         {
             InternalName = target.InternalName,
-            Body = target.Body,
+            Body = MapRichTextContent(target.RichText),
             SummaryLine = target.SummaryLine,
             Title = target.Title,
             Accordions = target.Content.Select(GenerateCustomAccordion).ToList()

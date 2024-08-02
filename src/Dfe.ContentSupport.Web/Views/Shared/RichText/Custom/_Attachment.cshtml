@@ -1,5 +1,4 @@
 @using System
-@using System.Globalization
 @model CustomAttachment
 
 <div class="guidance-container govuk-!-padding-8 govuk-!-margin-bottom-8">
@@ -8,7 +7,11 @@
             <a href="@Model.Uri" download>
                 @{
                     var fileExtension = Model.ContentType.Split('/').Last().ToLower();
-                    var fileExtensionTitleCase = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(fileExtension);
+                    if (fileExtension == "vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                    {
+                        fileExtension = "xlsx";
+                    }
+                    
                     switch (fileExtension)
                     {
                         case "pdf":
@@ -42,7 +45,7 @@
             </h2>
 
             <p class="attachment-metadata">
-                <span class="attachment-attribute" aria-label="file type">@fileExtensionTitleCase</span>,
+                <span class="attachment-attribute" aria-label="file type">@fileExtension.ToUpper()</span>,
                 <span class="attachment-attribute" aria-label="file size">
                     @(Model.Size / 1024) KB
                 </span>

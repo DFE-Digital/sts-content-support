@@ -15,6 +15,7 @@ public class ContentSupportPage : ContentBase
 
     public bool DisplayBackButton { get; init; }
     public bool IsSitemap { get; init; }
+    public bool HasBackToTop { get; init; }
 
     public DateTime? CreatedAt { get; init; }
 
