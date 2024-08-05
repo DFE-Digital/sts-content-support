@@ -9,6 +9,11 @@
     <partial name="_Content" model="@content"/>
 }
 
+@if (Model.HasCitation)
+{
+    <partial name="_Citation" model="Model"/>
+}
+
 @if (Model.HasBackToTop)
 {
     <partial name="_BackToTop"/>

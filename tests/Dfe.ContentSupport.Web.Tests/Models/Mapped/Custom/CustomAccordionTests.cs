@@ -27,7 +27,6 @@ public class CustomAccordionTests
                 InternalName = InternalName,
                 Title = Title,
                 SummaryLine = SummaryLine,
-                Body = Body,
                 Sys = new Sys
                 {
                     ContentType = new ContentType

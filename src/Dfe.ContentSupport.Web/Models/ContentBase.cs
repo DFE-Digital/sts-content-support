@@ -3,7 +3,7 @@
 namespace Dfe.ContentSupport.Web.Models;
 
 [ExcludeFromCodeCoverage]
-public class ContentBase
+public class ContentBase : ContentType
 {
     public string InternalName { get; set; } = null!;
 }
