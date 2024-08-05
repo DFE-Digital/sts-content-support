@@ -23,8 +23,11 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
             Heading = incoming.Heading,
             Slug = incoming.Slug,
             IsSitemap = incoming.IsSitemap,
+            HasCitation = incoming.HasCitation,
             HasBackToTop = incoming.HasBackToTop,
-            Content = MapEntriesToContent(incoming.Content)
+            Content = MapEntriesToContent(incoming.Content),
+            CreatedAt = incoming.Sys.CreatedAt,
+            UpdatedAt = incoming.Sys.UpdatedAt
         };
         return result;
     }
@@ -125,7 +128,7 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
             default:
                 return null;
         }
-        
+
         item.Content = MapRichTextNodes(contentItem.Content);
         item.Value = contentItem.Value;
         item.InternalName = internalName;
@@ -222,8 +225,8 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
             _ => RichTextNodeType.Unknown
         };
     }
-    
-        
+
+
     public AssetContentType ConvertToAssetContentType(string str)
     {
         if (supportedAssetTypes.ImageTypes.Contains(str)) return AssetContentType.Image;

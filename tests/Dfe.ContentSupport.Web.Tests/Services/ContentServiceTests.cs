@@ -3,6 +3,7 @@ using Dfe.ContentSupport.Web.Configuration;
 using Contentful.Core.Models;
 using Contentful.Core.Search;
 using Dfe.ContentSupport.Web.Http;
+using Dfe.ContentSupport.Web.Models;
 using Dfe.ContentSupport.Web.Models.Mapped;
 
 namespace Dfe.ContentSupport.Web.Tests.Services;
@@ -18,9 +19,9 @@ public class ContentServiceTests
     {
         Items = new List<ContentSupportPage>
         {
-            new() { Slug = "slug1", IsSitemap = true },
-            new() { Slug = "slug2", IsSitemap = false },
-            new() { Slug = "slug3", IsSitemap = true }
+            new() { Slug = "slug1", IsSitemap = true, Sys = new Sys() },
+            new() { Slug = "slug2", IsSitemap = false, Sys = new Sys() },
+            new() { Slug = "slug3", IsSitemap = true, Sys = new Sys() }
         }
     };
 
@@ -37,7 +38,9 @@ public class ContentServiceTests
 
 
         _mapperMock.Setup(o => o.MapToCsPages(res))
-            .Returns(res.Items.Select(page => new ModelMapper(new SupportedAssetTypes()).MapToCsPage(page)).ToList());
+            .Returns(res.Items
+                .Select(page => new ModelMapper(new SupportedAssetTypes()).MapToCsPage(page))
+                .ToList());
     }
 
     [Fact]
@@ -74,7 +77,8 @@ public class ContentServiceTests
         var sut = GetService();
         var result = await sut.GetContent(It.IsAny<string>());
 
-        var expected = new ModelMapper(new SupportedAssetTypes()).MapToCsPage(_response.Items.First());
+        var expected =
+            new ModelMapper(new SupportedAssetTypes()).MapToCsPage(_response.Items.First());
         result.Should().BeEquivalentTo(expected);
     }
 
