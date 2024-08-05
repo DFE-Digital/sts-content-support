@@ -169,7 +169,8 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
             ContentType = target.Asset.File.ContentType,
             Size = target.Asset.File.Details.Size,
             Title = target.Title,
-            Uri = target.Asset.File.Url
+            Uri = target.Asset.File.Url,
+            UpdatedAt = target.Asset.SystemProperties.UpdatedAt
         };
     }
 

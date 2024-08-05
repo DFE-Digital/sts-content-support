@@ -38,9 +38,8 @@ video {
     margin-bottom: 15px;
     padding: 5px;
     display: block;
-    max-width: 280px;
-    width: 140px;
-    height: auto;
+    max-height: 140px;
+    max-width: 99px;
     border: #e6e6e6;
     outline: 5px solid #e6e6e6;
     background: #ffffff;
@@ -52,7 +51,7 @@ video {
 .attachment .attachment-metadata {
     font-weight: 400;
     font-size: 1.1875rem;
-    line-height: 1.25;
+    line-height: 1.32;
     margin: 0 0 15px;
     color: #505a5f;
 }
@@ -83,6 +82,10 @@ video {
 
 .dfe-page-header {
     background-color: #ebf2f6;
+}
+
+.guidance-container {
+    border: 1px solid #b1b4b6;
 }
 
 #backtotop-button {
