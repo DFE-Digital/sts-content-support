@@ -2,9 +2,8 @@
 
 public static class DateTimeExtensions
 {
-    public static string ToLongString(this DateTime? dateTime)
+    public static string ToLongString(this DateTime dateTime)
     {
-        if (dateTime is null) return string.Empty;
-        return dateTime.Value.ToString("dd MMMM yyyy");
+        return dateTime.ToString("dd MMMM yyyy");
     }
 }

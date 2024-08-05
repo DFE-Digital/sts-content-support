@@ -8,8 +8,8 @@
             <dd class="gem-c-metadata__definition">
                 <a class="govuk-link" href="https://www.gov.uk/government/organisations/department-for-education">Department for Education</a>
             </dd>
-            <dt class="gem-c-metadata__term">Published:</dt><dd class="gem-c-metadata__definition">@Model.CreatedAt.ToLongString()</dd>
-            <dt class="gem-c-metadata__term">Updated:</dt><dd class="gem-c-metadata__definition">@Model.UpdatedAt.ToLongString()</dd>
+            <dt class="gem-c-metadata__term">Published:</dt><dd class="gem-c-metadata__definition">@Model.CreatedAt!.Value.ToLongString()</dd>
+            <dt class="gem-c-metadata__term">Updated:</dt><dd class="gem-c-metadata__definition">@Model.UpdatedAt!.Value.ToLongString()</dd>
         </dl>
     </div>
 </div>
