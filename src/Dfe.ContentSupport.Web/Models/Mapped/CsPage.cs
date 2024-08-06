@@ -9,4 +9,6 @@ public class CsPage
     public string Slug { get; set; } = null!;
     public bool IsSitemap { get; set; }
     public List<CsContentItem> Content { get; set; } = null!;
+
+    public List<string> Tags { get;set; } = null!;
 }

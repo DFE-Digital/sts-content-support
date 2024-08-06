@@ -29,13 +29,15 @@ public class ContentController(IContentService contentService)
     }
 
     [HttpGet("{slug}")]
-    public async Task<IActionResult> Index(string slug, bool isPreview = false)
+    public async Task<IActionResult> Index(string slug, bool isPreview = false, [FromQuery]List<string>? tags = null)
     {
         if (!ModelState.IsValid) return RedirectToAction("error");
         if (string.IsNullOrEmpty(slug)) return RedirectToAction("error");
 
         var resp = await contentService.GetContent(slug, isPreview);
         if (resp is null) return RedirectToAction("error");
+
+        ViewBag.tags = tags;
         return View("CsIndex", resp);
     }
 

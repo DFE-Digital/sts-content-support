@@ -1,4 +1,5 @@
-﻿using Dfe.ContentSupport.Web.Common;
+﻿using Contentful.Core.Models;
+using Dfe.ContentSupport.Web.Common;
 using Dfe.ContentSupport.Web.Configuration;
 using Dfe.ContentSupport.Web.Models;
 using Dfe.ContentSupport.Web.Models.Mapped;
@@ -23,9 +24,17 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
             Heading = incoming.Heading,
             Slug = incoming.Slug,
             IsSitemap = incoming.IsSitemap,
-            Content = MapEntriesToContent(incoming.Content)
+            Content = MapEntriesToContent(incoming.Content),
+            Tags = FlattenMetadata(incoming.Metadata)
         };
         return result;
+    }
+
+    private List<string> FlattenMetadata(ContentfulMetadata item)
+    {
+        if (item is null) return new();
+
+        return item.Tags.Select(_ => _.Sys.Id).ToList();
     }
 
     private List<CsContentItem> MapEntriesToContent(List<Entry> entries)
@@ -36,12 +45,12 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
     public CsContentItem ConvertEntryToContentItem(Entry entry)
     {
         CsContentItem item = entry.RichText is not null
-            ? MapRichTextContent(entry.RichText)!
+            ? MapRichTextContent(entry.RichText, entry.Metadata)!
             : new CsContentItem { InternalName = entry.InternalName };
         return item;
     }
 
-    public RichTextContentItem? MapRichTextContent(ContentItemBase? richText)
+    public RichTextContentItem? MapRichTextContent(ContentItemBase? richText, ContentfulMetadata metaData)
     {
         if (richText is null) return null;
         RichTextContentItem item =
@@ -50,6 +59,7 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
                 InternalName = richText.InternalName,
                 NodeType = ConvertToRichTextNodeType(richText.NodeType),
                 Content = MapRichTextNodes(richText.Content),
+                Tags = FlattenMetadata(metaData)
             };
         return item;
     }
@@ -57,14 +67,17 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
     public List<RichTextContentItem> MapRichTextNodes(List<ContentItem> nodes)
     {
         return nodes.Select(node => MapContent(node) ?? new RichTextContentItem
-            { NodeType = RichTextNodeType.Unknown, InternalName = node.InternalName }).ToList();
+        { NodeType = RichTextNodeType.Unknown, InternalName = node.InternalName }).ToList();
     }
+
 
     public RichTextContentItem? MapContent(ContentItem contentItem)
     {
         RichTextContentItem? item;
         var nodeType = ConvertToRichTextNodeType(contentItem.NodeType);
         var internalName = contentItem.InternalName;
+        
+
         switch (nodeType)
         {
             case RichTextNodeType.Text:
@@ -75,7 +88,7 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
                 break;
             case RichTextNodeType.Hyperlink:
                 var uri = contentItem.Data.Uri.ToString();
-                item = new Hyperlink
+                item = new Models.Mapped.Standard.Hyperlink
                 {
                     Uri = uri,
                     IsVimeo = uri.Contains("vimeo.com")
@@ -97,7 +110,7 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
                 item = new EmbeddedEntry
                 {
                     JumpIdentifier = target.JumpIdentifier,
-                    RichText = MapRichTextContent(target.RichText),
+                    RichText = MapRichTextContent(target.RichText, target.Metadata),
                     CustomComponent = GenerateCustomComponent(target)
                 };
                 break;
@@ -124,16 +137,17 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
             default:
                 return null;
         }
-        
+
         item.Content = MapRichTextNodes(contentItem.Content);
         item.Value = contentItem.Value;
         item.InternalName = internalName;
+        item.Tags = FlattenMetadata(contentItem.Metadata);
         return item;
     }
 
     public CustomComponent? GenerateCustomComponent(Target target)
     {
-        var contentType = target.Sys.ContentType?.Sys.Id;
+        var contentType = target.SystemProperties.ContentType?.SystemProperties.Id;
         if (contentType is null) return null;
         return contentType switch
         {
@@ -178,7 +192,7 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
             Uri = target.Uri,
             Description = target.Description,
             ImageAlt = target.ImageAlt,
-            ImageUri = target.Image.Fields.File.Url,
+            ImageUri = target?.Image?.Fields.File.Url,
             Meta = target.Meta
         };
         return card;
@@ -220,8 +234,8 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
             _ => RichTextNodeType.Unknown
         };
     }
-    
-        
+
+
     public AssetContentType ConvertToAssetContentType(string str)
     {
         if (supportedAssetTypes.ImageTypes.Contains(str)) return AssetContentType.Image;
