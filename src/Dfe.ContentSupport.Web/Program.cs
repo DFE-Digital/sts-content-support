@@ -41,7 +41,7 @@ internal static class Program
         app.UseCookiePolicy();
 
         app.MapControllerRoute(
-            "sitemap",
+            "Default",
             "sitemap.xml",
             new { controller = "Sitemap", action = "Index" }
         );
@@ -52,9 +52,6 @@ internal static class Program
             pattern: "{controller=Cache}/{action=Clear}"
         );
 
-        app.MapControllerRoute(
-            name: "home",
-            pattern: "{controller=Home}/{action=Home}");
 
         app.MapControllerRoute(
             name: "slug",

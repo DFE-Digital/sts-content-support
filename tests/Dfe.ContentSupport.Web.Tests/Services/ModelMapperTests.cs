@@ -20,9 +20,18 @@ public class ModelMapperTests
     {
         var supportPages = new List<ContentSupportPage>
         {
-            new(),
-            new(),
             new()
+            {
+                Sys = new Sys()
+            },
+            new()
+            {
+                Sys = new Sys()
+            },
+            new()
+            {
+                Sys = new Sys()
+            }
         };
 
         var sut = GetService();

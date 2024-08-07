@@ -23,7 +23,11 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
             Heading = incoming.Heading,
             Slug = incoming.Slug,
             IsSitemap = incoming.IsSitemap,
-            Content = MapEntriesToContent(incoming.Content)
+            HasCitation = incoming.HasCitation,
+            HasBackToTop = incoming.HasBackToTop,
+            Content = MapEntriesToContent(incoming.Content),
+            CreatedAt = incoming.Sys.CreatedAt,
+            UpdatedAt = incoming.Sys.UpdatedAt
         };
         return result;
     }
@@ -124,7 +128,7 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
             default:
                 return null;
         }
-        
+
         item.Content = MapRichTextNodes(contentItem.Content);
         item.Value = contentItem.Value;
         item.InternalName = internalName;
@@ -150,7 +154,7 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
         return new CustomAccordion
         {
             InternalName = target.InternalName,
-            Body = target.Body,
+            Body = MapRichTextContent(target.RichText),
             SummaryLine = target.SummaryLine,
             Title = target.Title,
             Accordions = target.Content.Select(GenerateCustomAccordion).ToList()
@@ -165,7 +169,8 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
             ContentType = target.Asset.File.ContentType,
             Size = target.Asset.File.Details.Size,
             Title = target.Title,
-            Uri = target.Asset.File.Url
+            Uri = target.Asset.File.Url,
+            UpdatedAt = target.Asset.SystemProperties.UpdatedAt
         };
     }
 
@@ -220,8 +225,8 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
             _ => RichTextNodeType.Unknown
         };
     }
-    
-        
+
+
     public AssetContentType ConvertToAssetContentType(string str)
     {
         if (supportedAssetTypes.ImageTypes.Contains(str)) return AssetContentType.Image;
