@@ -24,7 +24,11 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
             Heading = incoming.Heading,
             Slug = incoming.Slug,
             IsSitemap = incoming.IsSitemap,
+            HasCitation = incoming.HasCitation,
+            HasBackToTop = incoming.HasBackToTop,
             Content = MapEntriesToContent(incoming.Content),
+            CreatedAt = incoming.SystemProperties.CreatedAt,
+            UpdatedAt = incoming.SystemProperties.UpdatedAt,
             Tags = FlattenMetadata(incoming.Metadata)
         };
         return result;
@@ -164,7 +168,7 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
         return new CustomAccordion
         {
             InternalName = target.InternalName,
-            Body = target.Body,
+            Body = MapRichTextContent(target.RichText, target.Metadata),
             SummaryLine = target.SummaryLine,
             Title = target.Title,
             Accordions = target.Content.Select(GenerateCustomAccordion).ToList()
@@ -179,7 +183,8 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
             ContentType = target.Asset.File.ContentType,
             Size = target.Asset.File.Details.Size,
             Title = target.Title,
-            Uri = target.Asset.File.Url
+            Uri = target.Asset.File.Url,
+            UpdatedAt = target.Asset.SystemProperties.UpdatedAt
         };
     }
 
@@ -192,7 +197,7 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
             Uri = target.Uri,
             Description = target.Description,
             ImageAlt = target.ImageAlt,
-            ImageUri = target?.Image?.Fields.File.Url,
+            ImageUri = target.Image.Fields.File.Url,
             Meta = target.Meta
         };
         return card;

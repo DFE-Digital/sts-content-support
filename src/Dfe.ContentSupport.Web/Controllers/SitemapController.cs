@@ -1,6 +1,5 @@
 ﻿using Dfe.ContentSupport.Web.Models.Mapped;
 using Dfe.ContentSupport.Web.Services;
-using Dfe.ContentSupport.Web.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,7 +11,7 @@ public class SitemapController(IContentService contentfulService) : Controller
 {
     [HttpGet]
     [Route("/")]
-    public async Task<IActionResult> Index()
+    public IActionResult Index()
     {
         var defaultModel = new CsPage
         {
@@ -26,6 +25,7 @@ public class SitemapController(IContentService contentfulService) : Controller
 
         return View(defaultModel);
     }
+
 
     [HttpGet]
     [Route("/sitemap.xml")]

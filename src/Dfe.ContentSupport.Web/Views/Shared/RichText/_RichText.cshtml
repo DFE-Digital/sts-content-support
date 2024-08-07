@@ -4,7 +4,7 @@
 }
 
 
-@if (Model.Tags.Count == 0 || Model.Tags.Exists(el => tags.Contains(el)))
+@if (tags.Count == 0 || (Model.Tags.Count == 0 || Model.Tags.Exists(el => tags.Contains(el))))
 {
     var nodeType = Model.NodeType;
 
