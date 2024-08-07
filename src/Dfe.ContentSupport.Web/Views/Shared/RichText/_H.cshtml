@@ -4,12 +4,12 @@
     switch (Model.NodeType)
     {
         case RichTextNodeType.Heading2:
-            <h2 class="govuk-!-margin-top-4">
+            <h2 class="govuk-!-margin-top-4 govuk-heading-l">
                 <partial name="RichText/_Items" model="@Model"/>
             </h2>
             break;
         case RichTextNodeType.Heading3:
-            <h3>
+            <h3 class="govuk-heading-m">
                 <partial name="RichText/_Items" model="@Model"/>
             </h3>
             break;
