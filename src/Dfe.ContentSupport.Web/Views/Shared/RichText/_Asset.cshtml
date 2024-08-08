@@ -1,20 +1,19 @@
-@model ContentItemBase
+@model EmbeddedAsset
 
-@{
-    var asset = Model.Data.Target.Fields.File;
-}
 <div class="column-full">
-
-    @switch (asset.ContentType)
+    @switch (Model.AssetContentType)
     {
-        case "image/jpeg" or "image/png":
-            <img src="@asset.Url" alt="@Model.Data.Target.Fields.Description" title="@Model.Data.Target.Fields.Title"/>
+        case AssetContentType.Image:
+            <img src="@Model.Uri" alt="@Model.Description" title="@Model.Title"/>
             break;
-        case "video/mp4" or "video/quicktime":
+        case AssetContentType.Video:
             <video controls>
-                <source src="@asset.Url" type="video/mp4">
+                <source src="@Model.Uri" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
             break;
+        case AssetContentType.Unknown:
+        default:
+            throw new ArgumentOutOfRangeException(nameof(Model.AssetContentType));
     }
 </div>

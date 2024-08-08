@@ -1,6 +1,6 @@
 describe('Rich Text Rendering', () => {
   beforeEach(() => {
-    cy.visit('/hello-world');
+    cy.visit('content/hello-world');
   });
 
   describe('Headings', () => {
@@ -113,6 +113,7 @@ describe('Rich Text Rendering', () => {
       cy.get('.attachment-link').should('contain', 'Test csv');
       cy.get('.attachment-attribute').should('contain', 'CSV');
       cy.get('.attachment-attribute').should('contain', '18 KB');
+      cy.get('.attachment-attribute[aria-label="update date"]').should('contain', 'Last updated 31 May 2024');
     });
   });
 

@@ -3,7 +3,7 @@
 namespace Dfe.ContentSupport.Web.Models;
 
 [ExcludeFromCodeCoverage]
-public class ContentItemBase
+public class ContentItemBase:ContentBase
 {
     public string NodeType { get; set; } = null!;
     public Data Data { get; set; } = null!;

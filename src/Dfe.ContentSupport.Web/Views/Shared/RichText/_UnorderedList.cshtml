@@ -1,11 +1,5 @@
-@model ContentItemBase
+@model RichTextContentItem
 
-<ul>
-    @if (Model.Content.Any())
-    {
-        foreach (var childNode in Model.Content)
-        {
-            <partial name="RichText/_RichText" model="@childNode" />
-        }
-    }
+<ul class="govuk-list govuk-list--bullet">
+    <partial name="RichText/_Items" model="@Model"/>
 </ul>

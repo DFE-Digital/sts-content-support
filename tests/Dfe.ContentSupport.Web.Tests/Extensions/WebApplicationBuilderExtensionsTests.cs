@@ -1,5 +1,6 @@
 ﻿using Dfe.ContentSupport.Web.Extensions;
 using Dfe.ContentSupport.Web.Http;
+using Dfe.ContentSupport.Web.Models.Mapped;
 using Microsoft.AspNetCore.Builder;
 
 namespace Dfe.ContentSupport.Web.Tests.Extensions;
@@ -10,13 +11,15 @@ public class WebApplicationBuilderExtensionsTests
     public void Builder_Contains_Correct_Services()
     {
         var builder = WebApplication.CreateBuilder();
-        builder.InitDependencyInjection();
+        builder.InitCsDependencyInjection();
 
         var types = new[]
         {
             typeof(IContentService),
             typeof(IContentfulService),
-            typeof(IHttpContentfulClient)
+            typeof(IHttpContentfulClient),
+            typeof(ICacheService<List<CsPage>>),
+            typeof(IModelMapper)
         };
         foreach (var type in types)
             builder.Services.Where(o => o.ServiceType == type).Should().ContainSingle();
@@ -26,7 +29,7 @@ public class WebApplicationBuilderExtensionsTests
     public void Builder_Default_Uses_DefaultClient()
     {
         var builder = WebApplication.CreateBuilder();
-        builder.InitDependencyInjection();
+        builder.InitCsDependencyInjection();
 
 
         var service = builder.Services.First(o => o.ServiceType == typeof(IHttpContentfulClient));
@@ -41,7 +44,7 @@ public class WebApplicationBuilderExtensionsTests
             EnvironmentName = "e2e"
         });
 
-        builder.InitDependencyInjection();
+        builder.InitCsDependencyInjection();
 
         var service = builder.Services.First(o => o.ServiceType == typeof(IHttpContentfulClient));
         service.ImplementationType?.Name.Should().BeEquivalentTo(nameof(StubHttpContentfulClient));

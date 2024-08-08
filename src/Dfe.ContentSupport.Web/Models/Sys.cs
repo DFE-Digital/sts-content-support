@@ -6,7 +6,7 @@ namespace Dfe.ContentSupport.Web.Models;
 public class Sys
 {
     public string Id { get; set; } = null!;
-    public string Type { get; set; } = null!;
-    public string LinkType { get; set; } = null!;
-    public ContentType? ContentType { get; set; }
+    public ContentType? ContentType { get; set; } = null!;
+    public DateTime? CreatedAt { get; init; }
+    public DateTime? UpdatedAt { get; init; }
 }

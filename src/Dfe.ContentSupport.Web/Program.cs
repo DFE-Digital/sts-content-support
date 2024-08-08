@@ -18,14 +18,13 @@ internal static class Program
         var azureCredentials = new DefaultAzureCredential();
         builder.Configuration.AddAzureKeyVault(new Uri(keyVaultUri), azureCredentials);
 
-
+        builder.Services.AddControllers();
         builder.Services.AddControllersWithViews();
         builder.Services.AddApplicationInsightsTelemetry();
 
         builder.Services.AddGovUkFrontend();
         builder.Services.AddContentful(builder.Configuration);
-        builder.InitDependencyInjection();
-
+        builder.InitCsDependencyInjection();
 
         var app = builder.Build();
         if (!app.Environment.IsDevelopment())
@@ -39,18 +38,26 @@ internal static class Program
         app.UseStaticFiles();
         app.UseRouting();
         app.UseAuthorization();
+        app.UseCookiePolicy();
 
         app.MapControllerRoute(
-            "sitemap",
+            "Default",
             "sitemap.xml",
             new { controller = "Sitemap", action = "Index" }
         );
 
+
         app.MapControllerRoute(
-            "default/{slug}",
-            "{slug?}",
-            new { controller = "Home", action = "Index" }
+            "clearCache",
+            pattern: "{controller=Cache}/{action=Clear}"
         );
+
+
+        app.MapControllerRoute(
+            name: "slug",
+            pattern: "{slug}",
+            defaults: new { controller = "Content", action = "Index" });
+
 
         app.Run();
     }

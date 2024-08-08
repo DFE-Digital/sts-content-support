@@ -1,19 +1,12 @@
-@model ContentItemBase
+@model Hyperlink
 
-@* check if video is vimeo link - if so render vimeo partial instead *@
-@if (Model.Data.Uri.ToString().Contains("vimeo.com"))
+@if (Model.IsVimeo)
 {
     <partial name="RichText/_Vimeo" model="@Model" />
 }
 else
 {
-    <a href="@Model.Data.Uri.ToString()">
-    @if (Model.Content.Any())
-        {
-            foreach (var childNode in Model.Content)
-            {
-                <partial name="RichText/_RichText" model="@childNode" />
-            }
-        }
+    <a href="@Model.Uri" target="_blank" rel="noopener noreferrer">
+        <partial name="RichText/_Items" model="@Model"/>
     </a>
 }

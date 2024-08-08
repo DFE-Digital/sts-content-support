@@ -14,19 +14,19 @@ public class SitemapControllerTests
     }
 
     [Fact]
-    public async void Index_Calls_Service_GenerateSitemap()
+    public async Task Sitemap_Calls_Service_GenerateSitemap()
     {
         var sut = GetController();
         sut.ControllerContext.HttpContext = new DefaultHttpContext();
         var baseUrl =
             $"{sut.ControllerContext.HttpContext.Request.Scheme}://{sut.ControllerContext.HttpContext.Request.Host}/";
 
-        await sut.Index();
+        await sut.Sitemap();
         _contentServiceMock.Verify(o => o.GenerateSitemap(baseUrl), Times.Once);
     }
 
     [Fact]
-    public async void Index_Calls_Returns_ContentResult_XmlModel()
+    public async Task Sitemap_Calls_Returns_ContentResult_XmlModel()
     {
         const string sitemap = "dummy";
         _contentServiceMock.Setup(o => o.GenerateSitemap(It.IsAny<string>()))
@@ -41,7 +41,7 @@ public class SitemapControllerTests
         var sut = GetController();
         sut.ControllerContext.HttpContext = new DefaultHttpContext();
 
-        var result = await sut.Index();
+        var result = await sut.Sitemap();
 
         result.Should().BeEquivalentTo(expected);
     }

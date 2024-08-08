@@ -1,6 +1,9 @@
-﻿namespace Dfe.ContentSupport.Web.Models;
+﻿using System.Diagnostics.CodeAnalysis;
 
-public class Image 
+namespace Dfe.ContentSupport.Web.Models;
+
+[ExcludeFromCodeCoverage]
+public class Image
 {
-    public Fields Fields { get; set; } = null!;    
+    public Fields Fields { get; set; } = null!;
 }

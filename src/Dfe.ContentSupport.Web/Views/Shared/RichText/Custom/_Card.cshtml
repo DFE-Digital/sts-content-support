@@ -1,10 +1,10 @@
-﻿@model Target
+﻿@model CustomCard
 
 @{
 <div class="dfe-card">
-    @if (Model.Image is not null)
+    @if (Model.ImageUri is not null)
     {
-        <img src="@Model.Image.Fields.File.Url" alt="@Model.ImageAlt">
+        <img src="@Model.ImageUri" alt="@Model.ImageAlt">
     }
     <div class="dfe-card-container">
         <h3 class="govuk-heading-m">
