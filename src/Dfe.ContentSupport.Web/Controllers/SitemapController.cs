@@ -9,22 +9,7 @@ namespace Dfe.ContentSupport.Web.Controllers;
 [AllowAnonymous]
 public class SitemapController(IContentService contentfulService) : Controller
 {
-    [HttpGet]
-    [Route("/")]
-    public IActionResult Index()
-    {
-        var defaultModel = new CsPage
-        {
-            Heading = new Models.Heading
-            {
-                Title = "Department for Education",
-                Subtitle = "Content and Support"
-            }
-        };
-
-
-        return View(defaultModel);
-    }
+ 
 
     [HttpGet]
     [Route("/sitemap.xml")]
