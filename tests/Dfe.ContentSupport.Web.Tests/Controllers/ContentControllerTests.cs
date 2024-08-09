@@ -8,10 +8,11 @@ namespace Dfe.ContentSupport.Web.Tests.Controllers;
 public class ContentControllerTests
 {
     private readonly Mock<IContentService> _contentServiceMock = new();
+    private readonly Mock<ILayoutService> _layoutService = new();
 
     private ContentController GetController()
     {
-        return new ContentController(_contentServiceMock.Object);
+        return new ContentController(_contentServiceMock.Object, _layoutService.Object);
     }
 
 
@@ -45,7 +46,7 @@ public class ContentControllerTests
         const bool isPreview = true;
         var sut = GetController();
 
-        await sut.Index(dummySlug, isPreview);
+        await sut.Index(dummySlug, "", isPreview);
 
         _contentServiceMock.Verify(o => o.GetContent(dummySlug, isPreview), Times.Once);
     }
