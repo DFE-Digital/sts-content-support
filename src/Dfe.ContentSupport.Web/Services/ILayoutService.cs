@@ -1,5 +1,4 @@
-﻿using Dfe.ContentSupport.Web.Models;
-using Dfe.ContentSupport.Web.Models.Mapped;
+﻿using Dfe.ContentSupport.Web.Models.Mapped;
 
 namespace Dfe.ContentSupport.Web.Services
 {

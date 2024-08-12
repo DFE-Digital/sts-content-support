@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
 
 namespace Dfe.ContentSupport.Web.Models;
 

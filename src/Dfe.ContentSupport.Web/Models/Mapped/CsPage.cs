@@ -14,7 +14,6 @@ public class CsPage
     public List<CsContentItem> Content { get; set; } = null!;
     public DateTime? CreatedAt { get; init; }
     public DateTime? UpdatedAt { get; init; }
-
     public List<PageLink>? MenuItems { get; set; }
 
 }
