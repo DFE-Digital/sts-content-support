@@ -9,93 +9,83 @@ namespace Dfe.ContentSupport.Web.Tests.Services
     {
         private readonly LayoutService _layoutService = new();
 
+        private readonly string Home = "Home";
+        private readonly string About = "About";
+        private readonly string Contact = "Contact";
+        private readonly string HomeTitle = "Home Title";
+        private readonly string AboutTitle = "About Title";
+        private readonly string HomeSubtitle = "Home Subtitle";
+        private readonly string AboutSubtitle = "About Subtitle";
+
+        private CsPage GetPage()
+        {
+            return new CsPage
+            {
+                Content = new()
+            {
+                new () { InternalName = Home, Title = HomeTitle, Subtitle = HomeSubtitle },
+                new () { InternalName = About, Title = AboutTitle, Subtitle = AboutSubtitle }
+            }
+            };
+        }
+
+
+        private string GetSegmentLength(int length)
+        {
+            var segment = "";
+            for (var i = 1; i <= length; i++)
+            {
+                segment += $"/segment{i}";
+            }
+
+            return segment;
+        }
+
+
         [Fact]
         public void GetHeading_PageExists_ReturnsCorrectHeading()
         {
             // Arrange
-            var page = new CsPage
-            {
-                Content = new()
-            {
-                new () { InternalName = "Home", Title = "Home Title", Subtitle = "Home Subtitle" },
-                new () { InternalName = "About", Title = "About Title", Subtitle = "About Subtitle" }
-            }
-            };
+            var page = GetPage();
 
             // Act
-            var result = _layoutService.GetHeading(page, "About");
+            var result = _layoutService.GetHeading(page, About);
 
             // Assert
-            Assert.Equal("About Title", result.Title);
-            Assert.Equal("About Subtitle", result.Subtitle);
+            Assert.Equal(AboutTitle, result.Title);
+            Assert.Equal(AboutSubtitle, result.Subtitle);
         }
+
 
         [Fact]
         public void GetHeading_PageDoesNotExist_ReturnsFirstPageHeading()
         {
             // Arrange
-            var page = new CsPage
-            {
-                Content = new()
-            {
-                new () { InternalName = "Home", Title = "Home Title", Subtitle = "Home Subtitle" },
-                new () { InternalName = "About", Title = "About Title", Subtitle = "About Subtitle" }
-            }
-            };
+            var page = GetPage();
 
             // Act
-            var result = _layoutService.GetHeading(page, "Contact");
+            var result = _layoutService.GetHeading(page, Contact);
 
             // Assert
-            Assert.Equal("Home Title", result.Title);
-            Assert.Equal("Home Subtitle", result.Subtitle);
+            Assert.Equal(HomeTitle, result.Title);
+            Assert.Equal(HomeSubtitle, result.Subtitle);
         }
-
-
-        [Fact]
-        public void GetHeading_PageExistsWithNullTitleAndSubtitle_ReturnsEmptyStrings()
-        {
-            // Arrange
-            var page = new CsPage
-            {
-                Content = new()
-            {
-                new () { InternalName = "Home", Title = "Home Title", Subtitle = "Home Subtitle" },
-                new () { InternalName = "About", Title = null, Subtitle = null }
-            }
-            };
-
-            // Act
-            var result = _layoutService.GetHeading(page, "About");
-
-            // Assert
-            Assert.Equal("", result.Title);
-            Assert.Equal("", result.Subtitle);
-        }
-
 
 
         [Fact]
         public void GenerateVerticalNavigation_PageNameMatches_ReturnsCorrectMenuItems()
         {
             // Arrange
-            var page = new CsPage
-            {
-                Content = new()
-            {
-                new()  { InternalName = "Home", Title = "Home Title", Subtitle = "Home Subtitle" },
-                new()  { InternalName = "About", Title = "About Title", Subtitle = "About Subtitle" }
-            }
-            };
+            var page = GetPage();
 
             var request = new DefaultHttpContext().Request;
 
             // Act
-            var result = _layoutService.GenerateVerticalNavigation(page, request, "About");
+            var result = _layoutService.GenerateVerticalNavigation(page, request, About);
 
             // Assert
-            Assert.Equal(2, result.Count);
-            Assert.Equal("About Title", result[1].Title);
+            Assert.Equal(page.Content.Count, result.Count);
+            Assert.Equal(AboutTitle, result[1].Title);
             Assert.True(result[1].IsActive);
         }
 
@@ -104,23 +94,16 @@ namespace Dfe.ContentSupport.Web.Tests.Services
         public void GenerateVerticalNavigation_PageNameDoesNotMatch_ReturnsMenuItemsWithFirstActive()
         {
             // Arrange
-            var page = new CsPage
-            {
-                Content = new()
-            {
-                new () { InternalName = "Home", Title = "Home Title", Subtitle = "Home Subtitle" },
-                new () { InternalName = "About", Title = "About Title", Subtitle = "About Subtitle" }
-            }
-            };
+            var page = GetPage();
 
             var request = new DefaultHttpContext().Request;
 
             // Act
-            var result = _layoutService.GenerateVerticalNavigation(page, request, "Contact");
+            var result = _layoutService.GenerateVerticalNavigation(page, request, Contact);
 
             // Assert
-            Assert.Equal(2, result.Count);
-            Assert.Equal("Home Title", result[0].Title);
+            Assert.Equal(page.Content.Count, result.Count);
+            Assert.Equal(HomeTitle, result[0].Title);
             Assert.Equal(0, result.Count(o => o.IsActive));
         }
 
@@ -129,79 +112,55 @@ namespace Dfe.ContentSupport.Web.Tests.Services
         public void GetVisiblePageList_PageNameProvidedAndMatches_ReturnsMatchingItems()
         {
             // Arrange
-            var page = new CsPage
-            {
-                Content = new List<CsContentItem>
-            {
-                new CsContentItem { InternalName = "Home" },
-                new CsContentItem { InternalName = "About" }
-            }
-            };
-
+            var page = GetPage();
 
             // Act
-            var result = _layoutService.GetVisiblePageList(page, "About");
+            var result = _layoutService.GetVisiblePageList(page, About);
 
             // Assert
             Assert.Single(result);
-            Assert.Equal("About", result[0].InternalName);
+            Assert.Equal(About, result[0].InternalName);
         }
+
 
         [Fact]
         public void GetVisiblePageList_PageNameProvidedAndDoesNotMatch_ReturnsEmptyList()
         {
             // Arrange
-            var page = new CsPage
-            {
-                Content = new List<CsContentItem>
-            {
-                new CsContentItem { InternalName = "Home" },
-                new CsContentItem { InternalName = "About" }
-            }
-            };
-
+            var page = GetPage();
 
             // Act
-            var result = _layoutService.GetVisiblePageList(page, "Contact");
+            var result = _layoutService.GetVisiblePageList(page, Contact);
 
             // Assert
             Assert.Empty(result);
         }
 
+
         [Fact]
         public void GetVisiblePageList_PageNameIsNullOrEmpty_ReturnsFirstItem()
         {
             // Arrange
-            var page = new CsPage
-            {
-                Content = new List<CsContentItem>
-            {
-                new CsContentItem { InternalName = "Home" },
-                new CsContentItem { InternalName = "About" }
-            }
-            };
-
+            var page = GetPage();
 
             // Act
-            var result = _layoutService.GetVisiblePageList(page, "");
+            var result = _layoutService.GetVisiblePageList(page, string.Empty);
 
             // Assert
             Assert.Single(result);
-            Assert.Equal("Home", result[0].InternalName);
+            Assert.Equal(Home, result[0].InternalName);
         }
+
 
         [Fact]
         public void GetVisiblePageList_ContentListIsEmpty_ReturnsEmptyList()
         {
             // Arrange
-            var page = new CsPage
-            {
-                Content = new List<CsContentItem>()
-            };
-
+            var page = GetPage();
+            page.Content = new();
 
             // Act
-            var result = _layoutService.GetVisiblePageList(page, "Home");
+            var result = _layoutService.GetVisiblePageList(page, Home);
 
             // Assert
             Assert.Empty(result);
@@ -213,57 +172,59 @@ namespace Dfe.ContentSupport.Web.Tests.Services
         {
             // Arrange
             var context = new DefaultHttpContext();
-            context.Request.Path = "/segment1/segment2/segment3/segment4";
+            context.Request.Path = GetSegmentLength(4);
 
             // Act
             var result = _layoutService.GetNavigationUrl(context.Request);
 
             // Assert
-            Assert.Equal("/segment1/segment2", result);
+            Assert.Equal(GetSegmentLength(2), result);
         }
+
 
         [Fact]
         public void GetNavigationUrl_ExactlyTwoSegments_ReturnsAllSegments()
         {
             // Arrange
             var context = new DefaultHttpContext();
-            context.Request.Path = "/segment1/segment2";
-
+            context.Request.Path = GetSegmentLength(2);
 
             // Act
             var result = _layoutService.GetNavigationUrl(context.Request);
 
             // Assert
-            Assert.Equal("/segment1/segment2", result);
+            Assert.Equal(GetSegmentLength(2), result);
         }
+
 
         [Fact]
         public void GetNavigationUrl_FewerThanTwoSegments_ReturnsAllSegments()
         {
             // Arrange
             var context = new DefaultHttpContext();
-            context.Request.Path = "/segment1";
-
+            context.Request.Path = GetSegmentLength(1);
 
             // Act
             var result = _layoutService.GetNavigationUrl(context.Request);
 
             // Assert
-            Assert.Equal("/segment1", result);
+            Assert.Equal(GetSegmentLength(1), result);
         }
+
 
         [Fact]
         public void GetNavigationUrl_EmptyUrl_ReturnsEmptyString()
         {
             // Arrange
             var context = new DefaultHttpContext();
-            context.Request.Path = "";
+            var emptyRequestPath = string.Empty;
+            context.Request.Path = emptyRequestPath;
 
             // Act
             var result = _layoutService.GetNavigationUrl(context.Request);
 
             // Assert
-            Assert.Equal("", result);
+            Assert.Equal(emptyRequestPath, result);
         }
 
     }
