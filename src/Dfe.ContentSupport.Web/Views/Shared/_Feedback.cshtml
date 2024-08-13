@@ -7,12 +7,22 @@
                         useful?</h2>
                     <div class="govuk-button-group">
                         <button type="button" class="govuk-button govuk-button--secondary" value="Yes"
-                            data-module="govuk-button">Yes</button>
+                            data-module="govuk-button" onclick="handleFeedback('Yes')">Yes</button>
                         <button type="button" class="govuk-button govuk-button--secondary" value="No"
-                            data-module="govuk-button">No</button>
+                            data-module="govuk-button" onclick="handleFeedback('No')">No</button>
                     </div>
                 </div>
+            </div>
+            <div id="feedbackMessage" class="govuk-body govuk-!-margin-bottom-0" style="display: none;">
+                Thank you for your feedback.
             </div>
         </form>
     </div>
 </div>
+
+<script>
+    function handleFeedback(value) {
+        document.getElementById('questionForm').style.display = 'none';
+        document.getElementById('feedbackMessage').style.display = 'block';
+    }
+</script>
