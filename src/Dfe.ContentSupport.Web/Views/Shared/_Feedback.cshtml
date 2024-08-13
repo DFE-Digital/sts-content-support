@@ -1,3 +1,10 @@
+@{
+    var consentCookie = Context.Request.Cookies[".AspNet.Consent"];
+    var track = consentCookie == "true";
+}
+
+@if (track)
+{
 <div class="dfe-feedback-banner govuk-!-margin-top-9">
     <div class="dfe-feedback-banner--content">
         <form id="feedbackForm">
@@ -26,3 +33,4 @@
         document.getElementById('feedbackMessage').style.display = 'block';
     }
 </script>
+}
