@@ -17,4 +17,5 @@ public class ContentSupportPage : ContentBase
     public bool IsSitemap { get; init; }
     public bool HasCitation { get; init; }
     public bool HasBackToTop { get; init; }
+    public bool HasFeedbackBanner { get; init; }
 }

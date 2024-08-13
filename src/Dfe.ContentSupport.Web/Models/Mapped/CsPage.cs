@@ -13,4 +13,5 @@ public class CsPage
     public List<CsContentItem> Content { get; set; } = null!;
     public DateTime? CreatedAt { get; init; }
     public DateTime? UpdatedAt { get; init; }
+    public bool HasFeedbackBanner { get; set; }
 }

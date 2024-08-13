@@ -21,5 +21,10 @@
         {
             <partial name="_BackToTop" />
         }
+        
+        @if (Model.HasFeedbackBanner)
+        {
+            <partial name="_Feedback" />
+        }
     </div>
 </div>
