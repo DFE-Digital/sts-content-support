@@ -18,4 +18,6 @@ public class ContentSupportPage : ContentBase
     public bool HasCitation { get; init; }
     public bool HasBackToTop { get; init; }
     public bool HasFeedbackBanner { get; init; }
+    public bool ShowVerticalNavigation { get; init; }
+    
 }

@@ -24,6 +24,7 @@ public static class WebApplicationBuilderExtensions
         app.Services.AddTransient<IModelMapper, ModelMapper>();
         app.Services.AddTransient<IContentfulService, ContentfulService>();
         app.Services.AddTransient<IContentService, ContentService>();
+        app.Services.AddTransient<ILayoutService, LayoutService>();
 
         app.Services.Configure<CookiePolicyOptions>(options =>
         {

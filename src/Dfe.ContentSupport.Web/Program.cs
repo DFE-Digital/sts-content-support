@@ -55,7 +55,7 @@ internal static class Program
 
         app.MapControllerRoute(
             name: "slug",
-            pattern: "{slug}",
+            pattern: "{slug}/{page?}",
             defaults: new { controller = "Content", action = "Index" });
 
 
