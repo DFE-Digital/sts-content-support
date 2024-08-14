@@ -9,7 +9,7 @@ namespace Dfe.ContentSupport.Web.Controllers;
 
 [Route("/content")]
 [AllowAnonymous]
-public class ContentController(IContentService contentService)
+public class ContentController(IContentService contentService, ILayoutService layoutService)
     : Controller
 {
     public async Task<IActionResult> Home()
@@ -29,7 +29,7 @@ public class ContentController(IContentService contentService)
     }
 
     [HttpGet("{slug}")]
-    public async Task<IActionResult> Index(string slug, bool isPreview = false, [FromQuery]List<string>? tags = null)
+    public async Task<IActionResult> Index(string slug, bool isPreview = false, [FromQuery] List<string>? tags = null)
     {
         if (!ModelState.IsValid) return RedirectToAction("error");
         if (string.IsNullOrEmpty(slug)) return RedirectToAction("error");
@@ -37,6 +37,10 @@ public class ContentController(IContentService contentService)
         var resp = await contentService.GetContent(slug, isPreview);
         if (resp is null) return RedirectToAction("error");
 
+        ViewBag.tags = tags;
+
+        return View("CsIndex", resp);
+        resp = layoutService.GenerateLayout(resp, Request, page);
         ViewBag.tags = tags;
         return View("CsIndex", resp);
     }
@@ -50,6 +54,6 @@ public class ContentController(IContentService contentService)
     public IActionResult Error()
     {
         return View(new ErrorViewModel
-            { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }

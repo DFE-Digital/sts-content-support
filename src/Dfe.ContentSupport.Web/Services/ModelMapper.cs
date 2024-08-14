@@ -27,6 +27,7 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
             HasCitation = incoming.HasCitation,
             HasBackToTop = incoming.HasBackToTop,
             Content = MapEntriesToContent(incoming.Content),
+            ShowVerticalNavigation = incoming.ShowVerticalNavigation,
             CreatedAt = incoming.SystemProperties.CreatedAt,
             UpdatedAt = incoming.SystemProperties.UpdatedAt,
             Tags = FlattenMetadata(incoming.Metadata)
@@ -49,21 +50,23 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
     public CsContentItem ConvertEntryToContentItem(Entry entry)
     {
         CsContentItem item = entry.RichText is not null
-            ? MapRichTextContent(entry.RichText, entry.Metadata)!
-            : new CsContentItem { InternalName = entry.InternalName };
+            ? MapRichTextContent(entry.RichText, entry)!
+            : new CsContentItem { InternalName = entry.InternalName, Title = entry.Title, Subtitle = entry.Subtitle };
         return item;
     }
 
-    public RichTextContentItem? MapRichTextContent(ContentItemBase? richText, ContentfulMetadata metaData)
+    public RichTextContentItem? MapRichTextContent(ContentItemBase? richText, Entry entry)
     {
         if (richText is null) return null;
         RichTextContentItem item =
             new RichTextContentItem
             {
-                InternalName = richText.InternalName,
+                InternalName = entry.InternalName,
+                Title = entry.Title,
+                Subtitle = entry.Subtitle,
                 NodeType = ConvertToRichTextNodeType(richText.NodeType),
                 Content = MapRichTextNodes(richText.Content),
-                Tags = FlattenMetadata(metaData)
+                Tags = FlattenMetadata(entry.Metadata)
             };
         return item;
     }
@@ -114,7 +117,7 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
                 item = new EmbeddedEntry
                 {
                     JumpIdentifier = target.JumpIdentifier,
-                    RichText = MapRichTextContent(target.RichText, target.Metadata),
+                    RichText = MapRichTextContent(target.RichText, target),
                     CustomComponent = GenerateCustomComponent(target)
                 };
                 break;
@@ -168,7 +171,7 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
         return new CustomAccordion
         {
             InternalName = target.InternalName,
-            Body = MapRichTextContent(target.RichText, target.Metadata),
+            Body = MapRichTextContent(target.RichText, target),
             SummaryLine = target.SummaryLine,
             Title = target.Title,
             Accordions = target.Content.Select(GenerateCustomAccordion).ToList()
