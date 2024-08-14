@@ -8,11 +8,10 @@ namespace Dfe.ContentSupport.Web.Tests.Controllers;
 public class ContentControllerTests
 {
     private readonly Mock<IContentService> _contentServiceMock = new();
-    private readonly Mock<ILayoutService> _layoutService = new();
 
     private ContentController GetController()
     {
-        return new ContentController(_contentServiceMock.Object, _layoutService.Object);
+        return new ContentController(_contentServiceMock.Object, new LayoutService());
     }
 
 
