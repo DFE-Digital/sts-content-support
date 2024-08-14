@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using System.IO;
 using Dfe.ContentSupport.Web.Models.Mapped;
 using Dfe.ContentSupport.Web.Services;
 using Dfe.ContentSupport.Web.ViewModels;
