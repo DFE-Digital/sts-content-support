@@ -30,7 +30,7 @@ public class ContentController(IContentService contentService, ILayoutService la
     }
 
     [HttpGet("{slug}/{page?}")]
-    public async Task<IActionResult> Index(string slug, string page = "", bool isPreview = true)
+    public async Task<IActionResult> Index(string slug, string page = "", bool isPreview = false)
     {
         if (!ModelState.IsValid) return RedirectToAction("error");
         if (string.IsNullOrEmpty(slug)) return RedirectToAction("error");
