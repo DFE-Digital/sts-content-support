@@ -47,5 +47,10 @@
         {
             <partial name="_Print"/>
         }
+        
+        @if (Model.HasFeedbackBanner)
+        {
+            <partial name="_Feedback" />
+        }
     </div>
 </div>

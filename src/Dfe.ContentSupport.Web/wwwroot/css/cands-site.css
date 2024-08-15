@@ -84,6 +84,43 @@ video {
     background-color: #ebf2f6;
 }
 
+.dfe-feedback-banner {
+    background-color: #f3f2f1;
+    border: 1px solid #b1b4b6;
+    margin-bottom: 30px;
+  }
+  
+  .dfe-feedback-banner--content {
+    padding: 20px 15px;
+    display: block;
+    line-height: 1.333;
+  }
+  
+  .dfe-feedback-banner--content-questions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .dfe-feedback-banner--content-question {
+    display: flex;
+    align-items: center;
+  }
+  
+  .dfe-feedback-banner
+    .govuk-button,
+  .dfe-feedback-banner
+    .govuk-button-group {
+    margin-bottom: 0;
+  }
+  
+  .dfe-feedback-banner--content-question
+    .dfe-feedback-banner--content-question-text {
+    margin-bottom: 0;
+    margin-right: 20px;
+  }  
+
 .guidance-container {
     border: 1px solid #b1b4b6;
 }
