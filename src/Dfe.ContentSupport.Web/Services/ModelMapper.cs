@@ -25,6 +25,7 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
             IsSitemap = incoming.IsSitemap,
             HasCitation = incoming.HasCitation,
             HasBackToTop = incoming.HasBackToTop,
+            HasPrint = incoming.HasPrint,
             Content = MapEntriesToContent(incoming.Content),
             ShowVerticalNavigation = incoming.ShowVerticalNavigation,
             CreatedAt = incoming.Sys.CreatedAt,
