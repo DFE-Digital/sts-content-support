@@ -46,7 +46,7 @@ public class CustomAccordionTests
                 ],
                 RichText = new ContentItem
                 {
-                    InternalName = ContentInternalName,
+                    InternalName = null,
                     NodeType = "paragraph"
                 }
             }
@@ -75,7 +75,7 @@ public class CustomAccordionTests
 
         var expectedBody=  new RichTextContentItem
         {
-            InternalName = ContentInternalName,
+            InternalName = InternalName,
             NodeType = RichTextNodeType.Paragraph,
             Content = []
         };

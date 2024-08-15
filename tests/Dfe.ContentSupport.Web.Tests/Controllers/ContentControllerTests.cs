@@ -11,7 +11,7 @@ public class ContentControllerTests
 
     private ContentController GetController()
     {
-        return new ContentController(_contentServiceMock.Object);
+        return new ContentController(_contentServiceMock.Object, new LayoutService());
     }
 
 
@@ -45,7 +45,7 @@ public class ContentControllerTests
         const bool isPreview = true;
         var sut = GetController();
 
-        await sut.Index(dummySlug, isPreview);
+        await sut.Index(dummySlug, "", isPreview);
 
         _contentServiceMock.Verify(o => o.GetContent(dummySlug, isPreview), Times.Once);
     }
