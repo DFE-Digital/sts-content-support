@@ -28,19 +28,24 @@
 
         @foreach (var content in Model.Content)
         {
-            <partial name="_Content" model="@content" />
+            <partial name="_Content" model="@content"/>
         }
     </div>
 
     <div class="govuk-grid-column-full">
         @if (Model.HasCitation)
         {
-            <partial name="_Citation" model="Model" />
+            <partial name="_Citation" model="Model"/>
         }
 
         @if (Model.HasBackToTop)
         {
-            <partial name="_BackToTop" />
+            <partial name="_BackToTop"/>
+        }
+
+        @if (Model.HasPrint)
+        {
+            <partial name="_Print"/>
         }
         
         @if (Model.HasFeedbackBanner)

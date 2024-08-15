@@ -382,7 +382,7 @@ dl.gem-c-metadata__list {
     }
 
     .dfe-vertical-nav__section--nested .dfe-vertical-nav__section-item::before {
-        content: "—";
+        content: "ï¿½";
         margin-left: -20px;
         color: #505a5f;
     }
@@ -438,3 +438,22 @@ dl.gem-c-metadata__list {
         .dfe-vertical-nav__section .dfe-vertical-nav__section.dfe-vertical-nav__section-item--current .dfe-vertical-nav__link {
             font-weight: 700;
         }
+
+.print-link-button {
+    background: url(/assets/icon-print.png) no-repeat 10px 50%;
+    background-size: 16px 18px;
+    padding: 10px 10px 10px 36px;
+    border: 1px solid #b1b4b6;
+    color: #1d70b8;
+    cursor: pointer;
+    margin: 0;
+    margin-bottom: 15px;
+    font-weight: 400;
+    font-size: 14px;
+    font-size: 0.875rem;
+    line-height: 1.1429;
+}
+
+.print-button {
+    margin-top: 2rem;
+}
