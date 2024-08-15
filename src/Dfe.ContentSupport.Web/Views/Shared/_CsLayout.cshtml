@@ -7,7 +7,6 @@
     ViewData["Title"] = Model.Heading.Title;
     ViewData["containerClasses"] = "dfe-width-container";
     var consentCookie = Context.Request.Cookies[".AspNet.Consent"];
-    @* var track = false; *@
     var track = consentCookie == "true";
 }
 
@@ -33,9 +32,7 @@
     <link rel="stylesheet" as="style" href="~/css/application.css">
     <link rel="stylesheet" as="style" href="~/css/cands-site.css">
     <header role="banner">
-        
         <partial name="_CookieConsent"/>
-       
         <partial name="_CsHeader"/>
         <partial name="_Hero" model="@Model.Heading"/>
     </header>
