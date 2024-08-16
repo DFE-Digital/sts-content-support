@@ -11,9 +11,11 @@ public class CsPage
     public bool HasCitation { get; set; }
     public bool ShowVerticalNavigation { get; set; }
     public bool HasBackToTop { get; set; }
+    public bool HasPrint { get; set; }
     public List<CsContentItem> Content { get; set; } = null!;
     public DateTime? CreatedAt { get; init; }
     public DateTime? UpdatedAt { get; init; }
+    public bool HasFeedbackBanner { get; set; }
     public List<PageLink>? MenuItems { get; set; }
 
     public List<string> Tags { get;set; } = null!;

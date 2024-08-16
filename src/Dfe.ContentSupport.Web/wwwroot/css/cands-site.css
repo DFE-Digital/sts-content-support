@@ -84,6 +84,43 @@ video {
     background-color: #ebf2f6;
 }
 
+.dfe-feedback-banner {
+    background-color: #f3f2f1;
+    border: 1px solid #b1b4b6;
+    margin-bottom: 30px;
+}
+
+.dfe-feedback-banner--content {
+    padding: 20px 15px;
+    display: block;
+    line-height: 1.333;
+}
+
+.dfe-feedback-banner--content-questions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dfe-feedback-banner--content-question {
+    display: flex;
+    align-items: center;
+}
+
+.dfe-feedback-banner
+.govuk-button,
+.dfe-feedback-banner
+.govuk-button-group {
+    margin-bottom: 0;
+}
+
+.dfe-feedback-banner--content-question
+.dfe-feedback-banner--content-question-text {
+    margin-bottom: 0;
+    margin-right: 20px;
+}
+
 .guidance-container {
     border: 1px solid #b1b4b6;
 }
@@ -345,7 +382,7 @@ dl.gem-c-metadata__list {
     }
 
     .dfe-vertical-nav__section--nested .dfe-vertical-nav__section-item::before {
-        content: "—";
+        content: "ï¿½";
         margin-left: -20px;
         color: #505a5f;
     }
@@ -401,3 +438,26 @@ dl.gem-c-metadata__list {
         .dfe-vertical-nav__section .dfe-vertical-nav__section.dfe-vertical-nav__section-item--current .dfe-vertical-nav__link {
             font-weight: 700;
         }
+
+.print-link-button {
+    background: url(/assets/icon-print.png) no-repeat 10px 50%;
+    background-size: 16px 18px;
+    padding: 10px 10px 10px 36px;
+    border: 1px solid #b1b4b6;
+    color: #1d70b8;
+    cursor: pointer;
+    margin: 0;
+    margin-bottom: 15px;
+    font-weight: 400;
+    font-size: 14px;
+    font-size: 0.875rem;
+    line-height: 1.1429;
+}
+
+.print-button {
+    margin-top: 2rem;
+}
+
+.govuk-list.govuk-list--bullet li .govuk-body {
+    margin-bottom: 0;
+}
