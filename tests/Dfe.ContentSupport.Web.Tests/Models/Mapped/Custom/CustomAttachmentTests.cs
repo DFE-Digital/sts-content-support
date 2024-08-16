@@ -51,7 +51,9 @@ public class CustomAttachmentTests
                         {
                             Size = Size
                         }
-                    }
+                    },
+                    SystemProperties =new SystemProperties()
+                    
                 }
             }
         }
