@@ -28,8 +28,10 @@ public class ContentController(IContentService contentService, ILayoutService la
         return View(defaultModel);
     }
 
-    [HttpGet("{slug}")]
-    public async Task<IActionResult> Index(string slug, bool isPreview = false, [FromQuery] List<string>? tags = null)
+  
+
+    [HttpGet("{slug}/{page?}")]
+    public async Task<IActionResult> Index(string slug, string page = "", bool isPreview = false, [FromQuery] List<string>? tags = null)
     {
         if (!ModelState.IsValid) return RedirectToAction("error");
         if (string.IsNullOrEmpty(slug)) return RedirectToAction("error");
@@ -37,13 +39,12 @@ public class ContentController(IContentService contentService, ILayoutService la
         var resp = await contentService.GetContent(slug, isPreview);
         if (resp is null) return RedirectToAction("error");
 
+        resp = layoutService.GenerateLayout(resp, Request, page);
         ViewBag.tags = tags;
 
         return View("CsIndex", resp);
-        resp = layoutService.GenerateLayout(resp, Request, page);
-        ViewBag.tags = tags;
-        return View("CsIndex", resp);
     }
+
 
     public IActionResult Privacy()
     {
