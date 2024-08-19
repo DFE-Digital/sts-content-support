@@ -21,6 +21,7 @@ internal static class Program
         builder.Services.AddControllers();
         builder.Services.AddControllersWithViews();
         builder.Services.AddApplicationInsightsTelemetry();
+        builder.Services.AddHealthChecks();
 
         builder.Services.AddGovUkFrontend();
         builder.Services.AddContentful(builder.Configuration);
@@ -39,6 +40,7 @@ internal static class Program
         app.UseRouting();
         app.UseAuthorization();
         app.UseCookiePolicy();
+        app.MapHealthChecks("/healthz");
 
         app.MapControllerRoute(
             "Default",
@@ -55,7 +57,7 @@ internal static class Program
 
         app.MapControllerRoute(
             name: "slug",
-            pattern: "{slug}",
+            pattern: "{slug}/{page?}",
             defaults: new { controller = "Content", action = "Index" });
 
 

@@ -5,21 +5,52 @@
 }
 
 <div class="govuk-grid-row">
+
+    @if (Model.MenuItems is not null)
+    {
+        <div class="govuk-grid-column-one-quarter sticky">
+            <nav class="dfe-vertical-nav">
+                <div class="dfe-vertical-nav__section">
+                    <ul class="dfe-vertical-nav__section">
+                        @foreach (var menuItem in Model.MenuItems)
+                        {
+                            <li class="dfe-vertical-nav__section-item">
+                                <a class="dfe-vertical-nav__link @(menuItem.IsActive ? "dfe-vertical-nav__section-item--current" : "")" href="@menuItem.Url">@(string.IsNullOrEmpty(menuItem.Subtitle) ? "" : $"{menuItem.Subtitle} : ") @menuItem.Title </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    }
+
     <div class="govuk-grid-column-three-quarters">
 
         @foreach (var content in Model.Content)
         {
-            <partial name="_Content" model="@content" />
+            <partial name="_Content" model="@content"/>
         }
+    </div>
 
+    <div class="govuk-grid-column-full">
         @if (Model.HasCitation)
         {
-            <partial name="_Citation" model="Model" />
+            <partial name="_Citation" model="Model"/>
         }
 
         @if (Model.HasBackToTop)
         {
-            <partial name="_BackToTop" />
+            <partial name="_BackToTop"/>
+        }
+
+        @if (Model.HasPrint)
+        {
+            <partial name="_Print"/>
+        }
+        
+        @if (Model.HasFeedbackBanner)
+        {
+            <partial name="_Feedback" />
         }
     </div>
 </div>

@@ -25,7 +25,10 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
             IsSitemap = incoming.IsSitemap,
             HasCitation = incoming.HasCitation,
             HasBackToTop = incoming.HasBackToTop,
+            HasFeedbackBanner = incoming.HasFeedbackBanner,
+            HasPrint = incoming.HasPrint,
             Content = MapEntriesToContent(incoming.Content),
+            ShowVerticalNavigation = incoming.ShowVerticalNavigation,
             CreatedAt = incoming.Sys.CreatedAt,
             UpdatedAt = incoming.Sys.UpdatedAt
         };
@@ -40,18 +43,20 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
     public CsContentItem ConvertEntryToContentItem(Entry entry)
     {
         CsContentItem item = entry.RichText is not null
-            ? MapRichTextContent(entry.RichText)!
-            : new CsContentItem { InternalName = entry.InternalName };
+            ? MapRichTextContent(entry.RichText, entry)!
+            : new CsContentItem { InternalName = entry.InternalName, Title = entry.Title, Subtitle = entry.Subtitle };
         return item;
     }
 
-    public RichTextContentItem? MapRichTextContent(ContentItemBase? richText)
+    public RichTextContentItem? MapRichTextContent(ContentItemBase? richText, Entry entry)
     {
         if (richText is null) return null;
         RichTextContentItem item =
             new RichTextContentItem
             {
-                InternalName = richText.InternalName,
+                InternalName = entry.InternalName,
+                Title = entry.Title,
+                Subtitle = entry.Subtitle,
                 NodeType = ConvertToRichTextNodeType(richText.NodeType),
                 Content = MapRichTextNodes(richText.Content),
             };
@@ -61,7 +66,7 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
     public List<RichTextContentItem> MapRichTextNodes(List<ContentItem> nodes)
     {
         return nodes.Select(node => MapContent(node) ?? new RichTextContentItem
-            { NodeType = RichTextNodeType.Unknown, InternalName = node.InternalName }).ToList();
+        { NodeType = RichTextNodeType.Unknown, InternalName = node.InternalName }).ToList();
     }
 
     public RichTextContentItem? MapContent(ContentItem contentItem)
@@ -101,7 +106,7 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
                 item = new EmbeddedEntry
                 {
                     JumpIdentifier = target.JumpIdentifier,
-                    RichText = MapRichTextContent(target.RichText),
+                    RichText = MapRichTextContent(target.RichText, target),
                     CustomComponent = GenerateCustomComponent(target)
                 };
                 break;
@@ -154,7 +159,7 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
         return new CustomAccordion
         {
             InternalName = target.InternalName,
-            Body = MapRichTextContent(target.RichText),
+            Body = MapRichTextContent(target.RichText, target),
             SummaryLine = target.SummaryLine,
             Title = target.Title,
             Accordions = target.Content.Select(GenerateCustomAccordion).ToList()

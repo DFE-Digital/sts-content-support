@@ -50,10 +50,12 @@ public class CustomAttachmentTests
                         Details = new FileDetails
                         {
                             Size = Size
-                        }
+                        },
                     },
-                    SystemProperties =new SystemProperties()
-                    
+                    SystemProperties = new SystemProperties
+                    {
+                        UpdatedAt = DateTime.Now
+                    }
                 }
             }
         }
