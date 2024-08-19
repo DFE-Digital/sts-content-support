@@ -12,6 +12,22 @@ public class HttpContentfulClient(HttpClient httpClient, CsContentfulOptions opt
         CancellationToken cancellationToken = default) where T : class
     {
         queryBuilder = queryBuilder.Include(options.IncludeDepth);
-        return await GetEntries(queryBuilder, cancellationToken);
+
+        for (int attempt = 1; attempt <= options.RetryAttempts; attempt++)
+        {
+            try
+            {
+                return await GetEntries(queryBuilder, cancellationToken);
+            }
+            catch (Exception)
+            {
+                if (attempt == options.RetryAttempts)
+                {
+                    throw;
+                }
+            }
+        }
+
+        return default!;
     }
 }
