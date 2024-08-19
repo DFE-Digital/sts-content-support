@@ -40,7 +40,7 @@ public class CustomCardTests
                     {
                         SystemProperties = new Contentful.Core.Models.SystemProperties
                         {
-                            Id = "csCard"
+                            Id = ContentId
                         }
                     }
                 },
