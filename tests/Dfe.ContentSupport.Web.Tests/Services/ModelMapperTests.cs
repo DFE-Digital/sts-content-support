@@ -1,4 +1,5 @@
-﻿using Dfe.ContentSupport.Web.Common;
+﻿using Contentful.Core.Models;
+using Dfe.ContentSupport.Web.Common;
 using Dfe.ContentSupport.Web.Configuration;
 using Dfe.ContentSupport.Web.Models;
 using Dfe.ContentSupport.Web.Models.Mapped;
@@ -22,15 +23,15 @@ public class ModelMapperTests
         {
             new()
             {
-                Sys = new Sys()
+               SystemProperties = new SystemProperties()
             },
             new()
             {
-                Sys = new Sys()
+                 SystemProperties = new SystemProperties()
             },
             new()
-            {
-                Sys = new Sys()
+            { 
+                SystemProperties = new SystemProperties()
             }
         };
 
@@ -132,11 +133,12 @@ public class ModelMapperTests
     {
         var testValue = new Target
         {
-            Sys = new Sys
+            SystemProperties = new SystemProperties
             {
-                ContentType = new ContentType
+                ContentType = new Contentful.Core.Models.ContentType
                 {
-                    Sys = new Sys
+                    
+                    SystemProperties = new SystemProperties 
                     {
                         Id = "DUMMY"
                     }

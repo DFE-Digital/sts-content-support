@@ -1,4 +1,5 @@
-﻿using Dfe.ContentSupport.Web.Common;
+﻿using Contentful.Core.Models;
+using Dfe.ContentSupport.Web.Common;
 using Dfe.ContentSupport.Web.Configuration;
 using Dfe.ContentSupport.Web.Models;
 using Dfe.ContentSupport.Web.Models.Mapped.Custom;
@@ -31,11 +32,12 @@ public class CustomGridContainerTests
         Meta = CardMeta,
         ImageAlt = CardImageAlt,
         Description = CardDescription,
-        Sys = new Sys
+        SystemProperties = new SystemProperties
         {
-            ContentType = new ContentType
+            ContentType = new Contentful.Core.Models.ContentType
             {
-                Sys = new Sys
+
+                SystemProperties = new SystemProperties
                 {
                     Id = CardContentId
                 }
@@ -45,7 +47,7 @@ public class CustomGridContainerTests
         {
             Fields = new Fields
             {
-                File = new FileDetails
+                File = new Web.Models.FileDetails
                 {
                     Url = CardImageUri
                 }
@@ -61,11 +63,11 @@ public class CustomGridContainerTests
             Target = new Target
             {
                 InternalName = ContainerInternalName,
-                Sys = new Sys
+                SystemProperties = new Contentful.Core.Models.SystemProperties
                 {
-                    ContentType = new ContentType
+                    ContentType = new Contentful.Core.Models.ContentType
                     {
-                        Sys = new Sys
+                        SystemProperties = new Contentful.Core.Models.SystemProperties
                         {
                             Id = ContainerContentId
                         }

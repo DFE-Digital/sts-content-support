@@ -34,13 +34,13 @@ public class CustomCardTests
                 Meta = Meta,
                 ImageAlt = ImageAlt,
                 Description = Description,
-                Sys = new Sys
+                SystemProperties = new Contentful.Core.Models.SystemProperties
                 {
-                    ContentType = new ContentType
+                    ContentType = new Contentful.Core.Models.ContentType
                     {
-                        Sys = new Sys
+                        SystemProperties = new Contentful.Core.Models.SystemProperties
                         {
-                            Id = ContentId
+                            Id = "csCard"
                         }
                     }
                 },
@@ -52,10 +52,10 @@ public class CustomCardTests
                         {
                             Url = ImageUri
                         }
-                    }
+                    },
                 }
-            }
-        }
+            },
+        },
     };
 
     [Fact]

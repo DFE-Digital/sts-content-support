@@ -1,4 +1,5 @@
-﻿using Dfe.ContentSupport.Web.Common;
+﻿using Contentful.Core.Models;
+using Dfe.ContentSupport.Web.Common;
 using Dfe.ContentSupport.Web.Configuration;
 using Dfe.ContentSupport.Web.Models;
 using Dfe.ContentSupport.Web.Models.Mapped.Standard;
@@ -22,7 +23,7 @@ public class EmbeddedEntryTests
             {
                 InternalName = InternalName,
                 JumpIdentifier = JumpIdentifier,
-                Sys = new Sys()
+                SystemProperties = new SystemProperties()
             }
         }
     };
