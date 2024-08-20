@@ -1,9 +1,13 @@
 @using Microsoft.AspNetCore.Http.Features
 
 @{
-    var consentFeature = Context.Features.Get<ITrackingConsentFeature>();
-    var cookieString = consentFeature?.CreateConsentCookie();
-    var showBanner = Context.Request.Cookies[".AspNet.Consent"] is null;
+var consentFeature = Context.Features.Get<ITrackingConsentFeature>();
+var cookieString = consentFeature?.CreateConsentCookie();
+
+var csCookieNotSet = Context.Request.Cookies[".AspNet.Consent"] is null;
+var ptCookieNotSet = Context.Request.Cookies["user_cookies_preferences"] is null;
+
+var showBanner = csCookieNotSet && ptCookieNotSet;
 }
 
 @if (showBanner)
@@ -37,7 +41,7 @@
             </div>
         </div>
     </region>
-    <script>
+    <script nonce="@Context.Items["nonce"]">
     (function () {
         const buttons = document.querySelectorAll("#cookieConsent button[data-cookie-string]");
         buttons.forEach(function (button) {
