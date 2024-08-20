@@ -1,4 +1,5 @@
-﻿using Dfe.ContentSupport.Web.Common;
+﻿using Contentful.Core.Models;
+using Dfe.ContentSupport.Web.Common;
 using Dfe.ContentSupport.Web.Configuration;
 using Dfe.ContentSupport.Web.Models;
 using Dfe.ContentSupport.Web.Models.Mapped;
@@ -28,11 +29,11 @@ public class CustomAccordionTests
                 InternalName = InternalName,
                 Title = Title,
                 SummaryLine = SummaryLine,
-                Sys = new Sys
+                SystemProperties = new SystemProperties
                 {
-                    ContentType = new ContentType
+                    ContentType = new Contentful.Core.Models.ContentType
                     {
-                        Sys = new Sys
+                        SystemProperties = new SystemProperties
                         {
                             Id = ContentId
                         }

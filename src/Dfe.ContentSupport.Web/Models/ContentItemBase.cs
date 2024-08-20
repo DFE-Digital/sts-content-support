@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using Contentful.Core.Models;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Dfe.ContentSupport.Web.Models;
 

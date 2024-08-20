@@ -10,7 +10,6 @@ namespace Dfe.ContentSupport.Web.Controllers;
 public class SitemapController(IContentService contentfulService) : Controller
 {
  
-
     [HttpGet]
     [Route("/sitemap.xml")]
     public async Task<IActionResult> Sitemap()

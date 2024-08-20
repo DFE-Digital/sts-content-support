@@ -1,4 +1,5 @@
-﻿using Dfe.ContentSupport.Web.Common;
+﻿using Contentful.Core.Models;
+using Dfe.ContentSupport.Web.Common;
 using Dfe.ContentSupport.Web.Configuration;
 using Dfe.ContentSupport.Web.Models;
 using Dfe.ContentSupport.Web.Models.Mapped;
@@ -29,10 +30,18 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
             HasPrint = incoming.HasPrint,
             Content = MapEntriesToContent(incoming.Content),
             ShowVerticalNavigation = incoming.ShowVerticalNavigation,
-            CreatedAt = incoming.Sys.CreatedAt,
-            UpdatedAt = incoming.Sys.UpdatedAt
+            CreatedAt = incoming.SystemProperties.CreatedAt,
+            UpdatedAt = incoming.SystemProperties.UpdatedAt,
+            Tags = FlattenMetadata(incoming.Metadata)
         };
         return result;
+    }
+
+    private List<string> FlattenMetadata(ContentfulMetadata item)
+    {
+        if (item is null) return new();
+
+        return item.Tags.Select(_ => _.Sys.Id).ToList();
     }
 
     private List<CsContentItem> MapEntriesToContent(List<Entry> entries)
@@ -59,6 +68,7 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
                 Subtitle = entry.Subtitle,
                 NodeType = ConvertToRichTextNodeType(richText.NodeType),
                 Content = MapRichTextNodes(richText.Content),
+                Tags = FlattenMetadata(entry.Metadata)
             };
         return item;
     }
@@ -69,11 +79,14 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
         { NodeType = RichTextNodeType.Unknown, InternalName = node.InternalName }).ToList();
     }
 
+
     public RichTextContentItem? MapContent(ContentItem contentItem)
     {
         RichTextContentItem? item;
         var nodeType = ConvertToRichTextNodeType(contentItem.NodeType);
         var internalName = contentItem.InternalName;
+        
+
         switch (nodeType)
         {
             case RichTextNodeType.Text:
@@ -84,7 +97,7 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
                 break;
             case RichTextNodeType.Hyperlink:
                 var uri = contentItem.Data.Uri.ToString();
-                item = new Hyperlink
+                item = new Models.Mapped.Standard.Hyperlink
                 {
                     Uri = uri,
                     IsVimeo = uri.Contains("vimeo.com")
@@ -137,12 +150,13 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
         item.Content = MapRichTextNodes(contentItem.Content);
         item.Value = contentItem.Value;
         item.InternalName = internalName;
+        item.Tags = FlattenMetadata(contentItem.Metadata);
         return item;
     }
 
     public CustomComponent? GenerateCustomComponent(Target target)
     {
-        var contentType = target.Sys.ContentType?.Sys.Id;
+        var contentType = target.SystemProperties.ContentType?.SystemProperties.Id;
         if (contentType is null) return null;
         return contentType switch
         {

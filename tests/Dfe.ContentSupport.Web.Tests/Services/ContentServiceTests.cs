@@ -19,9 +19,9 @@ public class ContentServiceTests
     {
         Items = new List<ContentSupportPage>
         {
-            new() { Slug = "slug1", IsSitemap = true, Sys = new Sys() },
-            new() { Slug = "slug2", IsSitemap = false, Sys = new Sys() },
-            new() { Slug = "slug3", IsSitemap = true, Sys = new Sys() }
+            new() { Slug = "slug1", IsSitemap = true, SystemProperties = new SystemProperties() },
+            new() { Slug = "slug2", IsSitemap = false, SystemProperties = new SystemProperties() },
+            new() { Slug = "slug3", IsSitemap = true, SystemProperties = new SystemProperties() }
         }
     };
 
