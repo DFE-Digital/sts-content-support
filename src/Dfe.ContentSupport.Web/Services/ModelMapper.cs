@@ -44,16 +44,24 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
         return item.Tags.Select(_ => _.Sys.Id).ToList();
     }
 
-    private List<CsContentItem> MapEntriesToContent(List<Entry> entries)
+    private List<CsContentItem> MapEntriesToContent(List<Target> entries)
     {
-        return entries.Select(ConvertEntryToContentItem).ToList();
+
+        var x = new List<CsContentItem>();
+
+        foreach (var e in entries)
+        {
+            x.Add(ConvertEntryToContentItem(e));
+        }
+
+        return x;
     }
 
-    public CsContentItem ConvertEntryToContentItem(Entry entry)
+    public CsContentItem ConvertEntryToContentItem(Target entry)
     {
         CsContentItem item = entry.RichText is not null
             ? MapRichTextContent(entry.RichText, entry)!
-            : new CsContentItem { InternalName = entry.InternalName, Title = entry.Title, Subtitle = entry.Subtitle };
+            : GenerateCustomComponent(entry) ?? new CsContentItem { InternalName = entry.InternalName, Title = entry.Title, Subtitle = entry.Subtitle };
         return item;
     }
 

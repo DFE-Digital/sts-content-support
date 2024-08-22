@@ -9,7 +9,7 @@ namespace Dfe.ContentSupport.Web.Services;
 public interface IModelMapper
 {
     List<CsPage> MapToCsPages(IEnumerable<ContentSupportPage> incoming);
-    CsContentItem ConvertEntryToContentItem(Entry entry);
+    CsContentItem ConvertEntryToContentItem(Target entry);
     RichTextContentItem? MapContent(ContentItem contentItem);
     RichTextNodeType ConvertToRichTextNodeType(string str);
     CustomComponent? GenerateCustomComponent(Target target);

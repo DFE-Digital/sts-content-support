@@ -6,4 +6,8 @@
         var richText = Model as RichTextContentItem;
         <partial name="RichText/_RichText" model="@richText"/>
     }
+    else
+    {
+        <partial name="RichText/_GDSComponent" model="Model"/>
+    }
 }

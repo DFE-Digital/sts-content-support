@@ -61,7 +61,10 @@ public class ContentService(
 
         var builder = QueryBuilder<ContentSupportPage>.New.ContentTypeIs(nameof(ContentSupportPage))
             .FieldEquals($"fields.{field}", value);
+        var builderX = QueryBuilder<dynamic>.New.ContentTypeIs(nameof(ContentSupportPage))
+            .FieldEquals($"fields.{field}", value);
         var result = await contentfulService.ContentfulClient(isPreview).Query(builder);
+        var resultX =( await contentfulService.ContentfulClient(isPreview).Query(builderX)).First();
         var pages = modelMapper.MapToCsPages(result);
 
         if (!isPreview)
