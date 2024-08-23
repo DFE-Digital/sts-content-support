@@ -37,11 +37,11 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
         return result;
     }
 
-    private List<string> FlattenMetadata(ContentfulMetadata item)
+    private static List<string> FlattenMetadata(ContentfulMetadata item)
     {
-        if (item is null) return new();
+        if (item is null) return [];
 
-        return item.Tags.Select(_ => _.Sys.Id).ToList();
+        return item.Tags.Select(o => o.Sys.Id).ToList();
     }
 
     private List<CsContentItem> MapEntriesToContent(List<Entry> entries)
