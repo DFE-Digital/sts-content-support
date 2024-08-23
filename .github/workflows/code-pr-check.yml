@@ -47,18 +47,18 @@ jobs:
         distribution: "microsoft"
         java-version: "17"
 
-#    - name: Start SonarCloud scanner
-#      run: |
-#        dotnet-sonarscanner begin \
-#        /k:"DFE-Digital_sts-content-support" \
-#        /o:"dfe-digital" \
-#        /d:sonar.login="${{ secrets.SONAR_TOKEN }}" \
-#        /d:sonar.host.url="https://sonarcloud.io" \
-#        /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml \
-#        /d:sonar.coverage.exclusions=**/Program.cs,**/wwwroot/** \
-#        /d:sonar.issue.ignore.multicriteria=e1 \
-#        /d:sonar.issue.ignore.multicriteria.e1.ruleKey=csharpsquid:S6602 \
-#        /d:sonar.issue.ignore.multicriteria.e1.resourceKey=src/**/*.cs
+    - name: Start SonarCloud scanner
+      run: |
+        dotnet-sonarscanner begin \
+        /k:"DFE-Digital_sts-content-support" \
+        /o:"dfe-digital" \
+        /d:sonar.login="${{ secrets.SONAR_TOKEN }}" \
+        /d:sonar.host.url="https://sonarcloud.io" \
+        /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml \
+        /d:sonar.coverage.exclusions=**/Program.cs,**/wwwroot/** \
+        /d:sonar.issue.ignore.multicriteria=e1 \
+        /d:sonar.issue.ignore.multicriteria.e1.ruleKey=csharpsquid:S6602 \
+        /d:sonar.issue.ignore.multicriteria.e1.resourceKey=src/**/*.cs
         
     - name: Build web app
       uses: ./.github/actions/build-dotnet-app
@@ -71,15 +71,14 @@ jobs:
       with:
         solution_filename: sts-contentsupport.sln
         
-#    - name: Merge test results
-#      run: dotnet-coverage merge -f xml -o "coverage.xml" -s "coverage.settings.xml" -r coverage.cobertura.xml
-#
-#    - name: End SonarCloud Scanner
-#      run: dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
-#
-#    - name: Archive code coverage results
-#      uses: actions/upload-artifact@v4
-#      with:
-#        name: code-coverage-report
-#        path: coverage.xml
-#
+    - name: Merge test results
+      run: dotnet-coverage merge -f xml -o "coverage.xml" -s "coverage.settings.xml" -r coverage.cobertura.xml
+
+    - name: End SonarCloud Scanner
+      run: dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+
+    - name: Archive code coverage results
+      uses: actions/upload-artifact@v4
+      with:
+        name: code-coverage-report
+        path: coverage.xml
