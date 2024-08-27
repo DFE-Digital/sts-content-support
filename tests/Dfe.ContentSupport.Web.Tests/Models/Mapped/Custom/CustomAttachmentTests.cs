@@ -31,11 +31,12 @@ public class CustomAttachmentTests
             {
                 InternalName = InternalName,
                 Title = Title,
-                Sys = new Sys
+                SystemProperties = new SystemProperties
                 {
-                    ContentType = new ContentType
+                    ContentType = new Contentful.Core.Models.ContentType
                     {
-                        Sys = new Sys
+
+                        SystemProperties = new SystemProperties
                         {
                             Id = ContentId
                         }
