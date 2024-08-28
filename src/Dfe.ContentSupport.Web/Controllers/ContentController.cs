@@ -12,6 +12,8 @@ namespace Dfe.ContentSupport.Web.Controllers;
 public class ContentController(IContentService contentService, ILayoutService layoutService, ILogger<ContentController> logger)
     : Controller
 {
+    public const string ErrorActionName = "error";
+
     public async Task<IActionResult> Home()
     {
         var defaultModel = new CsPage
@@ -34,13 +36,13 @@ public class ContentController(IContentService contentService, ILayoutService la
         if (!ModelState.IsValid)
         {
             logger.LogError("Invalid model state received for {Controller} {Action} with slug {Slug}", nameof(ContentController), nameof(Index), slug);
-            return RedirectToAction("error");
+            return RedirectToAction(ErrorActionName);
         }
 
         if (string.IsNullOrEmpty(slug))
         {
             logger.LogError("No slug received for C&S {Controller} {Action}", nameof(ContentController), nameof(Index));
-            return RedirectToAction("error");
+            return RedirectToAction(ErrorActionName);
         }
 
         try
@@ -49,7 +51,7 @@ public class ContentController(IContentService contentService, ILayoutService la
             if (resp is null)
             {
                 logger.LogError("Failed to load content for C&S page {Slug}; no content received.", slug);
-                return RedirectToAction("error");
+                return RedirectToAction(ErrorActionName);
             }
 
             resp = layoutService.GenerateLayout(resp, Request, page);
@@ -60,7 +62,7 @@ public class ContentController(IContentService contentService, ILayoutService la
         catch (Exception ex)
         {
             logger.LogError(ex, "Error loading C&S content page {Slug}", slug);
-            return RedirectToAction("error");
+            return RedirectToAction(ErrorActionName);
         }
     }
 
