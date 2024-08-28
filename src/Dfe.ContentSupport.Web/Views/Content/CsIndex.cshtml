@@ -52,3 +52,28 @@
         }
     </div>
 </div>
+
+@section BodyEnd{
+    @if (Model.HasPrint)
+    {
+        <script nonce="@Context.Items["nonce"]" defer>
+            /**
+            * Adds functionality for printing a page to the Print Page button (_Print.cshtml)
+            */
+            const printPage = () => window.print();
+
+
+            const addPrintButtonEventListener = () => {
+                const printButton = document.getElementById("print-link");
+
+                if(!printButton){
+                    return;
+                }
+
+                printButton.addEventListener('click', printPage);
+            }
+
+            addPrintButtonEventListener();
+        </script>
+    }
+}
