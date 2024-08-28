@@ -30,6 +30,8 @@ public class ContentController(IContentService contentService, ILayoutService la
         return View(defaultModel);
     }
 
+  
+
     [HttpGet("{slug}/{page?}")]
     public async Task<IActionResult> Index(string slug, string page = "", bool isPreview = false, [FromQuery] List<string>? tags = null)
     {
@@ -65,6 +67,7 @@ public class ContentController(IContentService contentService, ILayoutService la
             return RedirectToAction(ErrorActionName);
         }
     }
+
 
     public IActionResult Privacy()
     {
