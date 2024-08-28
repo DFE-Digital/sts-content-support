@@ -2,6 +2,7 @@
 using Dfe.ContentSupport.Web.Models.Mapped;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Dfe.ContentSupport.Web.Tests.Controllers;
 
@@ -11,7 +12,7 @@ public class ContentControllerTests
 
     private ContentController GetController()
     {
-        return new ContentController(_contentServiceMock.Object, new LayoutService());
+        return new ContentController(_contentServiceMock.Object, new LayoutService(), new NullLogger<ContentController>());
     }
 
 
