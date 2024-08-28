@@ -33,13 +33,13 @@ public class ContentController(IContentService contentService, ILayoutService la
     {
         if (!ModelState.IsValid)
         {
-            logger.LogError("Invalid model state received for {Slug}", slug);
+            logger.LogError("Invalid model state received for {Controller} {Action} with slug {Slug}", nameof(ContentController), nameof(Index), slug);
             return RedirectToAction("error");
         }
 
         if (string.IsNullOrEmpty(slug))
         {
-            logger.LogError("No slug received for C&S {Controller} {Action} ", nameof(ContentController), nameof(Index));
+            logger.LogError("No slug received for C&S {Controller} {Action}", nameof(ContentController), nameof(Index));
             return RedirectToAction("error");
         }
 
