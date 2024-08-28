@@ -2,16 +2,18 @@
 using Dfe.ContentSupport.Web.Models.Mapped;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Dfe.ContentSupport.Web.Tests.Controllers;
 
 public class ContentControllerTests
 {
+    private readonly Mock<ILogger<ContentController>> _loggerMock = new();
     private readonly Mock<IContentService> _contentServiceMock = new();
 
     private ContentController GetController()
     {
-        return new ContentController(_contentServiceMock.Object, new LayoutService());
+        return new ContentController(_contentServiceMock.Object, new LayoutService(), _loggerMock.Object);
     }
 
 
@@ -36,6 +38,15 @@ public class ContentControllerTests
 
         result.Should().BeOfType<RedirectToActionResult>();
         (result as RedirectToActionResult)!.ActionName.Should().BeEquivalentTo("error");
+
+        _loggerMock.Verify(
+               x => x.Log(
+                   LogLevel.Error,
+                   It.IsAny<EventId>(),
+                   It.Is<It.IsAnyType>((o, t) => o.ToString() != null && o.ToString()!.StartsWith($"No slug received for C&S {nameof(ContentController)} {nameof(sut.Index)}")),
+                   It.IsAny<Exception>(),
+                   It.IsAny<Func<It.IsAnyType, Exception?, string>>()),
+               Times.Once);
     }
 
     [Fact]
@@ -53,15 +64,47 @@ public class ContentControllerTests
     [Fact]
     public async Task Index_NullResponse_ReturnsErrorAction()
     {
+        var slug = "slug";
         _contentServiceMock.Setup(o => o.GetContent(It.IsAny<string>(), It.IsAny<bool>()))
             .ReturnsAsync((CsPage?)null);
 
         var sut = GetController();
 
-        var result = await sut.Index("slug");
+        var result = await sut.Index(slug);
 
         result.Should().BeOfType<RedirectToActionResult>();
         (result as RedirectToActionResult)!.ActionName.Should().BeEquivalentTo("error");
+
+        _loggerMock.Verify(x => x.Log(
+           LogLevel.Error,
+           It.IsAny<EventId>(),
+           It.Is<It.IsAnyType>((o, t) => o.ToString() != null && o.ToString()!.Equals($"Failed to load content for C&S page {slug}; no content received.")),
+           It.IsAny<Exception>(),
+           It.IsAny<Func<It.IsAnyType, Exception?, string>>()),
+       Times.Once);
+    }
+
+    [Fact]
+    public async Task Index_ExceptionThrown_ReturnsErrorAction()
+    {
+        var slug = "slug";
+        _contentServiceMock.Setup(o => o.GetContent(It.IsAny<string>(), It.IsAny<bool>()))
+            .ThrowsAsync(new Exception("An exception occurred loading content"));
+
+        var sut = GetController();
+
+        var result = await sut.Index(slug);
+
+        result.Should().BeOfType<RedirectToActionResult>();
+        (result as RedirectToActionResult)!.ActionName.Should().BeEquivalentTo("error");
+
+        _loggerMock.Verify(x => x.Log(
+           LogLevel.Error,
+           It.IsAny<EventId>(),
+           It.Is<It.IsAnyType>((o, t) => o.ToString() != null && o.ToString()!.Equals($"Error loading C&S content page {slug}")),
+           It.IsAny<Exception>(),
+           It.IsAny<Func<It.IsAnyType, Exception?, string>>()),
+       Times.Once);
     }
 
     [Fact]
