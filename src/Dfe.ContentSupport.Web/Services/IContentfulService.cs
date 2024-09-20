@@ -1,9 +1,9 @@
-using Dfe.ContentSupport.Web.Http;
+using Dfe.ContentSupport.Web.ViewModels;
 
-namespace Dfe.ContentSupport.Web.Services
+namespace Dfe.ContentSupport.Web.Services;
+
+public interface IContentfulService
 {
-    public interface IContentfulService
-    {
-        IHttpContentfulClient ContentfulClient(bool isPreview = false);
-    }
+    Task<IEnumerable<ContentSupportPage>> GetContentSupportPages(string field, string value,
+        CancellationToken cancellationToken = default);
 }

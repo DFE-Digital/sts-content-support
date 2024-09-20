@@ -1,19 +1,15 @@
 ﻿using System.Xml.Linq;
 using Dfe.ContentSupport.Web.Configuration;
 using Contentful.Core.Models;
-using Contentful.Core.Search;
-using Dfe.ContentSupport.Web.Http;
-using Dfe.ContentSupport.Web.Models;
 using Dfe.ContentSupport.Web.Models.Mapped;
 
 namespace Dfe.ContentSupport.Web.Tests.Services;
 
 public class ContentServiceTests
 {
-    private readonly Mock<IHttpContentfulClient> _httpContentClientMock = new();
+    private readonly Mock<IContentfulService> _httpContentClientMock = new();
     private readonly Mock<ICacheService<List<CsPage>>> _cacheMock = new();
     private readonly Mock<IModelMapper> _mapperMock = new();
-
 
     private readonly ContentfulCollection<ContentSupportPage> _response = new()
     {
@@ -25,18 +21,15 @@ public class ContentServiceTests
         }
     };
 
-    private ContentService GetService() => new(GetClient(), _cacheMock.Object, _mapperMock.Object);
-
-    private ContentfulService GetClient() =>
-        new(new CsContentfulOptions(), _httpContentClientMock.Object);
-
+    private ContentService GetService() => new(_httpContentClientMock.Object, _cacheMock.Object, _mapperMock.Object);
+    
     private void SetupResponse(ContentfulCollection<ContentSupportPage>? response = null)
     {
         var res = response ?? _response;
-        _httpContentClientMock.Setup(o => o.Query(It.IsAny<QueryBuilder<ContentSupportPage>>(),
-            It.IsAny<CancellationToken>())).ReturnsAsync(res);
 
-
+        _httpContentClientMock.Setup(o => o.GetContentSupportPages(It.IsAny<string>(),
+            It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(res);
+        
         _mapperMock.Setup(o => o.MapToCsPages(res))
             .Returns(res.Items
                 .Select(page => new ModelMapper(new SupportedAssetTypes()).MapToCsPage(page))
@@ -51,8 +44,9 @@ public class ContentServiceTests
         await sut.GetContent(It.IsAny<string>());
 
         _httpContentClientMock.Verify(o =>
-                o.Query(
-                    It.IsAny<QueryBuilder<ContentSupportPage>>(),
+                o.GetContentSupportPages(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
                     It.IsAny<CancellationToken>()),
             Times.Once
         );
@@ -105,8 +99,9 @@ public class ContentServiceTests
         await sut.GetCsPages();
 
         _httpContentClientMock.Verify(o =>
-                o.Query(
-                    It.IsAny<QueryBuilder<ContentSupportPage>>(),
+                o.GetContentSupportPages(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
                     It.IsAny<CancellationToken>()),
             Times.Once
         );
@@ -226,8 +221,9 @@ public class ContentServiceTests
         await sut.GetContentSupportPages(field, value, isPreview);
 
         _httpContentClientMock.Verify(o =>
-                o.Query(
-                    It.IsAny<QueryBuilder<ContentSupportPage>>(),
+                o.GetContentSupportPages(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
                     It.IsAny<CancellationToken>()),
             Times.Once
         );

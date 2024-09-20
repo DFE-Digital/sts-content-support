@@ -1,6 +1,4 @@
-﻿using Dfe.ContentSupport.Web.Configuration;
-using Contentful.Core.Search;
-using Dfe.ContentSupport.Web.Http;
+﻿using Contentful.Core.Configuration;
 
 namespace Dfe.ContentSupport.Web.Tests.Http;
 
@@ -9,9 +7,9 @@ public class StubHttpContentfulClientTests
     [Fact]
     public async Task Client_Get_MockContent()
     {
-        var sut = new StubHttpContentfulClient(new HttpClient(), new CsContentfulOptions());
+        var sut = new StubContentfulService(new HttpClient(), new ContentfulOptions());
 
-        var collection = await sut.Query(It.IsAny<QueryBuilder<ContentSupportPage>>());
+        var collection = await sut.GetContentSupportPages(It.IsAny<string>(), It.IsAny<string>());
         collection.First().InternalName.Should().BeEquivalentTo("MockContent");
     }
 }

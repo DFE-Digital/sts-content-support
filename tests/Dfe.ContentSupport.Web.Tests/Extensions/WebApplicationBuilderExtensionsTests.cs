@@ -1,5 +1,4 @@
 ﻿using Dfe.ContentSupport.Web.Extensions;
-using Dfe.ContentSupport.Web.Http;
 using Dfe.ContentSupport.Web.Models.Mapped;
 using Microsoft.AspNetCore.Builder;
 
@@ -17,7 +16,6 @@ public class WebApplicationBuilderExtensionsTests
         {
             typeof(IContentService),
             typeof(IContentfulService),
-            typeof(IHttpContentfulClient),
             typeof(ICacheService<List<CsPage>>),
             typeof(IModelMapper)
         };
@@ -32,8 +30,8 @@ public class WebApplicationBuilderExtensionsTests
         builder.InitCsDependencyInjection();
 
 
-        var service = builder.Services.First(o => o.ServiceType == typeof(IHttpContentfulClient));
-        service.ImplementationType?.Name.Should().BeEquivalentTo(nameof(HttpContentfulClient));
+        var service = builder.Services.First(o => o.ServiceType == typeof(IContentfulService));
+        service.ImplementationType?.Name.Should().BeEquivalentTo(nameof(ContentfulService));
     }
 
     [Fact]
@@ -46,7 +44,7 @@ public class WebApplicationBuilderExtensionsTests
 
         builder.InitCsDependencyInjection();
 
-        var service = builder.Services.First(o => o.ServiceType == typeof(IHttpContentfulClient));
-        service.ImplementationType?.Name.Should().BeEquivalentTo(nameof(StubHttpContentfulClient));
+        var service = builder.Services.First(o => o.ServiceType == typeof(IContentfulService));
+        service.ImplementationType?.Name.Should().BeEquivalentTo(nameof(StubContentfulService));
     }
 }

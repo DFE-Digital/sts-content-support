@@ -1,9 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Azure.Identity;
-using Contentful.AspNetCore;
 using Dfe.ContentSupport.Web.Extensions;
 using GovUk.Frontend.AspNetCore;
-
 
 namespace Dfe.ContentSupport.Web;
 
@@ -24,7 +22,6 @@ internal static class Program
         builder.Services.AddHealthChecks();
 
         builder.Services.AddGovUkFrontend();
-        builder.Services.AddContentful(builder.Configuration);
         builder.InitCsDependencyInjection();
 
         var app = builder.Build();
@@ -33,7 +30,6 @@ internal static class Program
             app.UseExceptionHandler("/Home/Error");
             app.UseHsts();
         }
-
 
         app.UseHttpsRedirection();
         app.UseStaticFiles();
