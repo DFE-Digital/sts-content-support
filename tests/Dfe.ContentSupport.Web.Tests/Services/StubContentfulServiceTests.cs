@@ -2,7 +2,7 @@
 
 namespace Dfe.ContentSupport.Web.Tests.Http;
 
-public class StubHttpContentfulClientTests
+public class StubContentfulClientTests
 {
     [Fact]
     public async Task Client_Get_MockContent()

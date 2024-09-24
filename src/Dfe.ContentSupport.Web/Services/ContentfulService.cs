@@ -7,6 +7,8 @@ namespace Dfe.ContentSupport.Web.Services;
 public class ContentfulService(IContentfulClient client)
     : IContentfulService
 {
+    private const int DefaultRequestDepth = 10;
+
     private readonly IContentfulClient _client =
         client ?? throw new ArgumentNullException(nameof(client));
 
@@ -15,7 +17,7 @@ public class ContentfulService(IContentfulClient client)
     {
         var builder = QueryBuilder<ContentSupportPage>.New.ContentTypeIs(nameof(ContentSupportPage))
             .FieldEquals($"fields.{field}", value)
-            .Include(10);
+            .Include(DefaultRequestDepth);
 
         var entries = await _client.GetEntries(builder, cancellationToken);
 
