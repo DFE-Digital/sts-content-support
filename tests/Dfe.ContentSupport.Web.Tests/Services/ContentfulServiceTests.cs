@@ -1,22 +1,21 @@
-﻿using Dfe.ContentSupport.Web.Configuration;
-using Dfe.ContentSupport.Web.Http;
+﻿using Contentful.Core;
+using Dfe.ContentSupport.Web.Configuration;
+using Contentful.Core.Errors;
+using Contentful.Core.Search;
 
-namespace Dfe.ContentSupport.Web.Tests.Services;
+namespace Dfe.ContentSupport.Web.Tests.Http;
 
 public class ContentfulServiceTests
 {
-    private readonly Mock<IHttpContentfulClient> _httpContentClientMock = new();
+    private readonly Mock<IContentfulClient> _clientMock = new();
 
     [Fact]
-    public void ContentfulClient_Sets_IsPreview()
+    public async Task Client_Calls_Contentful_And_Bounce()
     {
-        var options = new CsContentfulOptions();
+        var sut = new ContentfulService(_clientMock.Object);
 
-        var sut = new ContentfulService(options, _httpContentClientMock.Object);
-
-        sut.ContentfulClient(true);
-        options.UsePreviewApi.Should().BeTrue();
-        sut.ContentfulClient();
-        options.UsePreviewApi.Should().BeFalse();
+        await sut.GetContentSupportPages(It.IsAny<string>(), It.IsAny<string>(),It.IsAny<CancellationToken>());
+        
+        _clientMock.Verify(o=>o.GetEntries(It.IsAny<QueryBuilder<ContentSupportPage>>(), It.IsAny<CancellationToken>()),Times.Once);
     }
 }
