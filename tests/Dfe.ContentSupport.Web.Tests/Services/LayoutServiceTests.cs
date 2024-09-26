@@ -12,6 +12,8 @@ namespace Dfe.ContentSupport.Web.Tests.Services
         private readonly string Home = "Home";
         private readonly string About = "About";
         private readonly string Contact = "Contact";
+        private readonly string HomeSlug = "Home Slug";
+        private readonly string AboutSlug = "About Slug";
         private readonly string HomeTitle = "Home Title";
         private readonly string AboutTitle = "About Title";
         private readonly string HomeSubtitle = "Home Subtitle";
@@ -23,14 +25,14 @@ namespace Dfe.ContentSupport.Web.Tests.Services
             {
                 Content = new()
             {
-                new () { InternalName = Home, Title = HomeTitle, Subtitle = HomeSubtitle },
-                new () { InternalName = About, Title = AboutTitle, Subtitle = AboutSubtitle }
+                new () { InternalName = Home,  Slug = HomeSlug, Title = HomeTitle, Subtitle = HomeSubtitle },
+                new () { InternalName = About, Slug = AboutSlug, Title = AboutTitle, Subtitle = AboutSubtitle }
             }
             };
         }
 
 
-        private string GetSegmentLength(int length)
+        private static string GetSegmentLength(int length)
         {
             var segment = "";
             for (var i = 1; i <= length; i++)
@@ -115,7 +117,7 @@ namespace Dfe.ContentSupport.Web.Tests.Services
             var page = GetPage();
 
             // Act
-            var result = _layoutService.GetVisiblePageList(page, About);
+            var result = LayoutService.GetVisiblePageList(page, About);
 
             // Assert
             Assert.Single(result);
@@ -130,7 +132,7 @@ namespace Dfe.ContentSupport.Web.Tests.Services
             var page = GetPage();
 
             // Act
-            var result = _layoutService.GetVisiblePageList(page, Contact);
+            var result = LayoutService.GetVisiblePageList(page, Contact);
 
             // Assert
             Assert.Empty(result);
@@ -144,7 +146,7 @@ namespace Dfe.ContentSupport.Web.Tests.Services
             var page = GetPage();
 
             // Act
-            var result = _layoutService.GetVisiblePageList(page, string.Empty);
+            var result = LayoutService.GetVisiblePageList(page, string.Empty);
 
             // Assert
             Assert.Single(result);
@@ -160,7 +162,7 @@ namespace Dfe.ContentSupport.Web.Tests.Services
             page.Content = new();
 
             // Act
-            var result = _layoutService.GetVisiblePageList(page, Home);
+            var result = LayoutService.GetVisiblePageList(page, Home);
 
             // Assert
             Assert.Empty(result);
@@ -175,7 +177,7 @@ namespace Dfe.ContentSupport.Web.Tests.Services
             context.Request.Path = GetSegmentLength(4);
 
             // Act
-            var result = _layoutService.GetNavigationUrl(context.Request);
+            var result = LayoutService.GetNavigationUrl(context.Request);
 
             // Assert
             Assert.Equal(GetSegmentLength(2), result);
@@ -190,7 +192,7 @@ namespace Dfe.ContentSupport.Web.Tests.Services
             context.Request.Path = GetSegmentLength(2);
 
             // Act
-            var result = _layoutService.GetNavigationUrl(context.Request);
+            var result = LayoutService.GetNavigationUrl(context.Request);
 
             // Assert
             Assert.Equal(GetSegmentLength(2), result);
@@ -205,7 +207,7 @@ namespace Dfe.ContentSupport.Web.Tests.Services
             context.Request.Path = GetSegmentLength(1);
 
             // Act
-            var result = _layoutService.GetNavigationUrl(context.Request);
+            var result = LayoutService.GetNavigationUrl(context.Request);
 
             // Assert
             Assert.Equal(GetSegmentLength(1), result);
@@ -221,7 +223,7 @@ namespace Dfe.ContentSupport.Web.Tests.Services
             context.Request.Path = emptyRequestPath;
 
             // Act
-            var result = _layoutService.GetNavigationUrl(context.Request);
+            var result = LayoutService.GetNavigationUrl(context.Request);
 
             // Assert
             Assert.Equal(emptyRequestPath, result);

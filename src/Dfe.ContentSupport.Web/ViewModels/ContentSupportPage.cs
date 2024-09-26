@@ -6,14 +6,8 @@ namespace Dfe.ContentSupport.Web.ViewModels;
 [ExcludeFromCodeCoverage]
 public class ContentSupportPage : ContentBase
 {
-    public string Slug { get; init; } = null!;
-
-    public List<dynamic> BeforeTitleContent { get; init; } = [];
-
     public Heading Heading { get; init; } = null!;
     public List<Entry> Content { get; init; } = [];
-
-    public bool DisplayBackButton { get; init; }
     public bool IsSitemap { get; init; }
     public bool HasCitation { get; init; }
     public bool HasBackToTop { get; init; }

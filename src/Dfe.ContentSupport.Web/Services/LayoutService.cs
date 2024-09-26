@@ -39,8 +39,8 @@ public class LayoutService : ILayoutService
 
         return new Heading
         {
-            Title = page.Content[0]?.Title ?? "",
-            Subtitle = page.Content[0]?.Subtitle ?? ""
+            Title = page.Content[0].Title ?? "",
+            Subtitle = page.Content[0].Subtitle ?? ""
         };
     }
 
