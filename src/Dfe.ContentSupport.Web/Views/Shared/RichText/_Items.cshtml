@@ -1,9 +1,10 @@
 ﻿@model RichTextContentItem
 
-@if (Model.Content is not null && Model.Content.Any())
+@if (Model.HaveNoContent) { 
+    return;
+}
+
+@foreach (var childNode in Model.Content)
 {
-    foreach (var childNode in Model.Content)
-    {
-        <partial name="RichText/_RichText" model="@childNode"/>
-    }
+    <partial name="RichText/_RichText" model="@childNode"/>
 }

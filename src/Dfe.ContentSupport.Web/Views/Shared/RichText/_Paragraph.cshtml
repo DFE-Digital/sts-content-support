@@ -1,5 +1,9 @@
 @model RichTextContentItem
 
+@if(Model.IsEmptyContent){ 
+    return;
+}
+
 <p class="govuk-body">
     <partial name="RichText/_Items" model="@Model"/>
 </p>

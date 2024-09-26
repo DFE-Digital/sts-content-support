@@ -15,4 +15,7 @@ public class EmbeddedEntry : RichTextContentItem
     public string JumpIdentifier { get; set; } = null!;
     public RichTextContentItem? RichText { get; set; }
     public CustomComponent? CustomComponent { get; set; }
+
+    public override bool HaveNoContent => Content.Count == 0 || Content.All(content => content.IsEmptyContent);
+    public override bool IsEmptyContent => base.IsEmptyContent && (RichText == null || (RichText != null && RichText.IsEmptyContent));
 }
