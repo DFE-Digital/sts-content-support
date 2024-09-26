@@ -53,7 +53,7 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
     {
         CsContentItem item = entry.RichText is not null
             ? MapRichTextContent(entry.RichText, entry)!
-            : new CsContentItem { InternalName = entry.InternalName, Title = entry.Title, Subtitle = entry.Subtitle };
+            : new CsContentItem { InternalName = entry.InternalName, Slug = entry.Slug, Title = entry.Title, Subtitle = entry.Subtitle };
         return item;
     }
 
@@ -64,6 +64,7 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
             new RichTextContentItem
             {
                 InternalName = entry.InternalName,
+                Slug = entry.Slug,
                 Title = entry.Title,
                 Subtitle = entry.Subtitle,
                 NodeType = ConvertToRichTextNodeType(richText.NodeType),
