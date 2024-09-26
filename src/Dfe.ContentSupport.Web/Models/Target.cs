@@ -6,7 +6,7 @@ namespace Dfe.ContentSupport.Web.Models;
 [ExcludeFromCodeCoverage]
 public class Target : Entry
 {
-    public Fields Fields { get; set; } = null!;
+    public new Fields Fields { get; set; } = null!;
     public Asset Asset { get; set; } = null!;
     public string SummaryLine { get; set; } = null!;
     public string Description { get; set; } = null!;
