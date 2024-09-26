@@ -15,4 +15,5 @@ public class Target : Entry
     public string Uri { get; set; } = null!;
     public Image Image { get; set; } = null!;
     public List<Target> Content { get; set; } = [];
+    public new string Title { get; set; } = null!;
 }
