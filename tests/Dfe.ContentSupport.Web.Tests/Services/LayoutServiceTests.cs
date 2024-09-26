@@ -51,7 +51,7 @@ namespace Dfe.ContentSupport.Web.Tests.Services
             var page = GetPage();
 
             // Act
-            var result = _layoutService.GetHeading(page, About);
+            var result = _layoutService.GetHeading(page, AboutSlug);
 
             // Assert
             Assert.Equal(AboutTitle, result.Title);
@@ -83,7 +83,7 @@ namespace Dfe.ContentSupport.Web.Tests.Services
             var request = new DefaultHttpContext().Request;
 
             // Act
-            var result = _layoutService.GenerateVerticalNavigation(page, request, About);
+            var result = _layoutService.GenerateVerticalNavigation(page, request, AboutSlug);
 
             // Assert
             Assert.Equal(page.Content.Count, result.Count);
@@ -117,7 +117,7 @@ namespace Dfe.ContentSupport.Web.Tests.Services
             var page = GetPage();
 
             // Act
-            var result = LayoutService.GetVisiblePageList(page, About);
+            var result = LayoutService.GetVisiblePageList(page, AboutSlug);
 
             // Assert
             Assert.Single(result);
