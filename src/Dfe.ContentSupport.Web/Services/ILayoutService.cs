@@ -4,5 +4,5 @@ namespace Dfe.ContentSupport.Web.Services;
 
 public interface ILayoutService
 {
-    CsPage GenerateLayout(CsPage page, HttpRequest request, string pageName);
+    CsPage GenerateLayout(CsPage page, HttpRequest request, string pageSlug);
 }

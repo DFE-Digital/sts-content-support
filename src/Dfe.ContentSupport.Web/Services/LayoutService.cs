@@ -5,15 +5,15 @@ namespace Dfe.ContentSupport.Web.Services;
 
 public class LayoutService : ILayoutService
 {
-    public CsPage GenerateLayout(CsPage page, HttpRequest request, string pageName)
+    public CsPage GenerateLayout(CsPage page, HttpRequest request, string pageSlug)
     {
         if (!page.ShowVerticalNavigation) return page;
 
         return new CsPage
         {
-            Heading = GetHeading(page, pageName),
-            MenuItems = GenerateVerticalNavigation(page, request, pageName),
-            Content = GetVisiblePageList(page, pageName),
+            Heading = GetHeading(page, pageSlug),
+            MenuItems = GenerateVerticalNavigation(page, request, pageSlug),
+            Content = GetVisiblePageList(page, pageSlug),
             UpdatedAt = page.UpdatedAt,
             CreatedAt = page.CreatedAt,
             HasCitation = page.HasCitation,
@@ -25,28 +25,23 @@ public class LayoutService : ILayoutService
     }
 
 
-    public Heading GetHeading(CsPage page, string pageName)
+    public Heading GetHeading(CsPage page, string pageSlug)
     {
-        var selectedPage = page.Content.Find(o => o.Slug == pageName);
+        var selectedPage = page.Content.Find(o => o.Slug == pageSlug);
 
-        if (selectedPage != null)
+        if (selectedPage is { UseParentHero: false })
             return new Heading
             {
-                Title = selectedPage.Title ?? "",
-                Subtitle = selectedPage.Subtitle ?? ""
+                Title = selectedPage.Title ?? string.Empty,
+                Subtitle = selectedPage.Subtitle ?? string.Empty
             };
 
-
-        return new Heading
-        {
-            Title = page.Content[0].Title ?? "",
-            Subtitle = page.Content[0].Subtitle ?? ""
-        };
+        return page.Heading;
     }
 
 
     public List<PageLink> GenerateVerticalNavigation(CsPage page, HttpRequest request,
-        string pageName)
+        string pageSlug)
     {
         var baseUrl = GetNavigationUrl(request);
 
@@ -55,20 +50,20 @@ public class LayoutService : ILayoutService
             Title = o.Title ?? "",
             Subtitle = o.Subtitle ?? "",
             Url = $"{baseUrl}/{o.Slug}",
-            IsActive = pageName == o.Slug
+            IsActive = pageSlug == o.Slug
         }).ToList();
 
-        if (string.IsNullOrEmpty(pageName) && menuItems.Count > 0)
+        if (string.IsNullOrEmpty(pageSlug) && menuItems.Count > 0)
             menuItems[0].IsActive = true;
 
         return menuItems;
     }
 
 
-    public static List<CsContentItem> GetVisiblePageList(CsPage page, string pageName)
+    public static List<CsContentItem> GetVisiblePageList(CsPage page, string pageSlug)
     {
-        if (!string.IsNullOrEmpty(pageName))
-            return page.Content.Where(o => o.Slug == pageName).ToList();
+        if (!string.IsNullOrEmpty(pageSlug))
+            return page.Content.Where(o => o.Slug == pageSlug).ToList();
 
 
         return page.Content.GetRange(0, 1);

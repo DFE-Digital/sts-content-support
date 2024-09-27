@@ -53,7 +53,11 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
     {
         CsContentItem item = entry.RichText is not null
             ? MapRichTextContent(entry.RichText, entry)!
-            : new CsContentItem { InternalName = entry.InternalName, Slug = entry.Slug, Title = entry.Title, Subtitle = entry.Subtitle };
+            : new CsContentItem
+            {
+                InternalName = entry.InternalName, Slug = entry.Slug, Title = entry.Title,
+                Subtitle = entry.Subtitle, UseParentHero = entry.UseParentHero
+            };
         return item;
     }
 
@@ -67,6 +71,7 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
                 Slug = entry.Slug,
                 Title = entry.Title,
                 Subtitle = entry.Subtitle,
+                UseParentHero = entry.UseParentHero,
                 NodeType = ConvertToRichTextNodeType(richText.NodeType),
                 Content = MapRichTextNodes(richText.Content),
                 Tags = FlattenMetadata(entry.Metadata)
@@ -77,7 +82,7 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
     public List<RichTextContentItem> MapRichTextNodes(List<ContentItem> nodes)
     {
         return nodes.Select(node => MapContent(node) ?? new RichTextContentItem
-        { NodeType = RichTextNodeType.Unknown, InternalName = node.InternalName }).ToList();
+            { NodeType = RichTextNodeType.Unknown, InternalName = node.InternalName }).ToList();
     }
 
 
@@ -86,7 +91,7 @@ public class ModelMapper(SupportedAssetTypes supportedAssetTypes) : IModelMapper
         RichTextContentItem? item;
         var nodeType = ConvertToRichTextNodeType(contentItem.NodeType);
         var internalName = contentItem.InternalName;
-        
+
 
         switch (nodeType)
         {

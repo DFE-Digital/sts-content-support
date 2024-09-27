@@ -1,4 +1,4 @@
-﻿
+﻿using Dfe.ContentSupport.Web.Models;
 using Dfe.ContentSupport.Web.Models.Mapped;
 using Microsoft.AspNetCore.Http;
 
@@ -19,15 +19,33 @@ namespace Dfe.ContentSupport.Web.Tests.Services
         private readonly string HomeSubtitle = "Home Subtitle";
         private readonly string AboutSubtitle = "About Subtitle";
 
+        private readonly string HeadingTitle = "Heading Title";
+        private readonly string HeadingSubtitle = "Heading Subtitle";
+
         private CsPage GetPage()
         {
             return new CsPage
             {
+                Heading = new Heading
+                {
+                    Title = HeadingTitle,
+                    Subtitle = HeadingSubtitle
+                },
                 Content = new()
-            {
-                new () { InternalName = Home,  Slug = HomeSlug, Title = HomeTitle, Subtitle = HomeSubtitle },
-                new () { InternalName = About, Slug = AboutSlug, Title = AboutTitle, Subtitle = AboutSubtitle }
-            }
+                {
+                    new()
+                    {
+                        InternalName = Home, Slug = HomeSlug, Title = HomeTitle,
+                        Subtitle = HomeSubtitle,
+                        UseParentHero = true
+                    },
+                    new()
+                    {
+                        InternalName = About, Slug = AboutSlug, Title = AboutTitle,
+                        Subtitle = AboutSubtitle,
+                        UseParentHero = false
+                    }
+                }
             };
         }
 
@@ -60,7 +78,7 @@ namespace Dfe.ContentSupport.Web.Tests.Services
 
 
         [Fact]
-        public void GetHeading_PageDoesNotExist_ReturnsFirstPageHeading()
+        public void GetHeading_PageDoesNotExist_ReturnsParentHero()
         {
             // Arrange
             var page = GetPage();
@@ -69,8 +87,8 @@ namespace Dfe.ContentSupport.Web.Tests.Services
             var result = _layoutService.GetHeading(page, Contact);
 
             // Assert
-            Assert.Equal(HomeTitle, result.Title);
-            Assert.Equal(HomeSubtitle, result.Subtitle);
+            result.Title.Should().Be(HeadingTitle);
+            result.Subtitle.Should().Be(HeadingSubtitle);
         }
 
 
@@ -93,7 +111,8 @@ namespace Dfe.ContentSupport.Web.Tests.Services
 
 
         [Fact]
-        public void GenerateVerticalNavigation_PageNameDoesNotMatch_ReturnsMenuItemsWithFirstActive()
+        public void
+            GenerateVerticalNavigation_PageNameDoesNotMatch_ReturnsMenuItemsWithFirstActive()
         {
             // Arrange
             var page = GetPage();
@@ -229,5 +248,38 @@ namespace Dfe.ContentSupport.Web.Tests.Services
             Assert.Equal(emptyRequestPath, result);
         }
 
+
+        [Fact]
+        public void GetHeading_NoPage_ReturnsParentHero()
+        {
+            var page = GetPage();
+
+            var result = _layoutService.GetHeading(page, string.Empty);
+
+            result.Title.Should().Be(HeadingTitle);
+            result.Subtitle.Should().Be(HeadingSubtitle);
+        }
+
+        [Fact]
+        public void GetHeading_Page_UseParent_ReturnsParentHero()
+        {
+            var page = GetPage();
+
+            var result = _layoutService.GetHeading(page, HomeSlug);
+
+            result.Title.Should().Be(HeadingTitle);
+            result.Subtitle.Should().Be(HeadingSubtitle);
+        }
+
+        [Fact]
+        public void GetHeading_Page_DontUseParent_ReturnsParentHero()
+        {
+            var page = GetPage();
+
+            var result = _layoutService.GetHeading(page, AboutSlug);
+
+            result.Title.Should().Be(AboutTitle);
+            result.Subtitle.Should().Be(AboutSubtitle);
+        }
     }
 }
