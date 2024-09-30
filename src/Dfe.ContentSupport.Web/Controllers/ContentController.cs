@@ -1,5 +1,4 @@
 using System.Diagnostics;
-using Dfe.ContentSupport.Web.Models.Mapped;
 using Dfe.ContentSupport.Web.Services;
 using Dfe.ContentSupport.Web.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -13,25 +12,7 @@ public class ContentController(IContentService contentService, ILayoutService la
     : Controller
 {
     public const string ErrorActionName = "error";
-
-    public async Task<IActionResult> Home()
-    {
-        var defaultModel = new CsPage
-        {
-            Heading = new Models.Heading
-            {
-                Title = "Department for Education",
-                Subtitle = "Content and Support"
-            }
-        };
-
-        ViewBag.pages = await contentService.GetCsPages();
-
-        return View(defaultModel);
-    }
-
-  
-
+    
     [HttpGet("{slug}/{page?}")]
     public async Task<IActionResult> Index(string slug, string page = "", bool isPreview = false, [FromQuery] List<string>? tags = null)
     {
@@ -67,12 +48,7 @@ public class ContentController(IContentService contentService, ILayoutService la
             return RedirectToAction(ErrorActionName);
         }
     }
-
-
-    public IActionResult Privacy()
-    {
-        return View();
-    }
+    
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
