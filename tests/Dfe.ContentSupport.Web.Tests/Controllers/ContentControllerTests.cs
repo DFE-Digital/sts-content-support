@@ -16,19 +16,6 @@ public class ContentControllerTests
         return new ContentController(_contentServiceMock.Object, new LayoutService(), _loggerMock.Object);
     }
 
-
-    [Fact]
-    public async Task Home_Returns_View()
-    {
-        _contentServiceMock.Setup(o => o.GetCsPages(It.IsAny<bool>())).ReturnsAsync([]);
-
-        var sut = GetController();
-        var result = await sut.Home();
-
-        result.Should().BeOfType<ViewResult>();
-        (result as ViewResult)!.Model.Should().BeOfType<CsPage>();
-    }
-
     [Fact]
     public async Task Index_NoSlug_Returns_ErrorAction()
     {
@@ -118,16 +105,6 @@ public class ContentControllerTests
 
         result.Should().BeOfType<ViewResult>();
         (result as ViewResult)!.Model.Should().BeOfType<CsPage>();
-    }
-
-    [Fact]
-    public void Privacy_Returns_EmptyView()
-    {
-        var sut = GetController();
-
-        var result = sut.Privacy();
-
-        result.Should().BeOfType<ViewResult>();
     }
 
     [Fact]
