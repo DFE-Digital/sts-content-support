@@ -16,6 +16,6 @@ public class EmbeddedEntry : RichTextContentItem
     public RichTextContentItem? RichText { get; set; }
     public CustomComponent? CustomComponent { get; set; }
 
-    public override bool HaveNoContent => Content.Count == 0 || Content.All(content => content.IsEmptyContent);
-    public override bool IsEmptyContent => base.IsEmptyContent && (RichText == null || (RichText != null && RichText.IsEmptyContent));
+    public override bool HaveNoContent => Content.Count == 0 || Content.TrueForAll(content => content.IsEmptyContent);
+    public override bool IsEmptyContent => base.IsEmptyContent && (RichText == null || RichText.IsEmptyContent);
 }
