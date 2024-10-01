@@ -6,8 +6,7 @@ namespace Dfe.ContentSupport.Web.Models;
 [ExcludeFromCodeCoverage]
 public class Target : Entry
 {
-    public Fields Fields { get; set; } = null!;
-    public string Title { get; set; } = null!;
+    public new Fields Fields { get; set; } = null!;
     public Asset Asset { get; set; } = null!;
     public string SummaryLine { get; set; } = null!;
     public string Description { get; set; } = null!;
@@ -16,4 +15,5 @@ public class Target : Entry
     public string Uri { get; set; } = null!;
     public Image Image { get; set; } = null!;
     public List<Target> Content { get; set; } = [];
+    public new string Title { get; set; } = null!;
 }

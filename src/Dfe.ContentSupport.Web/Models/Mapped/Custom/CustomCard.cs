@@ -15,6 +15,5 @@ public class CustomCard : CustomComponent
     public string ImageAlt { get; set; } = null!;
     public string ImageUri { get; set; } = null!;
     public string Meta { get; set; } = null!;
-    public string Title { get; set; } = null!;
     public string Uri { get; set; } = null!;
 }
