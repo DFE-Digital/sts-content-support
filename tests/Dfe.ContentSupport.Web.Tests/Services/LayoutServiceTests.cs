@@ -135,7 +135,7 @@ namespace Dfe.ContentSupport.Web.Tests.Services
             var page = GetPage();
 
             // Act
-            var result = LayoutService.GetVisiblePageList(page, AboutSlug);
+            var result = _layoutService.GetVisiblePageList(page, AboutSlug);
 
             // Assert
             Assert.Single(result);
@@ -150,7 +150,7 @@ namespace Dfe.ContentSupport.Web.Tests.Services
             var page = GetPage();
 
             // Act
-            var result = LayoutService.GetVisiblePageList(page, Contact);
+            var result = _layoutService.GetVisiblePageList(page, Contact);
 
             // Assert
             Assert.Empty(result);
@@ -164,7 +164,7 @@ namespace Dfe.ContentSupport.Web.Tests.Services
             var page = GetPage();
 
             // Act
-            var result = LayoutService.GetVisiblePageList(page, string.Empty);
+            var result = _layoutService.GetVisiblePageList(page, string.Empty);
 
             // Assert
             Assert.Single(result);
@@ -180,7 +180,7 @@ namespace Dfe.ContentSupport.Web.Tests.Services
             page.Content = new();
 
             // Act
-            var result = LayoutService.GetVisiblePageList(page, Home);
+            var result = _layoutService.GetVisiblePageList(page, Home);
 
             // Assert
             Assert.Empty(result);
@@ -195,7 +195,7 @@ namespace Dfe.ContentSupport.Web.Tests.Services
             context.Request.Path = GetSegmentLength(4);
 
             // Act
-            var result = LayoutService.GetNavigationUrl(context.Request);
+            var result = _layoutService.GetNavigationUrl(context.Request);
 
             // Assert
             Assert.Equal(GetSegmentLength(2), result);
@@ -210,7 +210,7 @@ namespace Dfe.ContentSupport.Web.Tests.Services
             context.Request.Path = GetSegmentLength(2);
 
             // Act
-            var result = LayoutService.GetNavigationUrl(context.Request);
+            var result = _layoutService.GetNavigationUrl(context.Request);
 
             // Assert
             Assert.Equal(GetSegmentLength(2), result);
@@ -225,7 +225,7 @@ namespace Dfe.ContentSupport.Web.Tests.Services
             context.Request.Path = GetSegmentLength(1);
 
             // Act
-            var result = LayoutService.GetNavigationUrl(context.Request);
+            var result = _layoutService.GetNavigationUrl(context.Request);
 
             // Assert
             Assert.Equal(GetSegmentLength(1), result);
@@ -241,7 +241,7 @@ namespace Dfe.ContentSupport.Web.Tests.Services
             context.Request.Path = emptyRequestPath;
 
             // Act
-            var result = LayoutService.GetNavigationUrl(context.Request);
+            var result = _layoutService.GetNavigationUrl(context.Request);
 
             // Assert
             Assert.Equal(emptyRequestPath, result);
