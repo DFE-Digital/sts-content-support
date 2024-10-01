@@ -111,8 +111,7 @@ namespace Dfe.ContentSupport.Web.Tests.Services
 
 
         [Fact]
-        public void
-            GenerateVerticalNavigation_PageNameDoesNotMatch_ReturnsMenuItemsWithFirstActive()
+        public void GenerateVerticalNavigation_PageNameDoesNotMatch_ReturnsMenuItemsWithFirstActive()
         {
             // Arrange
             var page = GetPage();
