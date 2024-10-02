@@ -63,28 +63,4 @@
             addPrintButtonEventListener();
         </script>
     }
-
-    <script nonce="@Context.Items["nonce"]" defer>
-        const hiddenClass = "govuk-visually-hidden";
-
-        //Some elements should remain hidden
-        const idsToNotShow = ["support-links"];
-
-        //Remove hidden visibility CSS class if JS enabled
-        const removeHiddenClassFromElements = () => {
-            const hiddenElements = Array.from(document.querySelectorAll(`.${hiddenClass}`));
-
-            for(const element of hiddenElements){
-                if(idsToNotShow.indexOf(element.id) > -1){
-                    continue;
-                }
-
-                element.classList.remove(hiddenClass);
-                //Also unset "aria-hidden" attribute
-                element.ariaHidden = undefined;
-            }
-        }
-
-        removeHiddenClassFromElements();
-    </script>
 }
