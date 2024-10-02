@@ -14,6 +14,5 @@ public class EmbeddedAsset : RichTextContentItem
     public AssetContentType AssetContentType { get; set; } = AssetContentType.Unknown;
 
     public string Description { get; set; } = null!;
-    public string Title { get; set; } = null!;
     public string Uri { get; set; } = null!;
 }

@@ -29,6 +29,7 @@
             </h6>
             break;
         default:
-            throw new ArgumentOutOfRangeException(nameof(Model.NodeType));
+            <partial name="_UnsupportedElement" model="@Model"/>
+            break;
     }
 }

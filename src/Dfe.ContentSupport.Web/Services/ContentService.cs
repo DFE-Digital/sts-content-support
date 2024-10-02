@@ -1,5 +1,4 @@
 using System.Xml.Linq;
-using Contentful.Core.Search;
 using Dfe.ContentSupport.Web.Models.Mapped;
 using Dfe.ContentSupport.Web.ViewModels;
 
@@ -59,9 +58,7 @@ public class ContentService(
         }
 
 
-        var builder = QueryBuilder<ContentSupportPage>.New.ContentTypeIs(nameof(ContentSupportPage))
-            .FieldEquals($"fields.{field}", value);
-        var result = await contentfulService.ContentfulClient(isPreview).Query(builder);
+        var result = await contentfulService.GetContentSupportPages(field, value);
         var pages = modelMapper.MapToCsPages(result);
 
         if (!isPreview)
