@@ -1,4 +1,4 @@
-﻿using Dfe.ContentSupport.Web.Models.Mapped;
+﻿using Dfe.ContentSupport.Web.Extensions;
 using Dfe.ContentSupport.Web.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,9 +7,10 @@ namespace Dfe.ContentSupport.Web.Controllers;
 
 [Route("/sitemap")]
 [AllowAnonymous]
-public class SitemapController(IContentService contentfulService) : Controller
+public class SitemapController(
+    [FromKeyedServices(WebApplicationBuilderExtensions.ContentAndSupportServiceKey)]
+    IContentService contentfulService) : Controller
 {
- 
     [HttpGet]
     [Route("/sitemap.xml")]
     public async Task<IActionResult> Sitemap()

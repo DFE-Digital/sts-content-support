@@ -1,12 +1,16 @@
 using System.Xml.Linq;
+using Dfe.ContentSupport.Web.Extensions;
 using Dfe.ContentSupport.Web.Models.Mapped;
 using Dfe.ContentSupport.Web.ViewModels;
 
 namespace Dfe.ContentSupport.Web.Services;
 
 public class ContentService(
+    [FromKeyedServices(WebApplicationBuilderExtensions.ContentAndSupportServiceKey)]
     IContentfulService contentfulService,
+    [FromKeyedServices(WebApplicationBuilderExtensions.ContentAndSupportServiceKey)]
     ICacheService<List<CsPage>> cache,
+    [FromKeyedServices(WebApplicationBuilderExtensions.ContentAndSupportServiceKey)]
     IModelMapper modelMapper)
     : IContentService
 {

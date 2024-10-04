@@ -3,7 +3,7 @@ using Polly.Extensions.Http;
 
 namespace Dfe.ContentSupport.Web.Extensions;
 
-public static class HttpClientPolicyExtensions
+public static class CsHttpClientPolicyExtensions
 {
     public static void AddRetryPolicy(IHttpClientBuilder builder) =>
         builder
