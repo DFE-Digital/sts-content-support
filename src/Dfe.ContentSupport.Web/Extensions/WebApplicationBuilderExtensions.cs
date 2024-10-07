@@ -45,21 +45,21 @@ public static class WebApplicationBuilderExtensions
                 sp.GetRequiredService<IOptions<ContentfulOptions>>().Value);
 
         services.AddKeyedScoped<IContentfulClient, ContentfulClient>(ContentAndSupportServiceKey,
-            implementationFactory: (sp, _) =>
+            (sp, _) =>
             {
-                var contentfulOptions = sp.GetRequiredKeyedService<Func<IServiceProvider, ContentfulOptions>>(ContentAndSupportServiceKey)(sp);
+                var contentfulOptions =
+                    sp.GetRequiredKeyedService<Func<IServiceProvider, ContentfulOptions>>(
+                        ContentAndSupportServiceKey)(sp);
                 var httpClient = sp.GetRequiredService<HttpClient>();
                 return new ContentfulClient(httpClient, contentfulOptions);
             });
 
         if (app.Environment.EnvironmentName.Equals("e2e"))
-        {
-            services.AddKeyedScoped<IContentfulService, StubContentfulService>(ContentAndSupportServiceKey);
-        }
+            services.AddKeyedScoped<IContentfulService, StubContentfulService>(
+                ContentAndSupportServiceKey);
         else
-        {
-            services.AddKeyedScoped<IContentfulService, ContentfulService>(ContentAndSupportServiceKey);
-        }
+            services.AddKeyedScoped<IContentfulService, ContentfulService>(
+                ContentAndSupportServiceKey);
 
         CsHttpClientPolicyExtensions.AddRetryPolicy(services.AddHttpClient<ContentfulClient>());
     }

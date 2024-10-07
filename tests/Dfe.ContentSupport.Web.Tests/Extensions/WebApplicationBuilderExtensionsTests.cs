@@ -46,6 +46,7 @@ public class WebApplicationBuilderExtensionsTests
         builder.InitCsDependencyInjection();
 
         var service = builder.Services.First(o => o.ServiceType == typeof(IContentfulService));
-        service.KeyedImplementationType?.Name.Should().BeEquivalentTo(nameof(StubContentfulService));
+        service.KeyedImplementationType?.Name.Should()
+            .BeEquivalentTo(nameof(StubContentfulService));
     }
 }
