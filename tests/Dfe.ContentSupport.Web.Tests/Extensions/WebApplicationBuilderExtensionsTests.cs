@@ -1,4 +1,4 @@
-﻿using Dfe.ContentSupport.Web.Extensions;
+using Dfe.ContentSupport.Web.Extensions;
 using Dfe.ContentSupport.Web.Models.Mapped;
 using Microsoft.AspNetCore.Builder;
 

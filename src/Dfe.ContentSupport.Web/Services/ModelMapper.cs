@@ -1,4 +1,4 @@
-﻿using Contentful.Core.Models;
+using Contentful.Core.Models;
 using Dfe.ContentSupport.Web.Common;
 using Dfe.ContentSupport.Web.Configuration;
 using Dfe.ContentSupport.Web.Models;

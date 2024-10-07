@@ -18,7 +18,7 @@ public class ContentController(
     : Controller
 {
     public const string ErrorActionName = "error";
-
+    
     [HttpGet("{slug}/{page?}")]
     public async Task<IActionResult> Index(string slug, string page = "", bool isPreview = false,
         [FromQuery] List<string>? tags = null)
@@ -59,7 +59,6 @@ public class ContentController(
             return RedirectToAction(ErrorActionName);
         }
     }
-
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
