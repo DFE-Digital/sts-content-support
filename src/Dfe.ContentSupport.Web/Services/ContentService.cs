@@ -1,12 +1,16 @@
 using System.Xml.Linq;
+using Dfe.ContentSupport.Web.Extensions;
 using Dfe.ContentSupport.Web.Models.Mapped;
 using Dfe.ContentSupport.Web.ViewModels;
 
 namespace Dfe.ContentSupport.Web.Services;
 
 public class ContentService(
+    [FromKeyedServices(WebApplicationBuilderExtensions.ContentAndSupportServiceKey)]
     IContentfulService contentfulService,
+    [FromKeyedServices(WebApplicationBuilderExtensions.ContentAndSupportServiceKey)]
     ICacheService<List<CsPage>> cache,
+    [FromKeyedServices(WebApplicationBuilderExtensions.ContentAndSupportServiceKey)]
     IModelMapper modelMapper)
     : IContentService
 {
@@ -51,20 +55,14 @@ public class ContentService(
         if (!isPreview)
         {
             var fromCache = cache.GetFromCache(key);
-            if (fromCache is not null)
-            {
-                return fromCache;
-            }
+            if (fromCache is not null) return fromCache;
         }
 
 
         var result = await contentfulService.GetContentSupportPages(field, value);
         var pages = modelMapper.MapToCsPages(result);
 
-        if (!isPreview)
-        {
-            cache.AddToCache(key, pages);
-        }
+        if (!isPreview) cache.AddToCache(key, pages);
 
         return pages;
     }
