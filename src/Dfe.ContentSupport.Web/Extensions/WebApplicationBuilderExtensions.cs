@@ -9,20 +9,25 @@ namespace Dfe.ContentSupport.Web.Extensions;
 
 public static class WebApplicationBuilderExtensions
 {
+    public const string ContentAndSupportServiceKey = "content-and-support";
+
     public static void InitCsDependencyInjection(this WebApplicationBuilder app)
     {
         app.Services.Configure<TrackingOptions>(app.Configuration.GetSection("tracking"))
             .AddSingleton(sp => sp.GetRequiredService<IOptions<TrackingOptions>>().Value);
 
-        app.Services.Configure<SupportedAssetTypes>(app.Configuration.GetSection("cs:supportedAssetTypes"))
+        app.Services
+            .Configure<SupportedAssetTypes>(app.Configuration.GetSection("cs:supportedAssetTypes"))
             .AddSingleton(sp => sp.GetRequiredService<IOptions<SupportedAssetTypes>>().Value);
 
         app.Services.SetupContentfulClient(app);
 
-        app.Services.AddTransient<ICacheService<List<CsPage>>, CsPagesCacheService>();
-        app.Services.AddTransient<IModelMapper, ModelMapper>();
-        app.Services.AddTransient<IContentService, ContentService>();
-        app.Services.AddTransient<ILayoutService, LayoutService>();
+        app.Services.AddKeyedTransient<ICacheService<List<CsPage>>, CsPagesCacheService>(
+            ContentAndSupportServiceKey);
+        app.Services.AddKeyedTransient<IModelMapper, ModelMapper>(ContentAndSupportServiceKey);
+        app.Services
+            .AddKeyedTransient<IContentService, ContentService>(ContentAndSupportServiceKey);
+        app.Services.AddKeyedTransient<ILayoutService, LayoutService>(ContentAndSupportServiceKey);
 
         app.Services.Configure<CookiePolicyOptions>(options =>
         {
@@ -30,28 +35,32 @@ public static class WebApplicationBuilderExtensions
             options.MinimumSameSitePolicy = SameSiteMode.Strict;
             options.ConsentCookieValue = "false";
         });
-
-
     }
 
-    public static void SetupContentfulClient(this IServiceCollection services, WebApplicationBuilder app)
+    public static void SetupContentfulClient(this IServiceCollection services,
+        WebApplicationBuilder app)
     {
         app.Services.Configure<ContentfulOptions>(app.Configuration.GetSection("cs:contentful"))
-            .AddSingleton(sp => sp.GetRequiredService<IOptions<ContentfulOptions>>().Value);
+            .AddKeyedSingleton(ContentAndSupportServiceKey, (IServiceProvider sp) =>
+                sp.GetRequiredService<IOptions<ContentfulOptions>>().Value);
 
-        services.AddScoped<IContentfulClient, ContentfulClient>();
-        
+        services.AddKeyedScoped<IContentfulClient, ContentfulClient>(ContentAndSupportServiceKey,
+            (sp, _) =>
+            {
+                var contentfulOptions =
+                    sp.GetRequiredKeyedService<Func<IServiceProvider, ContentfulOptions>>(
+                        ContentAndSupportServiceKey)(sp);
+                var httpClient = sp.GetRequiredService<HttpClient>();
+                return new ContentfulClient(httpClient, contentfulOptions);
+            });
+
         if (app.Environment.EnvironmentName.Equals("e2e"))
-        {
-            services.AddScoped<IContentfulService, StubContentfulService>();
-        }
+            services.AddKeyedScoped<IContentfulService, StubContentfulService>(
+                ContentAndSupportServiceKey);
         else
-        {
-            services.AddScoped<IContentfulService, ContentfulService>();
-        }
-        
-        
+            services.AddKeyedScoped<IContentfulService, ContentfulService>(
+                ContentAndSupportServiceKey);
 
-        HttpClientPolicyExtensions.AddRetryPolicy(services.AddHttpClient<ContentfulClient>());
+        CsHttpClientPolicyExtensions.AddRetryPolicy(services.AddHttpClient<ContentfulClient>());
     }
 }

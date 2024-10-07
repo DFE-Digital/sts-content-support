@@ -25,7 +25,7 @@ public class CsPagesCacheService(IMemoryCache cache, IConfiguration configuratio
     }
 
     public void ClearCache()
-    {       
+    {
         (cache as MemoryCache)?.Clear();
     }
 }

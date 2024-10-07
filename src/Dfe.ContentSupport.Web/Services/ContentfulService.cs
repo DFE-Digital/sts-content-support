@@ -1,16 +1,16 @@
 using Contentful.Core;
 using Contentful.Core.Search;
+using Dfe.ContentSupport.Web.Extensions;
 using Dfe.ContentSupport.Web.ViewModels;
 
 namespace Dfe.ContentSupport.Web.Services;
 
-public class ContentfulService(IContentfulClient client)
+public class ContentfulService(
+    [FromKeyedServices(WebApplicationBuilderExtensions.ContentAndSupportServiceKey)]
+    IContentfulClient client)
     : IContentfulService
 {
     private const int DefaultRequestDepth = 10;
-
-    private readonly IContentfulClient _client =
-        client ?? throw new ArgumentNullException(nameof(client));
 
     public async Task<IEnumerable<ContentSupportPage>> GetContentSupportPages(string field,
         string value, CancellationToken cancellationToken = default)
@@ -19,7 +19,7 @@ public class ContentfulService(IContentfulClient client)
             .FieldEquals($"fields.{field}", value)
             .Include(DefaultRequestDepth);
 
-        var entries = await _client.GetEntries(builder, cancellationToken);
+        var entries = await client.GetEntries(builder, cancellationToken);
 
         return entries ?? Enumerable.Empty<ContentSupportPage>();
     }

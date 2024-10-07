@@ -2,7 +2,7 @@
 
 public interface ICacheService<T>
 {
-    void AddToCache(string key,T item);
+    void AddToCache(string key, T item);
     T? GetFromCache(string key);
     void ClearCache();
 }
